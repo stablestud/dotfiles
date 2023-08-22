@@ -1,0 +1,18 @@
+#! /usr/bin/env sh
+
+# This script helps find and run a terminal emulator with a command.
+# It ensures the script waits until the terminal emulator is closed,
+# which is important for certain applications like qutebrowser that
+# need to know when the command is truly finished, so they can perform
+# actions based on the script.
+#
+# Note: i3-sensible-terminal provides similar functionaliy but without waiting for termination of the terminal.
+
+if command -v xfce4-terminal 1>/dev/null 2>&1; then
+	exec xfce4-terminal --disable-server --command "${@}"
+elif command -v lxterminal 1>/dev/null 2>&1; then
+	exec lxterminal --command "${@}"
+else
+	echo "No supported terminal emulator found!" 1>&2
+	exit 1
+fi
