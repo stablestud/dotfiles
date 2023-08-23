@@ -1,3 +1,5 @@
+# This is the static configuration,
+# to edit the qutebrowser managed settings goto:
 # ~/.var/app/org.qutebrowser.qutebrowser/config/qutebrowser/autoconfig.yml
 config.load_autoconfig()
 
@@ -9,12 +11,14 @@ c.aliases = {
         'qa': 'quit',
         'w': 'session-save',
         'wq': 'tab-close',
-        'wqa': 'quit --save'
+        'wqa': 'quit --save',
+        'x': 'tab-close'
 }
 
-# Make VIM's <Ctrl-W> work by removing its default assignment
-if '<Ctrl-W>' in c.bindings.default:
-    del c.bindings.default['normal']['<Ctrl-W>']
+# Make VIM's <Ctrl-W> work by removing its default assignment from all modes
+for mode_bindings in c.bindings.default:
+	if '<Ctrl-W>' in c.bindings.default[mode_bindings]:
+		del c.bindings.default[mode_bindings]['<Ctrl-W>']
 
 # Command mode bindings to make it feel more like VIM
 config.bind('<Ctrl-n>', 'completion-item-focus --history next', mode='command')
@@ -43,6 +47,8 @@ config.bind('<Ctrl-n>', 'nop', mode='normal')
 config.bind('<Ctrl-o>', 'back', mode='normal')
 config.bind('gT', 'tab-prev', mode='normal')
 config.bind('gt', 'tab-next', mode='normal')
+config.bind('ZZ', 'quit --save', mode='normal')
+config.bind('ZQ', 'quit', mode='normal')
 config.bind('<Ctrl-w>o', 'tab-only --pinned keep', mode='normal')
 config.bind('<Ctrl-w>T', 'tab-give', mode='normal')
 config.bind('<Ctrl-w>w', 'tab-next', mode='normal')
