@@ -12,6 +12,8 @@ if command -v xfce4-terminal 1>/dev/null 2>&1; then
 	exec xfce4-terminal --disable-server --command "${@}"
 elif command -v lxterminal 1>/dev/null 2>&1; then
 	exec lxterminal --command "${@}"
+elif command -v gnome-terminal 1>/dev/null 2>&1; then
+	exec gnome-terminal --wait -- env sh -c "${@}"
 else
 	echo "No supported terminal emulator found!" 1>&2
 	exit 1
