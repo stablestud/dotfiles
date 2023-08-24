@@ -93,6 +93,6 @@ c.scrolling.bar = 'when-searching'
 c.editor.command = [
         'flatpak-spawn',
         '--host', 
-        '.local/bin/termfg',
+        'termfg',
         'vim "{file}" -c "normal {line}G{column0}l"'
 ]

@@ -8,13 +8,18 @@
 #
 # Note: i3-sensible-terminal provides similar functionaliy but without waiting for termination of the terminal.
 
+if [ -z "${*}" ]; then
+	echo "Error: no command provided" 1>&2
+	exit 1
+fi	
+
 if command -v xfce4-terminal 1>/dev/null 2>&1; then
-	exec xfce4-terminal --disable-server --command "${@}"
+	exec xfce4-terminal --disable-server --execute /usr/bin/env sh -c "${*}"
 elif command -v lxterminal 1>/dev/null 2>&1; then
-	exec lxterminal --command "${@}"
+	exec lxterminal --command /usr/bin/env sh -c "${*}"
 elif command -v gnome-terminal 1>/dev/null 2>&1; then
-	exec gnome-terminal --wait -- env sh -c "${@}"
+	exec gnome-terminal --wait -- /usr/bin/env sh -c "${*}"
 else
-	echo "No supported terminal emulator found!" 1>&2
+	echo "Error: No supported terminal emulator found!" 1>&2
 	exit 1
 fi
