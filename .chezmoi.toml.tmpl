@@ -1,0 +1,12 @@
+# Chezmoi's config file
+#
+# Here we determine and setup the required dotfiles for this specific machine
+# For example: a server without flatpak or X server won't require
+# Qutebrowser dotfiles, so we set a variable here that will be used in
+# templates to exclude those files
+
+{{- $headless := true }}
+
+[data]
+	# If machine is without graphical environment (X server)
+	headless = {{ $headless }}
