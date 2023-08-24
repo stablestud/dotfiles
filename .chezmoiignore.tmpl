@@ -1,2 +1,22 @@
 README.md
 LICENSE
+
+{{/* Flatpak dependent configs */}}
+{{ define "flatpak" }}
+	.var/app
+	.local/bin/termfg
+	.local/bin/qutebrowser-clean
+{{ end }}
+
+{{/* Ignore these if no graphical environment is installed */}}
+{{ if .headless }}
+	{{ template "flatpak" }}
+{{/* Ignore these if flatpak is not installed */}}
+{{ else if not (lookPath "flatpak") }}
+	{{ template "flatpak" }}
+{{ end }}
+
+{{/* Git config; ignore if git is not installed */}}
+{{ if not (lookPath "git") }}
+	.gitconfig
+{{ end }}

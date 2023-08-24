@@ -1,0 +1,12 @@
+#! /usr/bin/env sh
+# Setup required flatpak permissions for Qutebrowser to work
+
+if flatpak info org.qutebrowser.qutebrowser --show-ref 1>/dev/null 2>&1; then
+	# For flatpak-spawn to work inside Qutebrowser
+	flatpak override --user --talk-name=org.freedesktop.Flatpak org.qutebrowser.qutebrowser
+	# For writing reading and writing tmp files between Qutebrowser and spawned external process
+	flatpak override --user --filesystem=/tmp org.qutebrowser.qutebrowser
+	echo "INFO: Flatpak org.qutebrowser.qutebrowser permissions updated"
+else
+	echo "WARN: Flatpak org.qutebrowser.qutebrowser not installed" 1>&2
+fi

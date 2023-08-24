@@ -5,7 +5,8 @@
 # Qutebrowser dotfiles, so we set a variable here that will be used in
 # templates to exclude those files
 
-{{- $headless := true }}
+{{/* Default values, should provide the bare minimum of dotfiles */}}
+{{- $headless := true -}}
 
 [data]
 	# If machine is without graphical environment (X server)
