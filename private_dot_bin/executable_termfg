@@ -6,7 +6,8 @@
 # need to know when the command is truly finished, so they can perform
 # actions based on the script.
 #
-# Note: i3-sensible-terminal provides similar functionaliy but without waiting for termination of the terminal.
+# Note: i3-sensible-terminal provides similar functionaliy but without
+# waiting for termination of the terminal.
 
 if [ -z "${*}" ]; then
 	echo "Error: no command provided" 1>&2
@@ -23,3 +24,5 @@ else
 	echo "Error: No supported terminal emulator found!" 1>&2
 	exit 1
 fi
+
+# vim: filetype=sh

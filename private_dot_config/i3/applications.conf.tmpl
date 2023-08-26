@@ -1,0 +1,49 @@
+# Note: even though some applications might not be installed we try to start them anyway,
+# because failure to start them does not cause any issues,
+# and should the applications should be installed afterwards,
+# no changes in config file must be made to have it running as expected
+
+# lockscreen setup
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork --tiling --ignore-empty-password --show-failed-attempts
+exec --no-startup-id $HOME/.bin/screenson
+
+# startup important applications
+exec --no-startup-id i3-msg 'workspace 1; exec i3-sensible-terminal'
+{{- if .battery }}
+exec --no-startup-id i3-battery-popup -L 15
+{{- end }}
+
+# startup optional applications
+exec --no-startup-id picom --vsync --inactive-dim 0.1 --backend glx --detect-transient --inactive-dim-fixed --use-ewmh-active-win --mark-wmwin-focused --glx-no-stencil
+exec --no-startup-id redshift -l 52.5:13.4 -t 6500K:3000K
+exec --no-startup-id volumeicon
+{{- if .wireless }}
+exec --no-startup-id nm-applet
+{{- end }}
+exec --no-startup-id dex --autostart --environment i3
+
+# runtime triggers (which run everytime i3 is being reloaded/restarted
+exec_always --no-startup-id setxkbmap -layout us,de -variant ,nodeadkeys -option grp:alt_shit_toggle,altwin:menu_win,caps:escape_shifted_capslock
+
+# custom application bindings
+bindsym $mod+x exec --no-startup-id $HOME/.bin/screensnow
+bindsym $mod+Shift+x exec --no-startup-id $HOME/.bin/userhibernate
+bindsym $mod+Ctrl+Shift+x exec --no-startup-id $HOME/.bin/usershutdown
+# run browser
+bindsym $mod+f exec --no-startup-id $HOME/.bin/openbrowser
+# start program launcher
+bindsym $mod+d exec --no-startup-id "rofi -modi drun,run -show drun"
+# start filebrowser
+bindsym $mod+Shift+d exec --no-startup-id "rofi -modi filebrowser,window -show filebrowser"
+# start window switcher
+bindsym $mod+Tab exec --no-startup-id "rofi -modi window -show window"
+
+{{- if .battery }}
+# handle backlight
+bindsym XF86MonBrightnessUp   exec light -A 10
+bindsym XF86MonBrightnessDown exec light -U 10
+{{- end }}
+
+# vim: filetype=i3config

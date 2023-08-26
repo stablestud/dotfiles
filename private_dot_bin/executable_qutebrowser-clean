@@ -17,3 +17,4 @@ for file in files:
         except OSError as e:
             print(e)
 
+# vim: filetype=python

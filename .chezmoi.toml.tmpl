@@ -5,9 +5,15 @@
 # Qutebrowser dotfiles, so we set a variable here that will be used in
 # templates to exclude those files
 
-{{/* Default values, should provide the bare minimum of dotfiles */}}
+{{/* default values, should provide the bare minimum of dotfiles */}}
 {{- $headless := true -}}
+{{- $battery  := false -}}
+{{- $wireless := false -}}
 
 [data]
-	# If machine is without graphical environment (X server)
+	# if machine is without graphical environment (X server)
 	headless = {{ $headless }}
+	# if machine has a battery
+	battery  = {{ $battery }}
+	# if machine has a wireless device
+	wireless = {{ $wireless }}

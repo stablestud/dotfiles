@@ -1,19 +1,36 @@
 README.md
 LICENSE
 
-{{/* Flatpak dependent configs */}}
+{{/* flatpak dependent configs */}}
 {{ define "flatpak" }}
 	.var/app
-	.local/bin/termfg
-	.local/bin/qutebrowser-clean
+	.bin/termfg
+	.bin/qutebrowser-clean
 {{ end }}
 
-{{/* Ignore these if no graphical environment is installed */}}
+{{/* i3 configs */}}
+{{ define "i3" }}
+	.config/i3
+	.config/rofi
+	.bin/screens*
+{{ end }}
+
+{{/* ignore these if no graphical environment is installed */}}
 {{ if .headless }}
 	{{ template "flatpak" }}
-{{/* Ignore these if flatpak is not installed */}}
-{{ else if not (lookPath "flatpak") }}
-	{{ template "flatpak" }}
+	{{ template "i3" }}
+	.bin/openbrowser
+	.bin/usershutdown
+	.bin/userhibernate
+{{ else }}
+	{{/* ignore these if flatpak is not installed */}}
+	{{ if not (lookPath "flatpak") }}
+		{{ template "flatpak" }}
+	{{ end }}
+	{{/* ignore these if i3 is not installed */}}
+	{{ if not (lookPath "i3") }}
+		{{ template "i3" }}
+	{{ end }}
 {{ end }}
 
 {{/* Git config; ignore if git is not installed */}}

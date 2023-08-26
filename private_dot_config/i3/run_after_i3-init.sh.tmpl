@@ -1,0 +1,41 @@
+#! /usr/bin/env sh
+
+check_deps() {
+	required_deps="
+		setxkbmap
+		i3status
+		xset
+		xss-lock
+		i3-sensible-terminal
+		pactl
+{{ if .battery -}}
+		light
+{{ end -}}
+		rofi"
+
+	optional_deps="
+		dex
+		redshift
+		picom
+{{ if .battery -}}
+		powertop
+		xinput
+{{ end -}}
+		dunst"
+
+	for i in ${required_deps}; do
+		if ! command -v "${i}" 1>/dev/null 2>&1; then
+			echo "Warning: important i3 dependency not installed: ${i}" 1>&2
+		fi
+	done
+
+	for i in ${optional_deps}; do
+		if ! command -v "${i}" 1>/dev/null 2>&1; then
+			echo "Info: optional i3 dependency not installed: ${i}"
+		fi
+	done
+}
+
+check_deps
+
+# vim: filetype=sh

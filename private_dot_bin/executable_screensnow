@@ -1,0 +1,14 @@
+#! /usr/bin/env sh
+
+# Lock the screen and turn on the screensaver immediately
+
+if command -v xset 1>/dev/null 2>&1; then
+	xset dpms force off
+elif command -v loginctl 1>/dev/null 2>&1; then
+	loginctl lock-session 
+else
+	echo "Error: cannot lock screen" 1>&2
+	exit 1
+fi
+
+# vim: filetype=sh
