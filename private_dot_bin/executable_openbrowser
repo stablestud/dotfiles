@@ -1,3 +1,24 @@
 #! /usr/bin/env sh
 
+if command -v flatpak 1>/dev/null 2>&1; then
+	if flatpak run org.chromium.Chromium; then
+		exit 0
+	elif flatpak run org.mozilla.firefox; then
+		exit 0
+	elif flatpak run org.qutebrowser.qutebrowser; then
+		exit 0
+	fi
+fi
+
+if command -v qutebrowser 1>/dev/null 2>&1; then
+	qutebrowser
+elif command -v firefox 1>/dev/null 2>&1; then
+	firefox
+elif command -v chromium 1>/dev/null 2>&1; then
+	chromium
+else
+	echo "Error: no browser found" 1>&2
+	exit 1
+fi
+
 # vim: filetype=sh
