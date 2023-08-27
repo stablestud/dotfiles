@@ -3,15 +3,15 @@ LICENSE
 
 {{/* flatpak dependent configs */}}
 {{ define "flatpak" }}
-	.var/app
+	.var/app/**
 	.bin/termfg
 	.bin/qutebrowser-clean
 {{ end }}
 
 {{/* i3 configs */}}
 {{ define "i3" }}
-	.config/i3
-	.config/rofi
+	.config/i3/**
+	.config/rofi/**
 	.bin/screens*
 {{ end }}
 
