@@ -1,0 +1,51 @@
+#! /usr/bin/env sh
+
+# This script is a wrapper that tries to allow the user to suspend/hibernate
+# the machine without root rights.
+# In most cases the administrator must manually change settings 
+# (e.g. the sudoers file) to allow unprivileged users to hibernate the system.
+# Hibernation is preferred over suspending
+
+hibernate() {
+	if loginctl hybrid-sleep 2>/dev/null; then
+		return 1
+	elif s2both 2>/dev/null; then
+		return 1
+	elif systemctl hybrid-sleep 2>/dev/null; then
+		return 1
+	elif dbus-send --system --print-reply --dest="org.freedesktop.login1" \
+			/org/freedesktop/login1 org.freedesktop.login1.Manager.Hibernate \
+			boolean:true 2>/dev/null 1>&2; then
+		return 1
+	elif loginctl hibernate 2>/dev/null; then
+		return 1
+	elif s2disk 2>/dev/null; then
+		return 1
+	elif systemctl hibernate 2>/dev/null; then
+		return 1
+	fi
+}
+
+fallbacksuspend() {
+	if loginctl suspend-then-hibernate 2>/dev/null; then
+		return 1
+	elif dbus-send --system --print-reply --dest="org.freedesktop.login1" \
+			/org/freedesktop/login1 org.freedesktop.login1.Manager.Suspend \
+			boolean:true 2>/dev/null 1>&2; then
+		return 1
+	elif loginctl suspend 2>/dev/null; then
+		return 1
+	elif s2ram 2>/dev/null; then
+		return 1
+	elif systemctl suspend 2>/dev/null; then
+		return 1
+	fi
+}
+
+if ! hibernate; then :
+elif ! fallbacksuspend; then :
+else echo "Error: failed to shutdown the machine" 1>&2; exit 1
+fi	
+
+
+# vim: filetype=sh

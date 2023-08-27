@@ -1,2 +1,14 @@
 #! /usr/bin/env sh
+
+# This script is a wrapper that tries to allow the user to shutdown the
+# machine without root rights.
+# In most cases the administrator must manually change settings 
+# (e.g. the sudoers file) to allow unprivileged users to shutdown the system
+
+if shutdown -P now -h -a 2>/dev/null; then :
+elif poweroff -p 2>/dev/null; then :
+elif systemctl poweroff 2>/dev/null; then :
+else echo "Error: failed to shutdown the machine" 1>&2; exit 1
+fi	
+
 # vim: filetype=sh
