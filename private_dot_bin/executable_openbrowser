@@ -1,19 +1,19 @@
 #! /usr/bin/env sh
 
-if command -v flatpak 1>/dev/null 2>&1; then
-	if flatpak run org.chromium.Chromium; then
-		exit 0
-	elif flatpak run org.mozilla.firefox; then
-		exit 0
-	elif flatpak run org.qutebrowser.qutebrowser; then
-		exit 0
-	fi
-fi
+# This script opens a new graphical browser window
+# trying different browsers until one could be openend
+# The order is opinionated
 
-if command -v qutebrowser 1>/dev/null 2>&1; then
+if flatpak info org.qutebrowser.qutebrowser 1>/dev/null 2>&1; then
+	flatpak run org.qutebrowser.qutebrowser
+elif command -v qutebrowser 1>/dev/null 2>&1; then
 	qutebrowser
+elif flatpak info org.mozilla.firefox 1>/dev/null 2>&1; then
+	flatpak run org.mozilla.firefox
 elif command -v firefox 1>/dev/null 2>&1; then
 	firefox
+elif flatpak info org.chromium.Chromium 1>/dev/null 2>&1; then
+	flatpak run org.chromium.Chromium
 elif command -v chromium 1>/dev/null 2>&1; then
 	chromium
 else
