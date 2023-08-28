@@ -13,10 +13,16 @@ LICENSE
 	.config/rofi/**
 {{ end }}
 
+{{/* fonts files */}}
+{{ define "fonts" }}
+	.fonts/**
+{{ end }}
+
 {{/* ignore these if no graphical environment is installed */}}
 {{ if .headless }}
 	{{ template "flatpak" }}
 	{{ template "i3" }}
+	{{ template "fonts" }}
 	.bin/termfg
 	.bin/openbrowser
 	.bin/pwrshutdown
@@ -30,6 +36,10 @@ LICENSE
 	{{/* ignore these if i3 is not installed */}}
 	{{ if not (lookPath "i3") }}
 		{{ template "i3" }}
+	{{ end }}
+	{{/* ignore these if no font utiliy is installed */}}
+	{{ if not (lookPath "fc-cache") }}
+		{{ template "fonts" }}
 	{{ end }}
 {{ end }}
 
