@@ -4,7 +4,6 @@ LICENSE
 {{/* flatpak dependent configs */}}
 {{ define "flatpak" }}
 	.var/app/**
-	.bin/termfg
 	.bin/qutebrowser-clean
 {{ end }}
 
@@ -12,16 +11,17 @@ LICENSE
 {{ define "i3" }}
 	.config/i3/**
 	.config/rofi/**
-	.bin/screens*
 {{ end }}
 
 {{/* ignore these if no graphical environment is installed */}}
 {{ if .headless }}
 	{{ template "flatpak" }}
 	{{ template "i3" }}
+	.bin/termfg
 	.bin/openbrowser
-	.bin/usershutdown
-	.bin/userhibernate
+	.bin/pwrshutdown
+	.bin/pwrsuspend
+	.bin/screensvr*
 {{ else }}
 	{{/* ignore these if flatpak is not installed */}}
 	{{ if not (lookPath "flatpak") }}
