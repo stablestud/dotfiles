@@ -39,11 +39,25 @@ bindsym $mod+d exec --no-startup-id "rofi -modi drun,run -show drun"
 bindsym $mod+f exec --no-startup-id "rofi -modi filebrowser -show filebrowser"
 # start window switcher
 bindsym $mod+Tab exec --no-startup-id "rofi -modi window -show window"
-
 {{- if .battery }}
 # handle backlight
 bindsym XF86MonBrightnessUp   exec light -A 10
 bindsym XF86MonBrightnessDown exec light -U 10
 {{- end }}
+
+# Launcher mode (launches applications directly from keybindings)
+mode "launch" {
+        # these bindings trigger as soon as you enter the launch mode
+	bindsym q exec $HOME/.bin/openbrowser qutebrowser; mode "default"
+	bindsym f exec $HOME/.bin/openbrowser firefox; mode "default"
+	bindsym c exec $HOME/.bin/openbrowser chromium; mode "default"
+	bindsym n exec $HOME/.bin/termfg vim; mode "default"
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+l mode "default"
+}
+bindsym $mod+o mode "launch"
 
 # vim: filetype=i3config
