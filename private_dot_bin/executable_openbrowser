@@ -3,22 +3,65 @@
 # This script opens a new graphical browser window
 # trying different browsers until one could be openend
 # The order is opinionated
+# Additionally one can provide a browser to be opened as argument,
+# and the script will try to open the browser
+# This script is required for i3 so a browser can be opened via a shortcut
 
-if flatpak info org.qutebrowser.qutebrowser 1>/dev/null 2>&1; then
-	flatpak run org.qutebrowser.qutebrowser
-elif command -v qutebrowser 1>/dev/null 2>&1; then
-	qutebrowser
-elif flatpak info org.mozilla.firefox 1>/dev/null 2>&1; then
-	flatpak run org.mozilla.firefox
-elif command -v firefox 1>/dev/null 2>&1; then
-	firefox
-elif flatpak info org.chromium.Chromium 1>/dev/null 2>&1; then
-	flatpak run org.chromium.Chromium
-elif command -v chromium 1>/dev/null 2>&1; then
-	chromium
-else
-	echo "Error: no browser found" 1>&2
-	exit 1
+run_qutebrowser()
+{
+	if flatpak info org.qutebrowser.qutebrowser 1>/dev/null 2>&1; then
+		flatpak run org.qutebrowser.qutebrowser ${opts}
+	elif command -v qutebrowser 1>/dev/null 2>&1; then
+		qutebrowser ${opts}
+	else
+		return 1
+	fi
+}
+
+run_firefox()
+{
+	if flatpak info org.mozilla.firefox 1>/dev/null 2>&1; then
+		flatpak run org.mozilla.firefox ${opts}
+	elif command -v firefox 1>/dev/null 2>&1; then
+		firefox ${opts}
+	else
+		return 1
+	fi
+}
+
+run_chromium()
+{
+	if flatpak info org.chromium.Chromium 1>/dev/null 2>&1; then
+		flatpak run org.chromium.Chromium ${opts}
+	elif command -v chromium 1>/dev/null 2>&1; then
+		chromium ${opts}
+	else
+		return 1
+	fi
+}
+
+if [ "${#}" -ne 0 ]; then
+	browser="${1}"
+	shift
+	opts="${*}"
 fi
+
+case "${browser}" in
+	q* )
+		run_qutebrowser
+		;;
+	f* )
+		run_firefox
+		;;
+	c* )
+		run_chromium
+		;;
+	* )
+		run_qutebrowser \
+		|| run_firefox \
+		|| run_chromium
+		;;
+esac
+
 
 # vim: filetype=sh
