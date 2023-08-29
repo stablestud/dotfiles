@@ -1,26 +1,25 @@
-#! /usr/bin/env python3
+#! /usr/bin/env sh
 
 # Script to cleanup qutebrowser leftovers
 # to remove tracking/cookies and other browsing data
 # NO settings are removed, only temporary files.
 # Supports flatpak install and from package manager
 
-import os
-import shutil
 
-home = os.environ['HOME']
-app_path = ['.var/app/org.qutebrowser.qutebrowser/data/qutebrowser', '.local/share/qutebrowser']
+cleanup()
+{
+	base="${1}"
+	if [ -d "${base}/webengine" ]; then
+		echo "Removing ${base}/webengine"
+		rm --recursive --force "${base}/webengine"
+	fi
+	if [ -d "${base}/greasemonkey" ]; then
+		echo "Removing ${base}/greasemonkey"
+		rm --recursive --force "${base}/greasemonkey"
+	fi
+}
 
-files = [ 'webengine', 'greasemonkey' ]
+cleanup "$HOME/.var/app/org.qutebrowser.qutebrowser/data/qutebrowser"
+cleanup "$HOME/.local/share/qutebrowser"
 
-for base in app_path:
-	for file in files:
-		path = os.path.join(home, base, file)
-		if path and os.path.isdir(path):
-			print("Removing %s" % path)
-			try:
-				shutil.rmtree(path)
-			except OSError as e:
-				print(e)
-
-# vim: filetype=python
+# vim: filetype=sh
