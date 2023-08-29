@@ -25,7 +25,7 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id dunst
 
 # runtime triggers (which run everytime i3 is being reloaded/restarted
-exec_always --no-startup-id setxkbmap -layout us,de -variant ,nodeadkeys -option grp:alt_shift_toggle,altwin:menu_win,caps:escape_shifted_capslock
+exec_always --no-startup-id $HOME/.bin/setxkblayout
 
 # custom application bindings
 bindsym $mod+x exec --no-startup-id $HOME/.bin/screensvrnow

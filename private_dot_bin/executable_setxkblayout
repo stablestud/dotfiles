@@ -1,0 +1,12 @@
+#! /usr/bin/env sh
+
+# This script sets the keyboard layout of the X server
+# For console layout (linux framebuffers...) use something like `loadkeys` and `find /usr/share/keymaps -type f` to findout which keymaps are available
+
+# Two different keyboard layouts: US and DE
+# Variant: DE without deadkeys (`, ^, etc)
+# Special key mappings: - ALT-SHIFT to toggle between layouts
+#                       - ALTMENU behaves as WIN
+#                       - CAPS behaves as ESC
+#                       - SHIFT-CAPS toggles original CAPS
+setxkbmap -layout us,de -variant ,nodeadkeys -option grp:alt_shift_toggle,altwin:menu_win,caps:escape_shifted_capslock
