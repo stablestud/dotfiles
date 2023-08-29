@@ -15,10 +15,12 @@ c.aliases = {
         'x': 'tab-close'
 }
 
+rm_std_binds = ['<Ctrl-W>','<Ctrl-X>']
 # Make VIM's <Ctrl-W> work by removing its default assignment from all modes
 for mode_bindings in c.bindings.default:
-	if '<Ctrl-W>' in c.bindings.default[mode_bindings]:
-		del c.bindings.default[mode_bindings]['<Ctrl-W>']
+        for bind in rm_std_binds:
+                if bind in c.bindings.default[mode_bindings]:
+                        del c.bindings.default[mode_bindings][bind]
 
 # Command mode bindings to make it feel more like VIM
 config.bind('<Ctrl-n>', 'completion-item-focus --history next', mode='command')
@@ -95,5 +97,5 @@ c.editor.command = [
         '--host', 
         'sh',
         '-c',
-        '$HOME/.bin/termfg vim "{file}" -c "normal\ {line}G{column0}l"'
+        '"$HOME/.bin/termfg" vim "\'{file}\'" -c "\'normal {line}G{column0}l\'"'
 ]
