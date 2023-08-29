@@ -78,4 +78,13 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# This mode disables all i3 commands and allows to control a remote i3 session
+# without controlling/manipulating the current i3 session.
+# Useful when used with remmina etc
+mode "passthrough" {
+	bindsym $mod+p mode "default"
+}
+
+bindsym $mod+p mode "passthrough"
+
 # vim: filetype=i3config
