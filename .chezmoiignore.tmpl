@@ -7,11 +7,17 @@ LICENSE
 	.bin/qutebrowser-clean
 {{ end }}
 
+{{/* battery and i3 dependent */}}
+{{ define "i3-battery" }}
+	.bin/i3-battery-popup
+{{ end }}
+
 {{/* i3 configs */}}
 {{ define "i3" }}
 	.config/i3/**
 	.config/rofi/**
 	.xsession
+	{{ template "i3-battery" }}
 {{ end }}
 
 {{/* fonts files */}}
@@ -42,6 +48,10 @@ LICENSE
 	{{/* ignore these if no font utiliy is installed */}}
 	{{ if not (lookPath "fc-cache") }}
 		{{ template "fonts" }}
+	{{ end }}
+	{{/* ignore these if no battery is installed */}}
+	{{ if not .battery }}
+		{{ template "i3-battery" }}
 	{{ end }}
 {{ end }}
 

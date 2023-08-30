@@ -26,6 +26,8 @@ set $ws11 "11"
 set $ws12 "12"
 set $ws13 "13"
 
+set $font "pango:DejaVu Sans Mono 10"
+
 include workspaces.conf
 include theme.conf
 include bindings.conf
@@ -33,7 +35,7 @@ include applications.conf
 include	multimedia.conf
 include custom.conf
 
-font pango:DejaVu Sans Mono 10
+font $font
 
 # Configure i3 behaviour
 focus_follows_mouse no
