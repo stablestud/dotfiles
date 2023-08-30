@@ -12,8 +12,8 @@ exec --no-startup-id $HOME/.bin/screensvron
 # startup important applications
 exec --no-startup-id i3-msg 'workspace 1; exec i3-sensible-terminal'
 {{- if .battery }}
-# Alert at 15% and on ever 3% battery level change with i3-nagbar
-exec --no-startup-id i3-battery-popup -L 15% -I 3% -N -f $font -t 2m
+# Alert at 15% and after that on every 3% battery level change with i3-nagbar
+exec --no-startup-id $HOME/.bin/i3-battery-popup -L 15% -I 3% -N -f $font -t 2m
 {{- end }}
 
 # startup optional applications
