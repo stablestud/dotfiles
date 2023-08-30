@@ -42,8 +42,12 @@ config.bind('<Ctrl-u>', 'fake-key --global <Shift-Home><Delete>', 'command')
 config.bind('<Ctrl-k>', 'fake-key --global <Shift-End><Delete>', 'command')
 config.bind('<Ctrl-x><Ctrl-e>', 'edit-command', 'command')
 
+# Normal mode, disable qutebrowsers strange keybinds
+config.bind('M', 'nop', mode='normal')
+config.bind('D', 'nop', mode='normal')
+config.bind('d', 'nop', mode='normal')
+config.bind('SS', 'config-edit', mode='normal')
 # Normal mode bindings to make it feel more like VIM
-config.bind('<Ctrl-x><Ctrl-e>', 'edit-url', mode='normal')
 config.bind('<Ctrl-i>', 'forward', mode='normal')
 config.bind('<Ctrl-n>', 'nop', mode='normal')
 config.bind('<Ctrl-o>', 'back', mode='normal')
@@ -55,11 +59,7 @@ config.bind('<Ctrl-w>o', 'tab-only --pinned keep', mode='normal')
 config.bind('<Ctrl-w>T', 'tab-give', mode='normal')
 config.bind('<Ctrl-w>w', 'tab-next', mode='normal')
 config.bind('<Ctrl-w><Ctrl-w>', 'tab-next', mode='normal')
-# Disable qutebrowsers strange keybinds
-config.bind('M', 'nop', mode='normal')
-config.bind('D', 'nop', mode='normal')
-config.bind('d', 'nop', mode='normal')
-config.bind('SS', 'config-edit', mode='normal')
+config.bind('<Ctrl-x><Ctrl-e>', 'edit-url', mode='normal')
 
 # Insert mode bindings to simulate readline keybindings
 config.bind('<Ctrl-h>', 'fake-key <Backspace>', 'insert')
@@ -76,7 +76,7 @@ config.bind('<Ctrl-d>', 'fake-key <Delete>', 'insert')
 config.bind('<Ctrl-w>', 'fake-key <Ctrl-Backspace>', 'insert')
 config.bind('<Ctrl-u>', 'fake-key <Shift-Home><Delete>', 'insert')
 config.bind('<Ctrl-k>', 'fake-key <Shift-End><Delete>', 'insert')
-config.bind('<Ctrl-x><Ctrl-e>', 'open-editor', 'insert')
+config.bind('<Ctrl-x><Ctrl-e>', 'edit-text', 'insert')
 
 c.content.cookies.accept = 'no-3rdparty'
 c.content.blocking.method = 'both'
