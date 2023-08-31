@@ -1,3 +1,11 @@
+# This file will be read from i3 to load machine specific configuration.
+# Here you can add custom settings for i3 which won't be overwritten
+# by chezmoi updates.
+# To regenerate the newest custom config, delete this file and rerun `chezmoi apply`
+#
+# The content in this file should be commented out so it won't be applied to
+# all systems by default but only on demand when commented out.
+
 # example setup for custom laptop touchpad setup
 #exec --no-startup-id xinput set-prop "ELAN0709:00 04F3:31BF Touchpad" "libinput Tapping Enabled" 1
 #exec --no-startup-id xinput set-prop "ELAN0709:00 04F3:31BF Touchpad" "libinput Natural Scrolling Enabled" 1
@@ -20,11 +28,11 @@
 
 # move tiling windows via drag & drop by left-clicking into the title bar,
 # or left-clicking anywhere into the window while holding the floating modifier.
-# >4.21 i3 version required, therefore it is in custom
+# >4.21 i3 version required, therefore it is in custom as Ubuntu 20.04 has only 4.20
 #tiling_drag modifier titlebar
 
 # launch audio server for audio output
-# required for Gentoo system running pipewire as daemon
+# required for Gentoo systems running pipewire as daemon
 #exec --no-startup-id gentoo-pipewire-launcher
 
 # vim: filetype=i3config
