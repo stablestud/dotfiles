@@ -1,11 +1,34 @@
 #! /usr/bin/env sh
 
-# Script that install/build fonts into the systems cache file.
-# Required so that fonts are visible to applications
+# Script that installs/builds user fonts into the X server cache file.
+# Required so that user fonts are visible to applications.
+#
+# To optimize font display take a look at:
+# https://wiki.archlinux.org/title/Font_configuration
+# especially the section with `Pixel alignment` and `Subpixel rendering`
+# are interesting and could be set from the user configuration.
+#
+# To get monitors pixel alignment:
+# http://www.lagom.nl/lcd-test/subpixel.php
+#
+# For example to set RGB subpixel rendering:
+# $ ln -s /etc/fonts/conf.avail/10-sub-pixel-rgb.conf            ~/.config/fontconfig/conf.d
+# OR if previous does not exist:
+# $ ln -s /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf ~/.config/fontconfig/conf.d
+#
+# To verify custom configs are loaded from user directory:
+# $ fc-conflist
+#
+# In most cases it is not need to set manually as it looks good enough.
 
 if ! fc-cache; then
 	echo "Error: failed to build fonts into cache files"
 	exit 1
+else
+	# Create user fontconfig configuration directory
+	# To be loaded, `50-user.conf` must be in (enabled):
+	# /etc/fonts/conf.d/50-user.conf
+	mkdir --parent ~/.config/fontconfig/conf.d
 fi
 
 # vim: filetype=sh
