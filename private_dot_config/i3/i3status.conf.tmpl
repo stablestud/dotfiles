@@ -7,11 +7,12 @@
 # If the above line is not correctly displayed, fix your editor first!
 
 general {
-        colors = true
-        interval = 5
-        color_good = "#70b433"
-        color_degraded = "#dbb32d"
-        color_bad = "#ed4a46"
+	colors = true
+	interval = 5
+	color_good = "#70b433"
+	color_degraded = "#dbb32d"
+	color_bad = "#ed4a46"
+	separator = " "
 }
 
 order += "ipv6"
@@ -25,38 +26,58 @@ order += "battery all"
 order += "disk /"
 order += "load"
 order += "memory"
+order += "volume master"
 order += "tztime local"
 
+ipv6 {
+	format_up = "%ip"
+	format_down = ""
+}
+
 wireless _first_ {
-        format_up = "W: (%quality at %essid) %ip"
-        format_down = "W: down"
+	format_up = "wlo: (%essid) %ip (%bitrate)"
+	format_down = "wlo: down"
 }
 
 ethernet _first_ {
-        format_up = "E: %ip (%speed)"
-        format_down = "E: down"
+	format_up = "eth: %ip (%speed)"
+	format_down = "eth: down"
 }
 
 battery all {
-        format = "%status %percentage %remaining"
+	format = "bat: %status %percentage %remaining"
+	format_down = "bat: down"
+	integer_battery_capacity = true
+	threshold_type = "percentage"
+	low_threshold = "20"
 }
 
 disk "/" {
-        format = "%avail"
+	format = "disk: %used/%total"
+	threshold_type = percentage_free
+	low_threshold = 10
 }
 
 load {
-        format = "%1min"
+	format = "load: %1min"
+	max_threshold = 4
 }
 
 memory {
-        format = "u:%used f:%available"
-        threshold_degraded = "1G"
-        format_degraded = "MEMORY < %available"
+	format = "mem: %used/%total"
+	memory_used_method = classical
+	threshold_degraded = "20%"
+	threshold_critical = "10%"
+}
+
+volume master {
+	device = "default"
+	format = "vol: (%devicename) %volume"
+	format_muted = "vol: (%devicename) %volume (muted)"
 }
 
 tztime local {
-        format = "%Y-%m-%d %H:%M:%S"
+	format = "%Y-%m-%d %H:%M:%S"
 }
 
 # vim: filetype=conf
