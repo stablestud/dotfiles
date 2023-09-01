@@ -12,7 +12,7 @@ exec --no-startup-id $HOME/.bin/screensvron
 # startup important applications
 exec --no-startup-id i3-msg 'workspace 1; exec i3-sensible-terminal'
 {{- if .battery }}
-# Alert at 15% and 7% battery level with i3-nagbar
+# Alert at 15% and on ever 3% battery level change with i3-nagbar
 exec --no-startup-id i3-battery-popup -L 15% -I 3% -N -f $font -t 2m
 {{- end }}
 
@@ -26,12 +26,18 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id dunst
 
 # runtime triggers (which run everytime i3 is being reloaded/restarted
+# for some reason on i3 start incorrect keyboard layouts are applied
+# even though this runs in startup. To fix this runs everytime i3 is
+# restarted. So to force fix my layout I just do <Ctrl-Shift-r> to restart
+# i3 and to execute the below setxkblayout script
 exec_always --no-startup-id $HOME/.bin/setxkblayout
 
-# custom application bindings
+# power control
 bindsym $mod+x exec --no-startup-id $HOME/.bin/screensvrnow
 bindsym $mod+Shift+x exec --no-startup-id $HOME/.bin/pwrsuspend
-bindsym $mod+Ctrl+Shift+x exec --no-startup-id $HOME/.bin/pwrshutdown
+bindsym $mod+Ctrl+Shift+x exec --no-startup-id i3-nagbar --type warning --message "Shutdown machine?" --button-no-terminal "Yes" "$HOME/.bin/pwrshutdown"
+
+# custom application bindings
 # run browser
 bindsym $mod+b exec --no-startup-id $HOME/.bin/openbrowser
 # start program launcher
