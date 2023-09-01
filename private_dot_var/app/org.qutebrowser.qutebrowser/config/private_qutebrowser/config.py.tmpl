@@ -1,0 +1,15 @@
+{{/* Import standard qutebrowser config */}}
+{{- template "qutebrowser-config.py.tmpl" -}}
+
+# To allow editing via external vim following permissions must be granted to qutebrowser:
+# flatpak override --user --talk-name=org.freedesktop.Flatpak org.qutebrowser.qutebrowser # for flatpak-spawn
+# flatpak override --user --filesystem=/tmp org.qutebrowser.qutebrowser # for writing reading and writing tmp files
+c.editor.command = [
+        'flatpak-spawn',
+        '--host',
+        'sh',
+        '-c',
+        '"$HOME/.bin/termfg" vim "{file}" -c "normal {line}G{column0}l"'
+]
+
+# vim: filetype=python

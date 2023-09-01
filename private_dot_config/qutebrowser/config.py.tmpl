@@ -1,0 +1,15 @@
+{{/* Import standard qutebrowser config */}}
+{{- template "qutebrowser-config.py.tmpl" -}}
+
+import os
+
+# To allow editing via external vim
+c.editor.command = [
+        os.environ['HOME'] + '/.bin/termfg',
+	'vim',
+	'{file}',
+	'-c',
+	'normal {line}G{column0}l'
+]
+
+# vim: filetype=python

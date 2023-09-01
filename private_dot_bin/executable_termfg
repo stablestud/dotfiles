@@ -9,17 +9,33 @@
 # Note: i3-sensible-terminal provides similar functionaliy but without
 # waiting for termination of the terminal.
 
+# Need to build command manually so every argument is quoted
+# This is required because else the invoked shell would split arguments
+# with spaces into two different arguments, so we enquote the arguments
+# again.
+# vim -c 'normal 20G' would've resulted to 4 different arguments even
+# though 'normal 20G' was quoted. Here we reenquote this again into
+# "vim" "-c" "normal 20G" making sure the subshell obeys our splitting
+# restriction
+buildcmd()
+{
+	for arg in "${@}"; do
+		cmd="${cmd}${cmd:+ }\"${arg}\""
+	done
+	echo "${cmd}"
+}
+
 if [ -z "${*}" ]; then
 	echo "Error: no command provided" 1>&2
 	exit 1
-fi	
+fi
 
 if command -v xfce4-terminal 1>/dev/null 2>&1; then
-	exec xfce4-terminal --disable-server --execute /usr/bin/env sh -c "${*}"
+	exec xfce4-terminal --disable-server --execute /usr/bin/env sh -c "$(buildcmd "${@}")"
 elif command -v lxterminal 1>/dev/null 2>&1; then
-	exec lxterminal --command /usr/bin/env sh -c "${*}"
+	exec lxterminal --command /usr/bin/env sh -c "$(buildcmd "${@}")"
 elif command -v gnome-terminal 1>/dev/null 2>&1; then
-	exec gnome-terminal --wait -- /usr/bin/env sh -c "${*}"
+	exec gnome-terminal --wait -- /usr/bin/env sh -c "$(buildcmd "${@}")"
 else
 	echo "Error: No supported terminal emulator found!" 1>&2
 	exit 1

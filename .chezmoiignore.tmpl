@@ -14,7 +14,9 @@ LICENSE
 
 {{/* i3 configs */}}
 {{ define "i3" }}
+	.config/i3
 	.config/i3/**
+	.config/rofi
 	.config/rofi/**
 	.xsession
 	{{ template "i3-battery" }}
@@ -22,7 +24,14 @@ LICENSE
 
 {{/* fonts files */}}
 {{ define "fonts" }}
+	.fonts
 	.fonts/**
+{{ end }}
+
+{{/* qutebrowser command available on host */}}
+{{ define "qutebrowser" }}
+	.config/qutebrowser
+	.config/qutebrowser/**
 {{ end }}
 
 {{/* ignore these if no graphical environment is installed */}}
@@ -30,10 +39,10 @@ LICENSE
 	{{ template "flatpak" }}
 	{{ template "i3" }}
 	{{ template "fonts" }}
+	{{ template "qutebrowser" }}
 	.bin/termfg
 	.bin/openbrowser
-	.bin/pwrshutdown
-	.bin/pwrsuspend
+	.bin/pwr*
 	.bin/screensvr*
 	.bin/setxkblayout
 {{ else }}
@@ -52,6 +61,10 @@ LICENSE
 	{{/* ignore these if no battery is installed */}}
 	{{ if not .battery }}
 		{{ template "i3-battery" }}
+	{{ end }}
+	{{/* ignore qutebrowser config if not installed */}}
+	{{ if not (lookPath "qutebrowser") }}
+		{{ template "qutebrowser" }}
 	{{ end }}
 {{ end }}
 
