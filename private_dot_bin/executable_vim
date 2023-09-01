@@ -1,0 +1,17 @@
+#! /usr/bin/env sh
+#
+# Wrapper script that runs the downloaded Vim AppImage
+# via the second wrapper script .AppImage
+# The second wrapper script tries to make sure requried
+# dependencies for AppImage are installed, if not it tries a workaround
+# For AppImages to work, exactly fuse v2 is required,
+# but some environments restrict fuse usage or have a too old or a too
+# new version installed (e.g. Gentoo ships fuse v3)
+#
+# Vim is being distributed as an AppImage making sure on every machine I
+# have access to a Vim instance with known version, making sure compatibiliy
+# is guaranteed will scripts and plugins
+
+basepath="$(cd "$(dirname "${0}")" && pwd)"
+
+exec "${basepath}/.AppImage" vim "${@}"
