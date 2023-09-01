@@ -1,7 +1,7 @@
 #! /usr/bin/env sh
 #
 # Wrapper script that runs the downloaded Vim AppImage
-# via the second wrapper script .AppImage
+# via the second wrapper script `.AppImageRunner`
 # The second wrapper script tries to make sure requried
 # dependencies for AppImage are installed, if not it tries a workaround
 # For AppImages to work, exactly fuse v2 is required,
@@ -14,4 +14,4 @@
 
 basepath="$(cd "$(dirname "${0}")" && pwd)"
 
-exec "${basepath}/.AppImage" vim "${@}"
+exec "${basepath}/.AppImageRunner" vim "${@}"

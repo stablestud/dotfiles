@@ -1,0 +1,47 @@
+#! /usr/bin/env sh
+#
+# Wrapper script that tries to run the AppImages in ~/.bin/.AppImages/*
+# while making sure that systems without the fuse v2 dependency can run
+# without problems.
+#
+# AppImage requires exactly fuse v2, not newer like in Gentoo (fuse v3).
+# If fuse v2 is not available, use a workaround by extracting the AppImage
+# into a temporary directory and execute it. This is being done by AppImage
+# with the `--appimage-extract-and-run` parameter.
+#
+# Note AppImage still requires a correct glibc version, the glibc version
+# witch AppImage was compiled with must be same or older than the current
+# version, as newer glibc versions are back compatible.
+#
+# For now the required glibc version is glibc 2.29, this is because most
+# AppImages are built on Ubuntu 20.04 LTS which ships with glibc 2.29
+#
+# To find the currently installed glibc version
+# $(ldconfig --print-cache | grep --max-count 1 libc.so.6 | awk -F " " '{print $NF}')
+# The library must be executable
+
+appimage="${1}"
+basepath="$(cd "$(dirname "${0}")" && pwd)"
+appimagepath="${basepath}/.AppImages/${appimage}.AppImage"
+
+if [ -z "${appimage}" ]; then
+	echo "Error: no AppImage specified to run" 1>&2
+	exit 1
+fi
+
+shift
+
+if ! [ -x "${appimagepath}" ]; then
+	echo "Error: cannot find ${appimagepath} or not executable"
+	exit 1
+fi
+
+if command -v ldconfig 1>/dev/null 2>&1; then
+	libs="$(ldconfig --print-cache | grep '^[[:space:]]\+libfuse\.so\.2[[:space:]]')"
+	if [ -n "${libs}" ]; then
+		exec "${appimagepath}" "${@}"
+	fi
+fi
+
+exec "${appimagepath}" --appimage-extract-and-run "${@}"
+
