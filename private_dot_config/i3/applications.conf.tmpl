@@ -35,7 +35,7 @@ exec_always --no-startup-id $HOME/.bin/setxkblayout
 # power control
 bindsym $mod+x exec --no-startup-id $HOME/.bin/screensvrnow
 bindsym $mod+Shift+x exec --no-startup-id $HOME/.bin/pwrsuspend
-bindsym $mod+Ctrl+Shift+x exec --no-startup-id i3-nagbar --type warning --message "Shutdown machine?" --button-no-terminal "Yes" "$HOME/.bin/pwrshutdown"
+bindsym $mod+Ctrl+Shift+x exec --no-startup-id i3-nagbar --type warning --message "Shutdown system?" --font $font --button-no-terminal "Yes" "$HOME/.bin/pwrshutdown"
 
 # custom application bindings
 # run browser
