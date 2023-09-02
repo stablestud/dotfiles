@@ -1,0 +1,2 @@
+mkdir --parent "${HOME}/.var/log/"
+PATH="${HOME}/.bin/:${PATH}" i3 1>"${HOME}/.var/log/i3.log" 2>&1
