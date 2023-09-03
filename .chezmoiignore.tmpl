@@ -73,6 +73,12 @@ LICENSE
 	{{ end }}
 {{ end }}
 
+{{/* AppImages that are only supported on amd64 platforms */}}
+{{ if ne .chezmoi.arch "amd64" }}
+	.loca/bin/vim
+	.loca/bin/tmux
+{{ end }}
+
 {{/* Git config; ignore if git is not installed */}}
 {{ if not (lookPath "git") }}
 	.gitconfig
