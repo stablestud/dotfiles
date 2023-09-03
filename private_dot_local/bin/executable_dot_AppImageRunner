@@ -1,6 +1,6 @@
 #! /usr/bin/env sh
 #
-# Wrapper script that tries to run the AppImages in ~/.bin/.AppImages/*
+# Wrapper script that tries to run the AppImages in ~/.local/bin/.AppImages/*
 # while making sure that systems without the fuse v2 dependency can run
 # without problems.
 #

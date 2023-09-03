@@ -4,12 +4,12 @@ LICENSE
 {{/* flatpak dependent configs */}}
 {{ define "flatpak" }}
 	.var/app/**
-	.bin/qutebrowser-clean
+	.local/bin/qutebrowser-clean
 {{ end }}
 
 {{/* battery and i3 dependent */}}
 {{ define "i3-battery" }}
-	.bin/i3-battery-popup
+	.local/bin/i3-battery-popup
 {{ end }}
 
 {{/* i3 configs */}}
@@ -40,11 +40,11 @@ LICENSE
 	{{ template "i3" }}
 	{{ template "fonts" }}
 	{{ template "qutebrowser" }}
-	.bin/termfg
-	.bin/openbrowser
-	.bin/pwr*
-	.bin/screensvr*
-	.bin/setxkblayout
+	.local/bin/termfg
+	.local/bin/openbrowser
+	.local/bin/pwr*
+	.local/bin/screensvr*
+	.local/bin/setxkblayout
 	.var/log
 	{{/* on headless these are empty, so don't even create these */}}
 	.var
