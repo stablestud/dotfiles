@@ -50,4 +50,3 @@ if command -v ldconfig 1>/dev/null 2>&1; then
 fi
 
 exec "${appimagepath}" --appimage-extract-and-run "${@}"
-
