@@ -1,13 +1,33 @@
+#! /usr/bin/env bash
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
-#
+
 # This file is sourced by all *interactive* bash shells on startup,
 # including some apparently interactive shells such as scp and rcp
-# that can't tolerate any output.  So make sure this doesn't display
+# that can't tolerate any output. So make sure this doesn't display
 # anything or bad things will happen !
 
-# Test for an interactive shell.  There is no need to set anything
+# Enable extended globbing feature (+(..), ?(..)..) for next step
+shopt -s extglob
+
+# Make sure the local bins are added to the shell.
+# Normally bash reads those via .profile or has inherited them from
+# the parent process, but when bash is run inside Docker, it has no
+# parent process that has loaded the correct path, nor will the
+# login shell run, so instead we make sure here that PATH is correctly
+# set
+if [[ -d "${HOME}/.local/bin" ]] && [[ ":${PATH}:" != *":${HOME}/.local/bin:"* ]]; then
+	export PATH="${HOME}/.local/bin:${PATH/#"${HOME}/bin"?(:)}"
+fi
+
+# Make sure $HOME/bin is always read before all other paths.
+# Useful to overwrite system bins
+if [[ -d "${HOME}/bin" ]] && [[ "${PATH}:" != "${HOME}/bin:"* ]]; then
+	export PATH="${HOME}/bin:${PATH}"
+fi
+
+# Test for an interactive shell. There is no need to set anything
 # past this point for scp and rcp, and it's important to refrain from
 # outputting anything in those cases.
 if [[ $- != *i* ]] ; then
@@ -15,20 +35,20 @@ if [[ $- != *i* ]] ; then
         return
 fi
 
-# don't put duplicate lines or lines starting with space in the history.
+# Don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
 
-# append to the history file, don't overwrite it
+# Append to the history file, don't overwrite it
 shopt -s histappend
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+# For setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=2000
 HISTFILESIZE=4000
 
 HISTTIMEFORMAT="(%F %H:%S) "
 
-# check the window size after each command and, if necessary,
+# Check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
@@ -36,17 +56,17 @@ shopt -s checkwinsize
 # match all files and zero or more directories and subdirectories.
 shopt -s globstar
 
-# set variable identifying the chroot you work in (used in the prompt below)
+# Set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# set a fancy prompt (non-color, unless we know we "want" color)
+# Set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
+# Uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
 #force_color_prompt=yes
@@ -78,7 +98,7 @@ xterm*|rxvt*)
     ;;
 esac
 
-# enable color support of ls and also add handy aliases
+# Enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
@@ -90,10 +110,10 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# colored GCC warnings and errors
+# Colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# some more ls aliases
+# Some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
