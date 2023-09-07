@@ -16,7 +16,7 @@
 {{- end -}}
 
 {{/* check if machine has a battery */}}
-{{- if (gt (glob "/sys/class/power_supply/*" | len) (0)) -}}
+{{- if (gt (glob "/sys/class/power_supply/{B,b}*" | len) (0)) -}}
 	{{- $battery = true -}}
 {{- end -}}
 

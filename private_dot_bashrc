@@ -21,8 +21,8 @@ if [[ -d "${HOME}/.local/bin" ]] && [[ ":${PATH}:" != *":${HOME}/.local/bin:"* ]
 	export PATH="${HOME}/.local/bin:${PATH/#"${HOME}/bin"?(:)}"
 fi
 
-# Make sure $HOME/bin is always read before all other paths.
-# Useful to overwrite system bins
+# Make sure ~/bin is always read before all other paths.
+# Useful to overwrite system bins and ~/.local/bin
 if [[ -d "${HOME}/bin" ]] && [[ "${PATH}:" != "${HOME}/bin:"* ]]; then
 	export PATH="${HOME}/bin:${PATH}"
 fi
