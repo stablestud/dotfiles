@@ -42,6 +42,7 @@ if ! [ -x "${appimagepath}" ]; then
 	exit 1
 fi
 
+# Check if system is fuse capable, if yes run AppImage the normal way (with fuse)
 if command -v ldconfig 1>/dev/null 2>&1; then
 	libs="$(ldconfig --print-cache | grep '^[[:space:]]\+libfuse\.so\.2[[:space:]]')"
 	if [ -n "${libs}" ]; then
@@ -49,4 +50,11 @@ if command -v ldconfig 1>/dev/null 2>&1; then
 	fi
 fi
 
-exec "${appimagepath}" --appimage-extract-and-run "${@}"
+# Since we landed here, fuse is not working/not installed so we do a workaround
+# by extracting the AppImage and run it directly.
+# Additionaly we make sure the extracted files are not removed on exit to allow
+# quicker startup on following runs.
+# Also this is required when the app is running in parallel, it is always
+# extracted into the same dir. So when one instance exits, it would remove
+# the extracted content which other still running instances require
+NO_CLEANUP=1 exec "${appimagepath}" --appimage-extract-and-run "${@}"
