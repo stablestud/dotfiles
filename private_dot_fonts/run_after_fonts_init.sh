@@ -22,11 +22,10 @@
 # In most cases it is not need to set manually as it looks good enough.
 
 if ! fc-cache; then
-	echo "Error: failed to build fonts into cache files"
-	exit 1
+	echo "Warning: failed to build fonts into cache files"
 else
 	# Create user fontconfig configuration directory
-	# To be loaded, `50-user.conf` must be in (enabled):
+	# To be loaded, `50-user.conf` must exist in (enabled):
 	# /etc/fonts/conf.d/50-user.conf
 	mkdir --parent ~/.config/fontconfig/conf.d
 fi

@@ -1,15 +1,15 @@
 #! /usr/bin/env sh
 
-{{ if .battery }}
+{{ if .battery -}}
 timeout=120
-{{ else }}
+{{ else -}}
 timeout=300
-{{ end }}
-stimeout="$(( ${timeout} + 10 ))"
+{{ end -}}
+stimeout="$(( timeout + 10 ))"
 
 # Set screen timeout to activate screensaver
 xset s "${timeout}" 10 # Triggers before screen timeout, as it could cause artifacts with i3lock
 # Enable Energy Star powersaving features and set screen timeout 
-xset dpms "${stimeout}" "$(( ${stimeout} + 10 ))" "$(( ${stimeout} + 20 ))"
+xset dpms "${stimeout}" "$(( stimeout + 10 ))" "$(( timeout + 20 ))"
 
 # vim: filetype=sh

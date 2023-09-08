@@ -1,7 +1,7 @@
-# chezmoi's config file
+# chezmoi's machine specific config file
 #
 # Here we determine and setup the required dotfiles for this specific machine
-# For example: a server without flatpak or X server won't require
+# For example: a server without a (graphical) X server won't require
 # qutebrowser dotfiles, so we set a variable here that will be used in
 # templates to exclude those files
 
@@ -28,11 +28,11 @@
 {{- end -}}
 
 [data]
-	# if machine is without graphical environment (X server)
-	headless = {{ $headless }}
-	# if machine has a battery
-	battery  = {{ $battery }}
-	# if machine has a wireless device
-	wireless = {{ $wireless }}
+# if machine is without graphical environment (X server)
+headless = {{ $headless }}
+# if machine has a battery
+battery  = {{ $battery }}
+# if machine has a wireless device
+wireless = {{ $wireless }}
 
 # vim: filetype=toml

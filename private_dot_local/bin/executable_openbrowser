@@ -63,5 +63,4 @@ case "${browser}" in
 		;;
 esac
 
-
 # vim: filetype=sh

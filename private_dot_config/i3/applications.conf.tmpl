@@ -46,7 +46,8 @@ bindsym $mod+d exec --no-startup-id "rofi -modi drun,run -show drun"
 bindsym $mod+f exec --no-startup-id "rofi -modi filebrowser -show filebrowser"
 # start window switcher
 bindsym $mod+Tab exec --no-startup-id "rofi -modi window -show window"
-{{- if .battery }}
+
+{{ if .battery -}}
 # handle backlight
 bindsym XF86MonBrightnessUp   exec light -A 10
 bindsym XF86MonBrightnessDown exec light -U 10
