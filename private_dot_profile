@@ -9,22 +9,28 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-# if running bash
-if [ -n "${BASH_VERSION}" ]; then
-    # include .bashrc if it exists
-    if [ -f "${HOME}/.bashrc" ]; then
-	. "${HOME}/.bashrc"
-    fi
-fi
-
 # set PATH so it includes user's private bin if it exists
 if [ -d "${HOME}/.local/bin" ] ; then
-    export PATH="${HOME}/.local/bin:${PATH}"
+	export PATH="${HOME}/.local/bin:${PATH}"
 fi
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "${HOME}/bin" ] ; then
-    export PATH="${HOME}/bin:${PATH}"
+	export PATH="${HOME}/bin:${PATH}"
+fi
+
+# if running bash
+if [ -n "${BASH_VERSION}" ]; then
+	# include .bashrc if it exists
+	if [ -f "${HOME}/.bashrc" ]; then
+		. "${HOME}/.bashrc"
+	fi
+# if not running bash (bash does these things here in its own .bashrc)
+else
+	# Initialize zoxide if in $PATH
+	if command -v zoxide 1>/dev/null 2>&1; then
+		eval "$(zoxide init --cmd=j posix --hook=prompt)"
+	fi
 fi
 
 # vim: filetype=sh
