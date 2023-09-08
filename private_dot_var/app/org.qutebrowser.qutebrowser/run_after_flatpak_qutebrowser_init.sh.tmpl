@@ -8,5 +8,5 @@ if flatpak info org.qutebrowser.qutebrowser --show-ref 1>/dev/null 2>&1; then
 	# For writing reading and writing tmp files between Qutebrowser and spawned external process
 	flatpak override --user --filesystem=/tmp org.qutebrowser.qutebrowser
 else
-	echo "Warning: Flatpak org.qutebrowser.qutebrowser not installed" 1>&2
+	echo "Warning: Flatpak org.qutebrowser.qutebrowser not installed/configured" 1>&2
 fi

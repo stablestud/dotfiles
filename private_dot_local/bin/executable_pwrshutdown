@@ -6,11 +6,9 @@
 # (e.g. the sudoers file) to allow unprivileged users to shutdown the system
 # The user can add the desired state as argument (`shutdown` to poweroff,
 # `reboot` to reboot the system)
-# Last script output is being written to ~/.var/log/pwrshutdown.log
+# Last script output is being written to ~/.pwrshutdown.log
 
-if [ -d "${HOME}/.var/log" ]; then
-	exec 1>"${HOME}/.var/log/pwrshutdown.log" 2>&1
-fi
+exec 1>"${HOME}/.pwrshutdown.log" 2>&1
 
 action="${1}"
 

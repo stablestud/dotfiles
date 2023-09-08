@@ -7,14 +7,9 @@
 # Hibernation is preferred over suspending, alternatively the user can add
 # the desired state as argument (`suspend` to suspend,
 # `hibernate` to hibernate)
-# Last script output is being written to ~/.var/log/pwrsuspend.log
+# Last script output is being written to ~/.pwrsuspend.log
 
-if [ -d "${HOME}/.var/log" ]; then
-	exec 1>/"${HOME}/.var/log/pwrsuspend.log" 2>&1
-fi
-
-echo STDERR 1>&2
-echo STDOUT
+exec 1>/"${HOME}/.pwrsuspend.log" 2>&1
 
 action="${1}"
 
