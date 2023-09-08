@@ -1,84 +1,23 @@
 README.md
 LICENSE
 
-{{/* flatpak dependent configs */}}
-{{ define "flatpak" }}
-	.var/app/**
+{{/* ignore these if no graphical environment is installed */}}
+{{ if .headless }}
+	.local/bin/termfg
+	.local/bin/openbrowser
+	.local/bin/screensvr*
+	.local/bin/setxkblayout
+	.local/bin/pwr*
 	.local/bin/qutebrowser-clean
-{{ end }}
-
-{{/* battery and i3 dependent */}}
-{{ define "i3-battery" }}
-	.local/bin/i3-battery-popup
-{{ end }}
-
-{{/* i3 configs */}}
-{{ define "i3" }}
+	.fonts
+	.fonts/**
 	.config/i3
 	.config/i3/**
 	.config/rofi
 	.config/rofi/**
-	.xsession
-	{{ template "i3-battery" }}
-{{ end }}
-
-{{/* fonts files */}}
-{{ define "fonts" }}
-	.fonts
-	.fonts/**
-{{ end }}
-
-{{/* qutebrowser command available on host */}}
-{{ define "qutebrowser" }}
 	.config/qutebrowser
 	.config/qutebrowser/**
-{{ end }}
-
-{{/* ignore these if no graphical environment is installed */}}
-{{ if .headless }}
-	{{ template "flatpak" }}
-	{{ template "i3" }}
-	{{ template "fonts" }}
-	{{ template "qutebrowser" }}
-	.local/bin/termfg
-	.local/bin/openbrowser
-	.local/bin/pwr*
-	.local/bin/screensvr*
-	.local/bin/setxkblayout
-	.var/log
-	{{/* on headless these are empty, so don't even create these */}}
 	.var
-	.fonts
-{{ else }}
-	{{/* ignore these if flatpak is not installed */}}
-	{{ if not (lookPath "flatpak") }}
-		{{ template "flatpak" }}
-	{{ end }}
-	{{/* ignore these if i3 is not installed */}}
-	{{ if not (lookPath "i3") }}
-		{{ template "i3" }}
-	{{ end }}
-	{{/* ignore these if no font utiliy is installed */}}
-	{{ if not (lookPath "fc-cache") }}
-		{{ template "fonts" }}
-	{{ end }}
-	{{/* ignore these if no battery is installed */}}
-	{{ if not .battery }}
-		{{ template "i3-battery" }}
-	{{ end }}
-	{{/* ignore qutebrowser config if not installed */}}
-	{{ if not (lookPath "qutebrowser") }}
-		{{ template "qutebrowser" }}
-	{{ end }}
-{{ end }}
-
-{{/* AppImages that are only supported on amd64 platforms */}}
-{{ if ne .chezmoi.arch "amd64" }}
-	.local/bin/vim
-	.local/bin/tmux
-{{ end }}
-
-{{/* Git config; ignore if git is not installed */}}
-{{ if not (lookPath "git") }}
-	.gitconfig
+	.var/**
+	.xsession
 {{ end }}
