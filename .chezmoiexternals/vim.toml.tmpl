@@ -1,13 +1,24 @@
-{{ if eq .chezmoi.arch "amd64" }}
+{{ $supported := list "amd64" }}
+
+{{ define "amd64" }}
+	url = "https://github.com/vim/vim-appimage/releases/download/v9.0.1894/Vim-v9.0.1894.glibc2.29-x86_64.AppImage"
+	checksum.sha512 = "6b33509ae74aee57dafbf8c728c50ebd2ad635b9afd0c27cc5ab784e9d0899209cb69fd15009b05fccb16949cfe21008ea78814c50e33fabb325cdae128e0c05"
+{{ end }}
+
+{{ define "sources" }}
+	{{ if eq .chezmoi.arch "amd64" }}
+		{{ template "amd64" }}
+	{{ end }}
+{{ end }}
+
+{{ if has .chezmoi.arch $supported }}
 
 # Vim
 [".local/bin/.AppImages/vim.AppImage"]
 	# source: https://github.com/vim/vim-appimage
 	type = "file"
-	url  = "https://github.com/vim/vim-appimage/releases/download/v9.0.1876/Vim-6e09c42aa6316ab05d712035138486f8397383a5.glibc-x86_64.AppImage"
-	checksum.sha512 = "3abd702fcb4af9f34b3007d2ad85038e24f5d88852e0ad8dc2dee65a440e8ff492e5c265c5245696bfe8c278a86019c228c19df9056534c4a08b088dbe394840"
-	executable      = true
-
+	executable = true
+	{{ template "sources" . }}
 {{ end }}
 
 # vim: filetype=toml
