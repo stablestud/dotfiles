@@ -12,7 +12,8 @@ c.aliases = {
         'w': 'session-save',
         'wq': 'tab-close',
         'wqa': 'quit --save',
-        'x': 'tab-close'
+        'x': 'tab-close',
+        'tabnew': 'open --tab --related'
 }
 
 rm_std_binds = ['<Ctrl-W>','<Ctrl-X>']
@@ -59,6 +60,7 @@ config.bind('<Ctrl-w>o', 'tab-only --pinned keep', mode='normal')
 config.bind('<Ctrl-w>T', 'tab-give', mode='normal')
 config.bind('<Ctrl-w>w', 'tab-next', mode='normal')
 config.bind('<Ctrl-w><Ctrl-w>', 'tab-next', mode='normal')
+config.bind('<Ctrl-w><Ctrl-n>', 'open --tab --related', mode='normal')
 config.bind('<Ctrl-x><Ctrl-e>', 'edit-url', mode='normal')
 
 # Insert mode bindings to simulate readline keybindings
