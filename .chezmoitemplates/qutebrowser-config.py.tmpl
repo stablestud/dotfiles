@@ -17,8 +17,9 @@ c.aliases = {
 }
 
 rm_std_binds = ['<Ctrl-W>','<Ctrl-X>']
-# Make VIM's <Ctrl-W> work by removing its default assignment from all modes
+# Make VIM's <Ctrl-W> and Emacs <Ctrl-X> work by removing its default assignment from all modes
 for mode_bindings in c.bindings.default:
+        print(mode_bindings)
         for bind in rm_std_binds:
                 if bind in c.bindings.default[mode_bindings]:
                         del c.bindings.default[mode_bindings][bind]
@@ -79,6 +80,10 @@ config.bind('<Ctrl-w>', 'fake-key <Ctrl-Backspace>', 'insert')
 config.bind('<Ctrl-u>', 'fake-key <Shift-Home><Delete>', 'insert')
 config.bind('<Ctrl-k>', 'fake-key <Shift-End><Delete>', 'insert')
 config.bind('<Ctrl-x><Ctrl-e>', 'edit-text', 'insert')
+
+# Prompt mode (download prompt) must be fixed as <Ctrl-x> has been removed
+# for Emacs key rebind <Ctrl-x>
+config.bind('<Shift-Return>', 'prompt-open-download', 'prompt')
 
 c.content.cookies.accept = 'no-3rdparty'
 c.content.blocking.method = 'both'
