@@ -27,7 +27,7 @@
 appimage="$(basename "${0}")"
 basepath="$(cd "$(dirname "${0}")" && pwd)"
 
-if [ "${appimage}" = ".AppImageRunner" ] && [ -n "${1}" ]; then 
+if [ "${appimage}" = ".AppImageRunner" ] && [ -n "${1}" ]; then
 	appimage="${1}"
 	shift
 elif [ "${appimage}" = ".AppImageRunner" ] || [ -z "${appimage}" ]; then

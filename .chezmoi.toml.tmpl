@@ -3,7 +3,7 @@
 # Here we determine and setup the required dotfiles for this specific machine
 # For example: a server without a (graphical) X server won't require
 # qutebrowser dotfiles, so we set a variable here that will be used in
-# templates to exclude those files
+# templates as parameter to exclude those files
 
 {{/* default values, should provide the bare minimum of dotfiles */}}
 {{- $headless := true -}}
@@ -27,12 +27,22 @@
 	{{- end -}}
 {{- end -}}
 
+# Current machine values detected by chezmoi v{{ .chezmoi.version.version }}
+# hostname = {{ .chezmoi.hostname }}
+# os       = {{ .chezmoi.os }}
+{{- if eq .chezmoi.os "linux" }}
+# kernel   = {{ .chezmoi.kernel.ostype }} {{ .chezmoi.kernel.osrelease }} {{ .chezmoi.kernel.version }}
+{{- end }}
+# arch     = {{ .chezmoi.arch }}
+# user     = {{ .chezmoi.username }} ({{ .chezmoi.uid }})
+# home     = {{ .chezmoi.homeDir }}
+
 [data]
-# if machine is without graphical environment (X server)
+# whether machine is without graphical environment (X server)
 headless = {{ $headless }}
-# if machine has a battery
+# whether machine has a battery
 battery  = {{ $battery }}
-# if machine has a wireless device
+# whether machine has a wireless device
 wireless = {{ $wireless }}
 
 # vim: filetype=toml
