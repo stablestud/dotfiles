@@ -16,14 +16,18 @@
 {{- end -}}
 
 {{/* check if machine has a battery */}}
-{{- if (gt (glob "/sys/class/power_supply/{B,b}*" | len) (0)) -}}
-	{{- $battery = true -}}
+{{- if eq (output "sh" "-c" "test -r /sys/class/power_supply; echo ${?}") ("0") -}}
+	{{- if gt (glob "/sys/class/power_supply/{B,b}*" | len) (0) -}}
+		{{- $battery = true -}}
+	{{- end -}}
 {{- end -}}
 
 {{/* check if machine has a wireless NIC */}}
-{{- range $nic := glob "/sys/class/net/*" -}}
-	{{- if (joinPath $nic "/wireless" | lstat) -}}
-		{{- $wireless = true -}}
+{{- if eq (output "sh" "-c" "test -r /sys/class/net; echo ${?}") ("0") -}}
+	{{- range $nic := glob "/sys/class/net/*" -}}
+		{{- if (joinPath $nic "/wireless" | lstat) -}}
+			{{- $wireless = true -}}
+		{{- end -}}
 	{{- end -}}
 {{- end -}}
 
