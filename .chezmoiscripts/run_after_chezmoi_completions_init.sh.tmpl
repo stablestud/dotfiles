@@ -1,0 +1,11 @@
+#! /usr/bin/env sh
+
+# Install chezmoi completions for bash and fish,
+# using chezmoi own generated completions from the binary
+if [ -x "{{ .chezmoi.executable }}" ]; then
+	"{{ .chezmoi.executable }}" completion bash --output="${HOME}/.local/share/bash-completion/completions/chezmoi.bash"
+	"{{ .chezmoi.executable }}" completion fish --output="${HOME}/.config/fish/completions/chezmoi.fish"
+else
+	echo "Warning: cannot install chezmoi completions" 1>&2
+fi
+
