@@ -34,18 +34,16 @@
 	include = ["man/**"]
 	{{ template "sources" . }}
 	stripComponents = 1
-[".local/share/bash-completion/completions"]
+[".local/share/bash-completion/completions/zoxide.bash"]
 	# source: https://github.com/ajeetdsouza/zoxide
-	type = "archive"
-	include = ["completions/zoxide.bash"]
+	type = "archive-file"
+	path = "completions/zoxide.bash"
 	{{ template "sources" . }}
-	stripComponents = 1
-[".config/fish/completions"]
+[".config/fish/completions/zoxide.fish"]
 	# source: https://github.com/ajeetdsouza/zoxide
-	type = "archive"
-	include = ["completions/zoxide.fish"]
+	type = "archive-file"
+	path = "completions/zoxide.fish"
 	{{ template "sources" . }}
-	stripComponents = 1
 
 {{ end }}
 
