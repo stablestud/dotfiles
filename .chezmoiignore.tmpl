@@ -30,7 +30,8 @@ LICENSE
 # Ignore symlinks which are used for AppImages,
 # The underlying AppImages are architecture dependent,
 # so don't create the symlinks for unsupport systems
-{{ if ne .chezmoi.arch "amd64" }}
+# Also all AppImages are glibc dependent so make sure it is available
+{{ if or (ne .chezmoi.arch "amd64") (ne .glibc true) }}
 	.local/bin/tmux
 	.local/bin/vim
 {{ end }}

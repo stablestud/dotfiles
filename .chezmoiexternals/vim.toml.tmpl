@@ -11,14 +11,15 @@
 	{{ end }}
 {{ end }}
 
-{{ if has .chezmoi.arch $supported }}
+{{ if and (has .chezmoi.arch $supported) (eq .glibc true) }}
 
 # Vim
 [".local/bin/.AppImages/vim.AppImage"]
 	# source: https://github.com/vim/vim-appimage
 	type = "file"
-	executable = true
 	{{ template "sources" . }}
+	executable = true
+
 {{ end }}
 
 # vim: filetype=toml

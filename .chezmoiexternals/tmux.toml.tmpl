@@ -1,12 +1,24 @@
-{{ if eq .chezmoi.arch "amd64" }}
+{{ $supported := list "amd64" }}
+
+{{ define "amd64" }}
+	url = "https://github.com/kiyoon/tmux-appimage/releases/download/3.3a/tmux.appimage"
+	checksum.sha512 = "6c559a5a67f1ba743ac90c49df6953e20c1abb671fd9bd491436bed1b745b7830e71f7015d79123ec1428984c343a6d0f1de7539fea511a4109a06e34ec10279"
+{{ end }}
+
+{{ define "sources" }}
+	{{ if eq .chezmoi.arch "amd64" }}
+		{{ template "amd64" }}
+	{{ end }}
+{{ end }}
+
+{{ if and (has .chezmoi.arch $supported) (eq .glibc true) }}
 
 # Tmux
 [".local/bin/.AppImages/tmux.AppImage"]
 	# source: https://github.com/kiyoon/tmux-appimage
 	type = "file"
-	url  = "https://github.com/kiyoon/tmux-appimage/releases/download/3.3a/tmux.appimage"
-	checksum.sha512 = "6c559a5a67f1ba743ac90c49df6953e20c1abb671fd9bd491436bed1b745b7830e71f7015d79123ec1428984c343a6d0f1de7539fea511a4109a06e34ec10279"
-	executable      = true
+	{{ template "sources" . }}
+	executable = true
 
 {{ end }}
 
