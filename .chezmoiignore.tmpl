@@ -1,6 +1,11 @@
 README.md
 LICENSE
 
+# Note: external binaries included by .chezmoiexternals* should
+# not be ignored by this file,
+# instead their template should result to an empty file/entry
+# on systems where the binary should not be installed
+
 {{/* ignore these if no graphical environment is installed */}}
 {{ if .headless }}
 	.local/bin/termfg
@@ -22,6 +27,9 @@ LICENSE
 	.xsession
 {{ end }}
 
+# Ignore symlinks which are used for AppImages,
+# The underlying AppImages are architecture dependent,
+# so don't create the symlinks for unsupport systems
 {{ if ne .chezmoi.arch "amd64" }}
 	.local/bin/tmux
 	.local/bin/vim
