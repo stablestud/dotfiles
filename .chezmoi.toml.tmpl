@@ -5,30 +5,38 @@
 # qutebrowser dotfiles, so we set a variable here that will be used in
 # templates as parameter to exclude those files
 
-{{/* default values, should provide the bare minimum of dotfiles */}}
+{{/* Default values, should provide the bare minimum of dotfiles */}}
 {{- $headless := true -}}
 {{- $battery  := false -}}
 {{- $wireless := false -}}
+{{- $glibc    := false -}}
 
 {{/* check if machine has graphical capabilities */}}
 {{- if (or (lookPath "X") (lookPath "Xorg")) -}}
 	{{- $headless = false -}}
 {{- end -}}
 
-{{/* check if machine has a battery */}}
-{{- if eq (output "sh" "-c" "test -r /sys/class/power_supply; echo ${?}") ("0") -}}
+{{/* Check if machine has a battery */}}
+{{- if eq (output "sh" "-c" "test -r /sys/class/power_supply; printf ${?}") ("0") -}}
 	{{- if gt (glob "/sys/class/power_supply/{B,b}*" | len) (0) -}}
 		{{- $battery = true -}}
 	{{- end -}}
 {{- end -}}
 
-{{/* check if machine has a wireless NIC */}}
-{{- if eq (output "sh" "-c" "test -r /sys/class/net; echo ${?}") ("0") -}}
+{{/* Check if machine has a wireless NIC */}}
+{{- if eq (output "sh" "-c" "test -r /sys/class/net; printf ${?}") ("0") -}}
 	{{- range $nic := glob "/sys/class/net/*" -}}
 		{{- if (joinPath $nic "/wireless" | lstat) -}}
 			{{- $wireless = true -}}
 		{{- end -}}
 	{{- end -}}
+{{- end -}}
+
+{{/* Check if machine has glibc installed */}}
+{{/* Needed for glibc dependent binaries like most AppImages */}}
+{{/* Note: glibc ldconfig has --version flag, musl doesn't */}}
+{{- if eq (output "sh" "-c" "ldconfig --version 1>/dev/null 2>&1; printf ${?}") ("0") -}}
+	{{- $glibc = true -}}
 {{- end -}}
 
 # Current machine values detected by chezmoi v{{ .chezmoi.version.version }}
@@ -42,11 +50,15 @@
 # home     = {{ .chezmoi.homeDir }}
 
 [data]
-# whether machine is without graphical environment (X server)
+# Whether machine is without graphical environment (X server)
 headless = {{ $headless }}
-# whether machine has a battery
+# Whether machine has a battery
 battery  = {{ $battery }}
-# whether machine has a wireless device
+# Whether machine has a wireless device
 wireless = {{ $wireless }}
+# Whether glibc (standard C library) is installed (required for most AppImages)
+# Binaries compiled with `musl` are compatible with `glibc` powered distros
+# but `glibc` binaries are not compatible with `musl` distros (like Alpine Linux)
+glibc    = {{ $glibc }}
 
 # vim: filetype=toml
