@@ -1,4 +1,4 @@
-#! /usr/bin/env sh
+#! {{ template "shebang.tmpl" "/usr/bin/env" }} sh
 # Setup required flatpak permissions for Qutebrowser to work
 # This script will be run by chezmoi automatically on 'apply' and it will not be copied to the target directory
 
@@ -10,3 +10,5 @@ if flatpak info org.qutebrowser.qutebrowser --show-ref 1>/dev/null 2>&1; then
 else
 	echo "Warning: Flatpak org.qutebrowser.qutebrowser not installed/configured" 1>&2
 fi
+
+# vim: filetype=sh

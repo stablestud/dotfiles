@@ -1,4 +1,9 @@
-#! /usr/bin/env sh
+#! {{ template "shebang.tmpl" "/usr/bin/env" }} sh
+
+# Simple scripts that check which dependencies/utilies
+# used by i3/i3-keybinds are missing/not installed
+# and informs the user that these should/could be installed
+# for better usability
 
 check_deps() {
 	required_deps="
