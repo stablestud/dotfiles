@@ -32,9 +32,9 @@
 	{{- end -}}
 {{- end -}}
 
-{{/* Check if machine has glibc installed */}}
-{{/* Needed for glibc dependent binaries like most AppImages */}}
-{{/* Note: glibc ldconfig has --version flag, musl doesn't */}}
+{{/* Check if machine has glibc installed
+   * Needed for glibc dependent binaries like most AppImages
+   * Note: glibc ldconfig has --version flag, musl doesn't */}}
 {{- if eq (output "sh" "-c" "ldconfig --version 1>/dev/null 2>&1; printf ${?}") ("0") -}}
 	{{- $glibc = true -}}
 {{- end -}}
