@@ -1,0 +1,4 @@
+{{/* Required for recursive calls from __shebang.tmpl,
+   * as templates cannot call itself.
+   * For documentation see __shebang.tmpl */}}
+{{- template "__shebang.tmpl" . -}}

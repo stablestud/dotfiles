@@ -1,0 +1,73 @@
+{{/* Template that aids in finding the correct path for the given shebang.
+   * Required for some non compliant/weird systems like Termux on Android.
+   *
+   * Takes a single argument: full path to the binary desired to be executed
+   * Example template usage:
+   *
+   *     #! {{ template "shebang.tmpl" "/usr/bin/env" }} python
+   * OR (the same)
+   *     #! {{ template "shebang.tmpl" }} python
+   *
+   * The template will make sure that /usr/bin/env exist and is executable,
+   * if not try to find the binary from $PATH and use that path instead.
+   * For example on Termux /usr/bin/env does not exist, it only exist at
+   * /data/data/com.termux/files/usr/bin/env so the script execution would
+   * fail. In the Termux case, using the template would replace /usr/bin/env
+   * with /data/data/com.termux/files/usr/bin/env which would result to the
+   * following shebang line:
+   *
+   *     #! /data/data/com.termux/files/usr/bin/env python
+   *
+   * Obviously one could use the template directly with the required binary
+   * like /usr/bin/python and if not found the template would resolve it via
+   * the $PATH just like env would. But for non-chezmoi scripts /usr/bin/env
+   * should be used. See below for detailed description.
+   *
+   * The /usr/bin/env sheband path should be used to find an run the correct
+   * interpreter for the given script as it makes the script more portable,
+   * as not all machines have the same path for the same binary.
+   * /usr/bin/env searches $PATH for the binary and executes the first match.
+   *
+   * For example python on machine A might be installed at /usr/bin/python
+   * but on machine B at /lib64/bin/python; using a fixed path shebang
+   * would break the execution of it when run on different machines.
+   * Instead one should use `/usr/bin/env python`, env will then try to find
+   * the python binary python in the $PATH env variable.
+   *
+   * /usr/bin/env is not a standard path but pretty much used in every system
+   * (except Termux caused by technical restrictions)
+
+
+{{/* If no argument given, use default /usr/bin/env */}}
+{{- $path := clean . -}}
+{{- if empty $path -}}
+	{{- template "shebang.tmpl" "/usr/bin/env" -}}
+{{/* Check if invalid/unreferencable relative path */}}
+{{- else if or (has (base .) (list ".." ".")) (eq $path "/") -}}
+	{{- fail (print "Invalid shebang : '" . "'") -}}
+{{- else -}}
+	{{/* Check if given argument exist, if not available on system, find it */}}
+	{{- if empty (stat $path) -}}
+		{{/* Check if argument base exist in $PATH, if yes use it instead */}}
+		{{- if lookPath (base $path) -}}
+			{{- lookPath (base $path) -}}
+		{{/* Last resort, cannot find argument in $PATH instead let env do the finding
+		   * Note: arguments for the shebang will be lost (like `perl -w`),
+		   * but since we got here this is a weird system/shebang anyways */}}
+		{{- else -}}
+			{{- template "shebang.tmpl" "/usr/bin/env" }} {{ base $path -}}
+		{{- end -}}
+	{{/* Path exist on system, use it */}}
+	{{- else -}}
+		{{/* Check if argument points to directory, if yes find base in $PATH instead */}}
+		{{- if eq (index (stat $path) "type") ("dir") -}}
+			{{- template "shebang.tmpl" (base $path) -}}
+		{{/* If is file and its executable, use it as is */}}
+		{{- else if isExecutable $path -}}
+			{{- $path -}}
+		{{/* File is not executable, so find base in $PATH instead */}}
+		{{- else -}}
+			{{- template "shebang.tmpl" (base $path) -}}
+		{{- end -}}
+	{{- end -}}
+{{- end -}}

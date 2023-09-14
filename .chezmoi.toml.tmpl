@@ -26,7 +26,7 @@
 {{/* Check if machine has a wireless NIC */}}
 {{- if eq (output "sh" "-c" "test -r /sys/class/net; printf ${?}") ("0") -}}
 	{{- range $nic := glob "/sys/class/net/*" -}}
-		{{- if (joinPath $nic "/wireless" | lstat) -}}
+		{{- if (joinPath $nic "/wireless" | stat) -}}
 			{{- $wireless = true -}}
 		{{- end -}}
 	{{- end -}}
@@ -58,7 +58,8 @@ battery  = {{ $battery }}
 wireless = {{ $wireless }}
 # Whether glibc (standard C library) is installed (required for most AppImages)
 # Binaries compiled with `musl` are compatible with `glibc` powered distros
-# but `glibc` binaries are not compatible with `musl` distros (like Alpine Linux)
+# but glibc binaries are not compatible with musl distros (like Alpine Linux).
+# So this variable can be used to ignore glibc dependent apps on musl systems
 glibc    = {{ $glibc }}
 
 # vim: filetype=toml
