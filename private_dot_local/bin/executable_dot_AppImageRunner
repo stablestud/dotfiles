@@ -6,12 +6,12 @@
 # The script must be executed via an symlink to it. The name of the symlink
 # specifies the AppImage to run.
 # For example: ./vim -> ./.AppImageRunner
-# This would execute the AppImage vim.AppImage from .AppImages
+# This would execute the AppImage vim.AppImage from ~/.local/bin/.AppImages
 #
-# AppImage requires exactly fuse v2, not newer like in Gentoo (fuse v3).
+# AppImage requires exactly fuse v2, not newer version like fuse v3 (like Gentoo).
 # If fuse v2 is not available, use a workaround by extracting the AppImage
 # into a temporary directory and execute it. This is being done by AppImage
-# with the `--appimage-extract-and-run` parameter.
+# with the `--appimage-extract` parameter.
 #
 # Note: AppImage still requires a correct glibc version, the glibc version
 # witch AppImage was compiled with must be same or older than the current
@@ -51,10 +51,32 @@ if command -v ldconfig 1>/dev/null 2>&1; then
 fi
 
 # Since we landed here, fuse is not working/not installed so we do a workaround
-# by extracting the AppImage and run it directly.
-# Additionaly we make sure the extracted files are not removed on exit to allow
-# quicker startup on following runs.
-# Also this is required when the app is running in parallel, it is always
-# extracted into the same dir. So when one instance exits, it would remove
-# the extracted content which other still running instances require
-NO_CLEANUP=1 exec "${appimagepath}" --appimage-extract-and-run "${@}"
+# by extracting the AppImage and run it from the extracted directory.
+# If the directory already exist, don't extract and run the AppImage directly.
+#
+# We extract to /tmp/$USER.$appimage, seperating the instances between users,
+# allowing mutiple users to run the AppImage in parallel, as extracting it into
+# a commonly used directory cross users could cause issues with access/write rights
+# and also could introduce security issues, for example:
+# user could modify the extracted binary which another would then run.
+# Instead isolate the AppImage between users.
+#
+# Note: previously `--appimage-extract-and-run` was used with NO_CLEANUP=1,
+# but it printed `File exists and file size matches, skipping`
+# which spammed the ouput which was annoying, also it was not possible to
+# share the AppImage across users, as the extracted directory would be owned
+# by the first user who executed the AppImage.
+#
+# Instead do it manually which also allows user isolation.
+appimagepath_extracted_base="/tmp/${USER:-$(whoami)}.AppImages/${appimage}.AppImage"
+appimagepath_extracted="${appimagepath_extracted_base}/squashfs-root/AppRun"
+
+if ! [ -x "${appimagepath_extracted}" ]; then
+	(umask 0077 &&
+		mkdir --parent "${appimagepath_extracted_base}" &&
+		cd "${appimagepath_extracted_base}" &&
+		exec "${appimagepath}" --appimage-extract 1>/dev/null) ||
+	{ echo "Error: failed to extract ${appimagepath}"; exit 1; }
+fi
+
+exec "${appimagepath_extracted}" "${@}"
