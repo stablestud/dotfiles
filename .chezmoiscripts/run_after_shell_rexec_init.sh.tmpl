@@ -1,0 +1,22 @@
+#! {{ template "shebang.tmpl" "/usr/bin/env" }} sh
+
+# Script is called after chezmoi has successfully installed the dotfiles
+# It informs the user how to reload the current shell
+# to apply the changed configs/settings
+#
+# For example if changes have been done in .bashrc and the current shell
+# is bash, this script will print a command how to load the new settings
+
+if [ -z "${SHELL}" ]; then
+	# Prefer getent, as user might be logged in via ldap and not /etc/passwd (NIS served)
+	if command -v getent 1>/dev/null 2>&1; then
+		shell="$(getent passwd "${USER-:{{ .chezmoi.username }}}" | awk --field-separator ":" '{print $NF}')"
+	else
+		shell="$(awk --field-separator ":" --assign user="${USER-:{{ .chezmoi.username }}}" '$1 == user {print $NF}' /etc/passwd)"
+	fi
+else
+	shell="${SHELL}"
+fi
+
+echo "Info: reload current shell with:"
+echo "    exec $(basename "${shell}") -l"
