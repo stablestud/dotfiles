@@ -12,72 +12,82 @@ general {
 	color_good = "#70b433"
 	color_degraded = "#dbb32d"
 	color_bad = "#ed4a46"
-	separator = " "
 }
 
-order += "ipv6"
-{{- if .wireless }}
 order += "wireless _first_"
-{{- end }}
 order += "ethernet _first_"
-{{- if .battery }}
 order += "battery all"
-{{- end }}
 order += "disk /"
 order += "load"
 order += "memory"
 order += "volume master"
 order += "tztime local"
 
+{{- define "shape" }}
+	min_width = 60
+	align     = center
+	separator_block_width = 15
+{{- end }}
+
 ipv6 {
-	format_up = "IPV6: %ip"
+	format_up = "IPV6 %ip"
 	format_down = ""
+	{{ template "shape" }}
 }
 
 wireless _first_ {
-	format_up = "WLAN: (%essid) %ip (%bitrate)"
-	format_down = "WLAN: down"
+	format_up = "WLAN (%essid) %ip (%bitrate)"
+	format_down = ""
+	{{ template "shape" }}
 }
 
 ethernet _first_ {
-	format_up = "ETHER: %ip (%speed)"
-	format_down = "ETHER: down"
+	format_up = "LAN %ip (%speed)"
+	format_down = ""
+	{{ template "shape" }}
 }
 
 battery all {
-	format = "BAT: %status %percentage %remaining"
-	format_down = "BAT: down"
+	format = "BAT %status %percentage %remaining"
+	format_down = ""
+	status_bat  = "DIS"
 	integer_battery_capacity = true
 	threshold_type = "percentage"
 	low_threshold = "20"
+	{{ template "shape" }}
 }
 
 disk "/" {
-	format = "DISK: %used/%total"
+	format = "DISK %used/%total"
 	threshold_type = percentage_free
 	low_threshold = 10
+	{{ template "shape" }}
 }
 
 load {
-	format = "LOAD: %1min"
+	format = "LOAD %1min"
 	max_threshold = 4
+	{{ template "shape" }}
 }
 
 memory {
-	format = "MEM: %used/%total"
+	format = "MEM %used/%total"
 	memory_used_method = classical
 	threshold_degraded = "20%"
 	threshold_critical = "10%"
+	{{ template "shape" }}
 }
 
 volume master {
 	device = "default"
-	format = "VOL: %volume"
-	format_muted = "VOL: %volume (muted)"
+	format = "VOL %volume"
+	format_muted = "VOL %volume (muted)"
+	{{ template "shape" }}
 }
 
 tztime local {
 	format = "TIME %Y-%m-%d %H:%M:%S"
+	{{ template "shape" }}
 }
 
 # vim: filetype=conf
