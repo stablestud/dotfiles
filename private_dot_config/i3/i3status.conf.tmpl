@@ -15,7 +15,6 @@ general {
 	separator = " "
 }
 
-order += "volume master"
 order += "ipv6"
 {{- if .wireless }}
 order += "wireless _first_"
@@ -27,44 +26,45 @@ order += "battery all"
 order += "disk /"
 order += "load"
 order += "memory"
+order += "volume master"
 order += "tztime local"
 
 ipv6 {
-	format_up = "%ip"
+	format_up = "IPV6: %ip"
 	format_down = ""
 }
 
 wireless _first_ {
-	format_up = "wlo: (%essid) %ip (%bitrate)"
-	format_down = "wlo: down"
+	format_up = "WLAN: (%essid) %ip (%bitrate)"
+	format_down = "WLAN: down"
 }
 
 ethernet _first_ {
-	format_up = "eth: %ip (%speed)"
-	format_down = "eth: down"
+	format_up = "ETHER: %ip (%speed)"
+	format_down = "ETHER: down"
 }
 
 battery all {
-	format = "bat: %status %percentage %remaining"
-	format_down = "bat: down"
+	format = "BAT: %status %percentage %remaining"
+	format_down = "BAT: down"
 	integer_battery_capacity = true
 	threshold_type = "percentage"
 	low_threshold = "20"
 }
 
 disk "/" {
-	format = "disk: %used/%total"
+	format = "DISK: %used/%total"
 	threshold_type = percentage_free
 	low_threshold = 10
 }
 
 load {
-	format = "load: %1min"
+	format = "LOAD: %1min"
 	max_threshold = 4
 }
 
 memory {
-	format = "mem: %used/%total"
+	format = "MEM: %used/%total"
 	memory_used_method = classical
 	threshold_degraded = "20%"
 	threshold_critical = "10%"
@@ -72,12 +72,12 @@ memory {
 
 volume master {
 	device = "default"
-	format = "vol: (%devicename) %volume"
-	format_muted = "vol: (%devicename) %volume (muted)"
+	format = "VOL: %volume"
+	format_muted = "VOL: %volume (muted)"
 }
 
 tztime local {
-	format = "%Y-%m-%d %H:%M:%S"
+	format = "TIME %Y-%m-%d %H:%M:%S"
 }
 
 # vim: filetype=conf

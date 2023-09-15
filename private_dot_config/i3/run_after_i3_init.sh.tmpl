@@ -5,7 +5,8 @@
 # and informs the user that these should/could be installed
 # for better usability
 
-check_deps() {
+check_deps()
+{
 	required_deps="
 		setxkbmap
 		i3status
@@ -26,7 +27,8 @@ check_deps() {
 		powertop
 		xinput
 {{ end -}}
-		dunst"
+		dunst
+		xrandr"
 
 	for i in ${required_deps}; do
 		if ! command -v "${i}" 1>/dev/null 2>&1; then
@@ -41,6 +43,20 @@ check_deps() {
 	done
 }
 
+check_primary()
+{
+	if command -v xrandr 1>/dev/null 2>&1; then
+		primary="$(xrandr --listmonitors | grep '^[[:space:]]\+[[:digit:]]\+: +\*')"
+		if [ -z "${primary}" ]; then
+			echo "Warning: no primary output set (no tray icons will be displayed), set one with 'xrandr --output X --primary'"
+		fi
+	else
+		echo "Warning: xrandr not installed, cannot check primary output for tray position" 1>&2
+	fi
+}
+
 check_deps
+check_primary
+
 
 # vim: filetype=sh
