@@ -10,6 +10,8 @@
 #                       - CAPS behaves as ESC
 # To get all available options `localectl list-x11-keymap-options`
 # To view all variants for layout `us` use `sed '/! variant/,/^$/!d;/us:/!d' < /usr/share/X11/xkb/rules/evdev.lst`
-setxkbmap -layout us -variant ,nodeadkeys -option -option grp:alt_shift_toggle -option altwin:menu_win -option caps:escape
+setxkbmap -layout us,de -variant ,nodeadkeys -option -option grp:alt_shift_toggle -option altwin:menu_win -option caps:escape
 # Note the empty `-option` removes all previously set options,
 # this is required as setxkbmap only adds options but does not remove nor overwrite existing ones
+
+# vim: filetype=sh
