@@ -1,0 +1,61 @@
+{{ $supported := list "amd64" "arm64" }}
+
+{{ define "amd64" }}
+	url = "https://github.com/junegunn/fzf/releases/download/0.42.0/fzf-0.42.0-linux_amd64.tar.gz"
+	checksum.sha512 = "41979beb3e29733e65a37eb128f6e32bae381b6f1a66e6a985cd2911d08ccde3cbde26e8a73b59d34afb67dc40ff4d409a35f663b1b56236f4dd75f5b7f7cd4c"
+{{ end }}
+
+# ARM 64bit also called arm64, aarch64, armv8
+{{ define "arm64" }}
+	url = "https://github.com/junegunn/fzf/releases/download/0.42.0/fzf-0.42.0-linux_arm64.tar.gz"
+	checksum.sha512 = "27fbffccd092044de62e2344b0915b10865644ade1f7b0ba7f9ecfb54c3f57a8fa17b697e0139a7d07cd2710d71f82a05c9b1044797f52a75e397a2c28f45832"
+{{ end }}
+
+{{ define "binary" }}
+	{{ if eq .chezmoi.arch "amd64" }}
+		{{ template "amd64" }}
+	{{ else if eq .chezmoi.arch "arm64" }}
+		{{ template "arm64" }}
+	{{ end }}
+{{ end }}
+
+{{ define "sources" }}
+	url = "https://github.com/junegunn/fzf/archive/refs/tags/0.42.0.tar.gz"
+	sha512sum = "9587b8c9d37abcf1ae85b12d5cf3a1179f57241e3932db6801dee9bb952f83621b780d713c1793ccb4c5c36921b9078e156fe989b3e13664201ed729ea03d414"
+{{ end }}
+
+{{ if has .chezmoi.arch $supported }}
+
+# Fzf
+[".local/bin/fzf"]
+	type = "archive-file"
+	path = "fzf"
+	{{ template "binary" . }}
+	executable = true
+[".local/bin/fzf-tmux"]
+	type = "archive-file"
+	path = "fzf-0.42.0/bin/fzf-tmux"
+	{{ template "sources" }}
+	executable = true
+[".local/man"]
+	type = "archive"
+	include = ["fzf-0.42.0/man/**"]
+	{{ template "sources" }}
+	stripComponents = 2
+# Not fzf completion but completion of commands with fzf **<Tab>
+[".bashrc.d/fzf_completion.bash"]
+	type = "archive-file"
+	path = "fzf-0.42.0/shell/completion.bash"
+	{{ template "sources" }}
+[".bashrc.d/fzf_key_bindings.bash"]
+	type = "archive-file"
+	path = "fzf-0.42.0/shell/key-bindings.bash"
+	{{ template "sources" }}
+[".config/fish/functions/fzf_key_bindings.fish"]
+	type = "archive-file"
+	path = "fzf-0.42.0/shell/key-bindings.fish"
+	{{ template "sources" }}
+
+{{ end }}
+
+# vim: filetype=toml
