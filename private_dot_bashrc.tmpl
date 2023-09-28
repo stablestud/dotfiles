@@ -16,6 +16,13 @@ if [[ $- != *i* ]] ; then
 	return
 fi
 
+# Source external configuration files
+if [ -d ~/.bashrc.d/ ]; then
+	for conf in ~/.bashrc.d/*.bash; do
+		source "${conf}"
+	done
+fi
+
 # Don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -134,11 +141,3 @@ if ! shopt -oq posix; then
 		source /etc/bash_completion
 	fi
 fi
-
-# Source external configuration files
-if [ -d ~/.bashrc.d/ ]; then
-	for conf in ~/.bashrc.d/*.bash; do
-		source "${conf}"
-	done
-fi
-
