@@ -1,4 +1,5 @@
-{{ $supported := list "amd64" }}
+{{ $supported_os := list "linux" }}
+{{ $supported_arch := list "amd64" }}
 
 {{ define "amd64" }}
 	url = "https://github.com/kiyoon/tmux-appimage/releases/download/3.3a/tmux.appimage"
@@ -11,7 +12,7 @@
 	{{ end }}
 {{ end }}
 
-{{ if and (has .chezmoi.arch $supported) (eq .glibc true) }}
+{{ if and (has .chezmoi.os $supported_os) (has .chezmoi.arch $supported_arch) }}
 
 # Tmux
 [".local/bin/.AppImages/tmux.AppImage"]

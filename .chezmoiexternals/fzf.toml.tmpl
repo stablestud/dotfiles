@@ -1,4 +1,7 @@
-{{ $supported := list "amd64" "arm64" }}
+{{/* Linux Go binaries could run on android, but android has blocked some syscalls (faccessat2) */}}
+{{/* therefore special binaries built with GOOS=android are required. So android is not supported by default */}}
+{{ $supported_os := list "linux" }}
+{{ $supported_arch := list "amd64" "arm64" }}
 
 {{ define "amd64" }}
 	url = "https://github.com/junegunn/fzf/releases/download/0.42.0/fzf-0.42.0-linux_amd64.tar.gz"
@@ -24,7 +27,7 @@
 	sha512sum = "9587b8c9d37abcf1ae85b12d5cf3a1179f57241e3932db6801dee9bb952f83621b780d713c1793ccb4c5c36921b9078e156fe989b3e13664201ed729ea03d414"
 {{ end }}
 
-{{ if has .chezmoi.arch $supported }}
+{{ if and (has .chezmoi.os $supported_os) (has .chezmoi.arch $supported_arch) }}
 
 # Fzf
 [".local/bin/fzf"]
