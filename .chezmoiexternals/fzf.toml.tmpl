@@ -45,6 +45,9 @@
 	include = ["fzf-0.42.0/man/**"]
 	{{ template "sources" }}
 	stripComponents = 2
+
+{{ end }}
+
 # Not fzf completion but completion of commands with fzf **<Tab>
 [".bashrc.d/fzf_completion.bash"]
 	type = "archive-file"
@@ -58,7 +61,5 @@
 	type = "archive-file"
 	path = "fzf-0.42.0/shell/key-bindings.fish"
 	{{ template "sources" }}
-
-{{ end }}
 
 # vim: filetype=toml

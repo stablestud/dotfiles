@@ -1,0 +1,17 @@
+#! {{ template "shebang.tmpl" "/usr/bin/env" }} sh
+
+# Check if important CLI binaries are available/installed
+# and inform the user that these should be installed
+
+required_deps="
+	fzf
+	fzf-tmux
+	zoxide
+	vim
+	tmux"
+
+for i in ${required_deps}; do
+	if ! command -v "${i}" 1>/dev/null 2>&1; then
+		echo "Warning: important cli binary not installed: ${i}" 1>&2
+	fi
+done

@@ -1,6 +1,6 @@
 # Setup fish greeting message with fzf keybindings
 # Keybindings must be loaded at fish_user_key_bindings
-if type --query fzf_key_bindings
+if type --query fzf_key_bindings && status is-interactive
 	if not set --query fish_greeting
 		set --local color (set_color green)
 		set --local nocolor (set_color normal)

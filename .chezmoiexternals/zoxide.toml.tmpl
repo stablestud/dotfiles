@@ -35,6 +35,9 @@
 	include = ["man/**"]
 	{{ template "sources" . }}
 	stripComponents = 1
+
+{{ end }}
+
 [".local/share/bash-completion/completions/zoxide.bash"]
 	type = "archive-file"
 	path = "completions/zoxide.bash"
@@ -43,7 +46,5 @@
 	type = "archive-file"
 	path = "completions/zoxide.fish"
 	{{ template "sources" . }}
-
-{{ end }}
 
 # vim: filetype=toml
