@@ -13,20 +13,20 @@ set $mod Mod4
 # WORKSPACES
 # define workspaces
 # note: must start with a number, else the workspace won't work
-set $ws0 "0"
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
-set $ws11 "11"
-set $ws12 "12"
-set $ws13 "13"
+set $ws0 0
+set $ws1 1
+set $ws2 2
+set $ws3 3
+set $ws4 4
+set $ws5 5
+set $ws6 6
+set $ws7 7
+set $ws8 8
+set $ws9 9
+set $ws10 10
+set $ws11 11
+set $ws12 12
+set $ws13 13
 
 
 # THEMING/APPEARANCE
@@ -68,8 +68,8 @@ client.unfocused $black $black $fg $white
 client.urgent $yellow $yellow $black $orange
 
 # font to use, selected font should exist on all systems by default
-set $font "pango:DejaVu Sans Mono 10"
-font $font
+set $font pango:DejaVu Sans Mono 10
+font "$font"
 
 
 # EXTERNAL CONFIGS

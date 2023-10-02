@@ -45,8 +45,8 @@ bindsym $mod+Shift+q kill
 # Mark and jump
 # vim style window marking and jumping
 # m to mark; ' to jump
-bindcode $mod+58 exec --no-startup-id i3-input -F "mark %s" -l 1 -P "Mark: "
-bindcode $mod+48 exec --no-startup-id i3-input -F '[con_mark="%s"] focus' -l 1 -P "Goto: "
+bindcode $mod+58 exec --no-startup-id i3-input -F "mark %s" -l 1 -P "Mark: " -f "$font"
+bindcode $mod+48 exec --no-startup-id i3-input -F '[con_mark="%s"] focus' -l 1 -P "Goto: " -f "$font"
 
 # Start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
@@ -55,7 +55,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec --no-startup-id i3-nagbar --type warning --message "Exit i3?" --font $font --button-no-terminal "Yes" "i3-msg 'exit'"
+bindsym $mod+Shift+e exec --no-startup-id i3-nagbar --type warning --message "Exit i3?" --font "$font" --button-no-terminal "Yes" "i3-msg 'exit'"
 
 # Resize window (you can also use the mouse for that)
 mode "resize" {

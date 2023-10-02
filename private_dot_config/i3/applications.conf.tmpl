@@ -7,13 +7,13 @@
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork --tiling --ignore-empty-password --show-failed-attempts
-exec --no-startup-id $HOME/.local/bin/screensvron
+exec --no-startup-id "$HOME/.local/bin/screensvron"
 
 # startup important applications
 exec --no-startup-id i3-msg 'workspace 1; exec i3-sensible-terminal'
 {{- if .battery }}
 # Alert at 15% and after that on every 3% battery level change with i3-nagbar
-exec --no-startup-id $HOME/.local/bin/i3-battery-popup -L 15% -I 3% -N -f $font -t 2m
+exec --no-startup-id "$HOME/.local/bin/i3-battery-popup -L 18% -I 3% -N -f '$font' -t 2m"
 {{- end }}
 
 # startup optional applications
@@ -30,16 +30,16 @@ exec --no-startup-id dunst
 # even though this runs in startup. To fix this runs everytime i3 is
 # restarted. So to force fix my layout I just do <Ctrl-Shift-r> to restart
 # i3 and to execute the below setxkblayout script
-exec_always --no-startup-id $HOME/.local/bin/setxkblayout
+exec_always --no-startup-id "$HOME/.local/bin/setxkblayout"
 
 # power control
-bindsym $mod+x exec --no-startup-id $HOME/.local/bin/screensvrnow
-bindsym $mod+Shift+x exec --no-startup-id $HOME/.local/bin/pwrsuspend
-bindsym $mod+Ctrl+Shift+x exec --no-startup-id i3-nagbar --type warning --message "Shutdown system?" --font $font --button-no-terminal "Yes" "$HOME/.local/bin/pwrshutdown"
+bindsym $mod+x exec --no-startup-id "$HOME/.local/bin/screensvrnow"
+bindsym $mod+Shift+x exec --no-startup-id "$HOME/.local/bin/pwrsuspend"
+bindsym $mod+Ctrl+Shift+x exec --no-startup-id i3-nagbar --type warning --message "Shutdown system?" --font "$font" --button-no-terminal "Yes" "$HOME/.local/bin/pwrshutdown"
 
 # custom application bindings
 # run browser
-bindsym $mod+b exec --no-startup-id $HOME/.local/bin/openbrowser
+bindsym $mod+b exec --no-startup-id "$HOME/.local/bin/openbrowser"
 # start program launcher
 bindsym $mod+d exec --no-startup-id "rofi -modi drun,run -show drun"
 # start filebrowser
@@ -56,15 +56,14 @@ bindsym XF86MonBrightnessDown exec light -U 10
 # Launcher mode (launches applications directly from keybindings)
 mode "launch" {
         # these bindings trigger as soon as you enter the launch mode
-	bindsym q exec $HOME/.local/bin/openbrowser qutebrowser; mode "default"
-	bindsym f exec $HOME/.local/bin/openbrowser firefox; mode "default"
-	bindsym c exec $HOME/.local/bin/openbrowser chromium; mode "default"
-	bindsym n exec $HOME/.local/bin/termfg vim; mode "default"
+	bindsym q exec "$HOME/.local/bin/openbrowser qutebrowser"; mode "default"
+	bindsym f exec "$HOME/.local/bin/openbrowser firefox"; mode "default"
+	bindsym c exec "$HOME/.local/bin/openbrowser chromium"; mode "default"
+	bindsym n exec "$HOME/.local/bin/termfg vim"; mode "default"
 
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
         bindsym Escape mode "default"
-        bindsym $mod+l mode "default"
         bindsym $mod+o mode "default"
 }
 bindsym $mod+o mode "launch"
