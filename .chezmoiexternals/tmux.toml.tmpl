@@ -12,7 +12,7 @@
 	{{ end }}
 {{ end }}
 
-{{ if and (has .chezmoi.os $supported_os) (has .chezmoi.arch $supported_arch) }}
+{{ if and (has .chezmoi.os $supported_os) (has .chezmoi.arch $supported_arch) (.glibc) }}
 
 # Tmux
 [".local/bin/.AppImages/tmux.AppImage"]

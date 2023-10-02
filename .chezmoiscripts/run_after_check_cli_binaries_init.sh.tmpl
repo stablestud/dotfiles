@@ -8,7 +8,8 @@ required_deps="
 	fzf-tmux
 	zoxide
 	vim
-	tmux"
+	tmux
+	perl"
 
 for i in ${required_deps}; do
 	if ! command -v "${i}" 1>/dev/null 2>&1; then
