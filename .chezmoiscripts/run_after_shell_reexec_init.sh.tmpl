@@ -10,9 +10,9 @@
 if [ -z "${SHELL}" ]; then
 	# Prefer getent, as user might be logged in via ldap and not /etc/passwd (NIS served)
 	if command -v getent 1>/dev/null 2>&1; then
-		shell="$(getent passwd "${USER-:{{ .chezmoi.username }}}" | awk -F ":" '{print $NF}')"
+		shell="$(getent passwd "${USER:-{{ .chezmoi.username }}}" | awk -F ":" '{print $NF}')"
 	else
-		shell="$(awk -F ":" -v user="${USER-:{{ .chezmoi.username }}}" '$1 == user {print $NF}' /etc/passwd)"
+		shell="$(awk -F ":" -v user="${USER:-{{ .chezmoi.username }}}" '$1 == user {print $NF}' /etc/passwd)"
 	fi
 else
 	shell="${SHELL}"
