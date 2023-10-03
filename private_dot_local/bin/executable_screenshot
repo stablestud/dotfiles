@@ -1,0 +1,79 @@
+#! /usr/bin/env sh
+
+# Wrapper script that takes a screenshot of the deskop or of a rectangular selection
+# Finds installed screenshot programs and executes them to make it possible to
+# have a crossplatform/portable way of doing screenshots without needing to findout
+# the currently installed screenshot utility and its parameters.
+#
+# All screenshots are saved under ~/Pictures/ with the file name screenshot-$(date).png
+# and are copied automatically to the clipboard
+
+to_clipboard()
+{
+	if command -v xclip 1>/dev/null 2>&1; then
+		xclip -selection clipboard -t image/png
+	else
+		# No supported clipboard utility found; discard
+		cat - 1>/dev/null
+		echo "Warning: cannot find clipboard utility" 1>&2
+		return 1
+	fi
+}
+
+take_screenshot()
+{
+	msg_success="Saved screenshot to ${filepath}"
+
+	{
+		if command -v maim 1>/dev/null 2>&1; then
+			if [ -z "${selection}" ]; then
+				maim --format png --noopengl
+			else
+				maim --select --format png --noopengl
+			fi
+		elif command -v scrot 1>/dev/null 2>&1; then
+			if [ -z "${selection}" ]; then
+				scrot --pointer --silent -
+			else
+				scrot --select=capture --pointer --silent -
+			fi
+		else
+			echo "Error: cannot find screenshot utility" 1>&2
+			exit 1
+		fi
+	} | tee "${filepath}" | to_clipboard
+	if [ "${?}" -eq "0" ]; then
+		msg_success="${msg_success} and CLIPBOARD"
+	fi
+
+	# if selection has been aborted = file empty; remove it
+	if ! [ -s "${filepath}" ]; then
+		if [ -f "${filepath}" ]; then
+			rm "${filepath}"
+		fi
+	else
+		if command -v notify-send 1>/dev/null 2>&1; then
+			notify-send --urgency=low "${msg_success}"
+		fi
+		echo "${msg_success}"
+	fi
+}
+
+show_help()
+{
+	echo "$(basename "${0}"): take a screenshot of current desktop"
+	printf "  -h\t show this help\n"
+	printf "  -s\t screenshot a rectangular area\n"
+}
+
+filepath="$HOME/Pictures/screenshot-$(date +%F@%H'%M'%S%z).png"
+
+while getopts 'sh' opt; do
+	case "${opt}" in
+		s ) selection=1 ;;
+		h ) show_help; exit ;;
+		* ) echo "Error: use -h to show help" 1>&2; exit 1 ;;
+	esac
+done
+
+take_screenshot

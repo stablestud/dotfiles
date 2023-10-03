@@ -1,4 +1,5 @@
 # Bindings for i3 internal actions (no external dependencies on applications)
+# To get keybind code/symbol for a key use `xev`
 
 # Navigation
 # change focus
@@ -83,6 +84,8 @@ bindsym $mod+r mode "resize"
 # Useful when used with remmina etc
 mode "passthrough" {
 	bindsym $mod+p mode "default"
+	# Only extra keybind that will be caught by host and not passed to remote
+	bindsym --release $mod+Shift+Print exec --no-startup-id "$HOME/.local/bin/screenshot -s"
 }
 
 bindsym $mod+p mode "passthrough"

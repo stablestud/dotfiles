@@ -22,6 +22,7 @@ exec --no-startup-id redshift -l 52.5:13.4 -t 6500K:3000K
 {{- if .wireless }}
 exec --no-startup-id nm-applet
 {{- end }}
+# autostart programs; list autostarted apps: dex -ad
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id dunst
 
@@ -37,9 +38,7 @@ bindsym $mod+x exec --no-startup-id "$HOME/.local/bin/screensvrnow"
 bindsym $mod+Shift+x exec --no-startup-id "$HOME/.local/bin/pwrsuspend"
 bindsym $mod+Ctrl+Shift+x exec --no-startup-id i3-nagbar --type warning --message "Shutdown system?" --font "$font" --button-no-terminal "Yes" "$HOME/.local/bin/pwrshutdown"
 
-# custom application bindings
-# run browser
-bindsym $mod+b exec --no-startup-id "$HOME/.local/bin/openbrowser"
+# launcher bindings
 # start program launcher
 bindsym $mod+d exec --no-startup-id "rofi -modi drun,run -show drun"
 # start filebrowser
@@ -52,6 +51,10 @@ bindsym $mod+Tab exec --no-startup-id "rofi -modi window -show window"
 bindsym XF86MonBrightnessUp   exec light -A 10
 bindsym XF86MonBrightnessDown exec light -U 10
 {{- end }}
+
+# screenshot bindings
+# use my screenshot wrapper script that can use different screenshot utilities
+bindsym --release $mod+Print exec --no-startup-id "$HOME/.local/bin/screenshot -s"
 
 # Launcher mode (launches applications directly from keybindings)
 mode "launch" {
