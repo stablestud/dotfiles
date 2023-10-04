@@ -22,7 +22,7 @@ to_clipboard()
 
 take_screenshot()
 {
-	msg_success="Saved screenshot to ${filepath}"
+	msg_success="Saved to $(basename "${filepath}")"
 
 	{
 		if command -v maim 1>/dev/null 2>&1; then
@@ -53,7 +53,7 @@ take_screenshot()
 		fi
 	else
 		if command -v notify-send 1>/dev/null 2>&1; then
-			notify-send --urgency=low "${msg_success}"
+			notify-send --urgency=low "Screenshot saved" "${msg_success}"
 		fi
 		echo "${msg_success}"
 	fi
