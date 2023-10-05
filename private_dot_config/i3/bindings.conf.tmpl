@@ -39,6 +39,9 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+q focus parent
 # focus the child container
 bindsym $mod+a focus child
+# toggle floating with right mouse button
+bindsym --border button3 floating toggle
+bindsym --whole-window --border $mod+button3 floating toggle
 
 # Kill focused window
 bindsym $mod+Shift+q kill
@@ -67,14 +70,23 @@ mode "resize" {
         # pressing up will shrink the window’s height.
         # pressing down will grow the window’s height.
         bindsym h resize shrink width 10 px or 10 ppt
+        bindsym $mod+h resize shrink width 10 px or 10 ppt
         bindsym j resize grow height 10 px or 10 ppt
+        bindsym $mod+j resize grow height 10 px or 10 ppt
         bindsym k resize shrink height 10 px or 10 ppt
+        bindsym $mod+k resize shrink height 10 px or 10 ppt
         bindsym l resize grow width 10 px or 10 ppt
+        bindsym $mod+l resize grow width 10 px or 10 ppt
 
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
         bindsym Escape mode "default"
         bindsym $mod+r mode "default"
+        bindsym --whole-window --border button1 mode "default"
+        bindsym --whole-window --border button2 mode "default"
+        bindsym --whole-window --border button3 mode "default"
+        bindsym --whole-window --border button4 mode "default"
+        bindsym --whole-window --border button5 mode "default"
 }
 
 bindsym $mod+r mode "resize"
