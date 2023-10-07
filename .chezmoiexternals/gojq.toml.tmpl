@@ -1,0 +1,36 @@
+{{/* Linux Go binaries could run on android, but android has blocked some syscalls (faccessat2) */}}
+{{/* therefore special binaries built with GOOS=android are required. So android is not supported by default */}}
+{{ $supported_os := list "linux" }}
+{{ $supported_arch := list "amd64" "arm64" }}
+
+{{ define "amd64" }}
+	url = "https://github.com/itchyny/gojq/releases/download/v0.12.13/gojq_v0.12.13_linux_amd64.tar.gz"
+	checksum.sha512 = "94792f032e02e6326d8b630c011c44f36cccd6a5669525ee2b3d5e959a5be3e02a4d835486e3af2b8a411c7b7cff7d8a611a0021a009b7f41df9f11f19550860"
+{{ end }}
+
+# ARM 64bit also called arm64, aarch64, armv8
+{{ define "arm64" }}
+	url = "https://github.com/itchyny/gojq/releases/download/v0.12.13/gojq_v0.12.13_linux_arm64.tar.gz"
+	checksum.sha512 = "e1f26d0818d52367c173df29e05eda0e60172deddbd5d49759a053ae5f3c84de7ab91a343d1b21be7f750954a0a7fedf1f5b223b99f1fe71f56a2c19bf8c6b76"
+{{ end }}
+
+{{ define "binary" }}
+	{{ if eq .chezmoi.arch "amd64" }}
+		{{ template "amd64" }}
+	{{ else if eq .chezmoi.arch "arm64" }}
+		{{ template "arm64" }}
+	{{ end }}
+{{ end }}
+
+{{ if and (has .chezmoi.os $supported_os) (has .chezmoi.arch $supported_arch) }}
+
+[".local/bin/gojq"]
+	type = "archive-file"
+	path = "gojq"
+	{{ template "binary" . }}
+	executable = true
+	stripComponents = 1
+
+{{ end }}
+
+# vim: filetype=toml
