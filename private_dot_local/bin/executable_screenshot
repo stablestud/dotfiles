@@ -8,6 +8,13 @@
 # All screenshots are saved under ~/Pictures/ with the file name screenshot-$(date).png
 # and are copied automatically to the clipboard
 
+show_help()
+{
+	echo "$(basename "${0}"): take a screenshot of current desktop"
+	printf "  -h\t show this help\n"
+	printf "  -s\t screenshot a rectangular area\n"
+}
+
 to_clipboard()
 {
 	if command -v xclip 1>/dev/null 2>&1; then
@@ -59,20 +66,13 @@ take_screenshot()
 	fi
 }
 
-show_help()
-{
-	echo "$(basename "${0}"): take a screenshot of current desktop"
-	printf "  -h\t show this help\n"
-	printf "  -s\t screenshot a rectangular area\n"
-}
-
-filepath="$HOME/Pictures/screenshot-$(date +%F@%H'%M'%S%z).png"
+filepath="${HOME}/Pictures/screenshot-$(date +%F@%H'%M'%S%z).png"
 
 while getopts 'sh' opt; do
 	case "${opt}" in
 		s ) selection=1 ;;
 		h ) show_help; exit ;;
-		* ) echo "Error: use -h to show help" 1>&2; exit 1 ;;
+		* ) echo "Error: use -h for help" 1>&2; exit 1 ;;
 	esac
 done
 

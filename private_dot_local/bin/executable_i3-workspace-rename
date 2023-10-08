@@ -1,0 +1,166 @@
+#!/usr/bin/env sh
+
+# Wrapper script that allows renaming of a i3 workspace without changing its
+# id/number. Normally the id/number is also part of the name, but changing it
+# would break keybindings set to the workspace number. Instead this script
+# makes sure that the the workspace number is never changed.
+# For example: rename '10: comm' to 'mail' will rename it to '10: mail' and not 'mail'
+#
+# Additionally when a id is given for example: rename '10: comm' to '8: mail', then
+# the id is not kept and the ID of the new name is used instead
+
+show_help()
+{
+	echo "$(basename "${0}"): rename specifed workspace without changing workspace id/number"
+	printf "  -h\tshow this help\n"
+	printf "  -f\tfont to use for i3-input (see i3 documentation for font specification)\n"
+	printf "  -n\tnew name for workspace (default: ask via i3-input)\n"
+	printf "  -w\tworkspace to rename (default: current)\n"
+}
+
+script_path()
+{
+	echo "$(cd "$(dirname "${0}")" && pwd)/$(basename "${0}")"
+}
+
+select_jq()
+{
+	# Try `gojq` first, normally installed by chezmoi
+	if command -v gojq 1>/dev/null 2>&1; then
+		cmd_jq="gojq --raw-output"
+	# Try `jq` as fallback, must be installed by system
+	elif command -v jq 1>/dev/null 2>&1; then
+		cmd_jq="jq -r"
+	fi
+}
+
+to_jq()
+{
+	filter="${1?filter empty}"
+	eval "${cmd_jq}" '"${filter}"'
+}
+
+get_workspaces_filtered()
+{
+	filter="${1?filter empty}"
+	i3-msg -t get_workspaces | to_jq "${filter}"
+}
+
+is_workspace_num_occupied()
+{
+	num="${1}"
+	nums="$(get_workspaces_filtered ".[] | .num")"
+	until (for n in ${nums}; do
+			if [ "${n}" -eq "${num}" ]; then
+				exit 0
+			fi
+		done
+		exit 1)
+	do
+		return 1
+	done
+}
+
+get_unused_workspace_num()
+{
+	unused=0
+	used="$(get_workspaces_filtered ".[] | .num")"
+	until (for i in ${used}; do
+			if [ "${i}" -eq "${unused}" ]; then
+				exit 1
+			fi
+		done)
+	do
+		unused="$(( unused + 1 ))"
+	done
+	echo "${unused}"
+}
+
+get_current_workspace_num()
+{
+	get_workspaces_filtered ".[] | select(.focused==true).num"
+}
+
+get_workspace_num()
+{
+	workspace_name="${1}"
+	if [ -z "${workspace_name}" ]; then
+		num="$(get_current_workspace_num)"
+	else
+		num="$(get_workspaces_filtered ".[] | select(.name==\"${workspace_name}\").num")"
+	fi
+	if [ -z "${num}" ] || [ "${num}" -lt 0 ] || [ "$(get_workspace_name "${num}")" != "${workspace_name}" ]; then
+		num="$(get_unused_workspace_num)"
+	fi
+	echo "${num}"
+}
+
+get_current_workspace_name()
+{
+	get_workspaces_filtered ".[] | select(.focused==true).name"
+}
+
+get_workspace_name()
+{
+	workspace_num="${1}"
+	if [ -z "${workspace_num}" ]; then
+		get_current_workspace_name
+	else
+		get_workspaces_filtered ".[] | select(.num==${workspace_num}).name"
+	fi
+}
+
+rename_workspace()
+{
+	workspace="${1}"
+	newname="${2}"
+	num="${3}"
+
+	# if new name contains id like "0: test"
+	# use the id from name instead of workspace,
+	# this allows moving of a workspace
+	if [ "${newname}" != "${newname#[[:digit:]]}" ]; then
+		# check if workspace with same id already exists, if it does abort
+		if is_workspace_num_occupied "$(echo "${newname}" | grep -o '[[:digit:]]\+')"; then
+			echo "Error: workspace with that number already exists" 1>&2
+			exit 1
+		fi
+		i3-msg "rename workspace \"${workspace}\" to \"${newname}\""
+	else
+		i3-msg "rename workspace \"${workspace}\" to \"${num}${newname:+: }${newname}\""
+	fi
+
+}
+
+parse_opts()
+{
+	while getopts 'f:n:w:h' opt; do
+		case "${opt}" in
+			f ) font="${OPTARG}" ;;
+			n ) name="${OPTARG}" ;;
+			w ) workspace="${OPTARG}" ;;
+			h ) show_help; exit ;;
+			* ) echo "Error: use -h for help" 1>&2; exit 1 ;;
+		esac
+	done
+
+	if [ -z "${workspace}" ]; then
+		workspace="$(get_current_workspace_name)"
+	fi
+
+	# Only ask for a workspace name if -n has not been given
+	# (allows to specify an empty name)
+	if [ -z "${name}" ] && [ "${name:+true}" = "${name+true}" ]; then
+		exec i3-input -P "Rename \"${workspace}\" to: " ${font:+-f}${font:+ }"${font}" \
+			-F "exec \"$(script_path) -n '%s' -w '${workspace}'\""
+	fi
+}
+
+main()
+{
+	select_jq
+	parse_opts "${@}"
+	rename_workspace "${workspace}" "${name}" "$(get_workspace_num "${workspace}")"
+}
+
+main "${@}"

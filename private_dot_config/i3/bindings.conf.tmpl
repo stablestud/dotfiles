@@ -52,6 +52,10 @@ bindsym $mod+Shift+q kill
 bindcode $mod+58 exec --no-startup-id i3-input -F "mark %s" -l 1 -P "Mark: " -f "$font"
 bindcode $mod+48 exec --no-startup-id i3-input -F '[con_mark="%s"] focus' -l 1 -P "Goto: " -f "$font"
 
+# Rename current workspace via keybind
+# n to rename, workspace id/number is kept if not given
+bindcode $mod+57 exec --no-startup-id "$HOME/.local/bin/i3-workspace-rename -f '$font'"
+
 # Start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 

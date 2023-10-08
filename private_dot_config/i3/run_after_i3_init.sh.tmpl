@@ -5,8 +5,39 @@
 # and informs the user that these should/could be installed
 # for better usability
 
-check_deps()
+check_single_dep()
 {
+	dep="${1}"
+	sh -l -c "command -v '${dep}'" 1>/dev/null 2>&1
+	return "${?}"
+}
+
+check_list_dep()
+{
+	deps="${1}"
+	msg="${2}"
+
+	for i in ${deps}; do
+		OIFS="${IFS}"
+		IFS="${IFS}|"
+		if (for j in ${i}; do
+				if check_single_dep "${j}"; then
+					exit 1
+				fi
+			done); then
+			echo "${msg} $(echo "${i}" | sed 's/|/ OR /g')"
+		fi
+		IFS="${OIFS}"
+	done
+}
+
+verify_deps()
+{
+	# List of dependencies that should be checked if installed on the system
+	# binaries installed by chezmoi are also detected.
+	# Special syntax: 'maim|scrot' allows specifying multiple dependencies from
+	# which only one needs to be available. Using this syntax the deps must be
+	# delimited by pipe |, no whitespaces are allowed and the must be in a single line.
 	required_deps="
 		setxkbmap
 		i3status
@@ -29,21 +60,14 @@ check_deps()
 {{ end -}}
 		dunst
 		xclip
-		maim
+		maim|scrot
+		gojq|jq
 		notify-send
 		xrandr"
 
-	for i in ${required_deps}; do
-		if ! command -v "${i}" 1>/dev/null 2>&1; then
-			echo "Warning: important i3 dependency not installed: ${i}" 1>&2
-		fi
-	done
 
-	for i in ${optional_deps}; do
-		if ! command -v "${i}" 1>/dev/null 2>&1; then
-			echo "Info: optional i3 dependency not installed: ${i}"
-		fi
-	done
+	check_list_dep "${required_deps}" "Warning: important i3 dependency not installed:" 1>&2
+	check_list_dep "${optional_deps}" "Info: optional i3 dependency not installed:"
 }
 
 check_primary()
@@ -58,8 +82,7 @@ check_primary()
 	fi
 }
 
-check_deps
+verify_deps
 check_primary
-
 
 # vim: filetype=sh
