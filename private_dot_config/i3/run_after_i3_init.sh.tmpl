@@ -5,6 +5,8 @@
 # and informs the user that these should/could be installed
 # for better usability
 
+{{ if lookPath "i3" }}
+
 check_single_dep()
 {
 	dep="${1}"
@@ -84,5 +86,7 @@ check_primary()
 
 verify_deps
 check_primary
+
+{{ end }}
 
 # vim: filetype=sh
