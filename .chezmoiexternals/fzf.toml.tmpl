@@ -49,11 +49,11 @@
 {{ end }}
 
 # Not fzf completion but completion of commands with fzf **<Tab>
-[".bashrc.d/fzf_completion.bash"]
+[".bashrc.d/80-fzf_completion.bash"]
 	type = "archive-file"
 	path = "fzf-0.42.0/shell/completion.bash"
 	{{ template "sources" }}
-[".bashrc.d/fzf_key_bindings.bash"]
+[".bashrc.d/80-fzf_key_bindings.bash"]
 	type = "archive-file"
 	path = "fzf-0.42.0/shell/key-bindings.bash"
 	{{ template "sources" }}

@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+# Add here your local/machine specific bash aliases
+# This file won't be changed/updated by chezmoi
+
+# vim: filetype=bash
