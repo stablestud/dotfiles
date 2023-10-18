@@ -1,0 +1,13 @@
+#! /usr/bin/env bash
+
+# ble.sh config file
+# See https://github.com/akinomyoga/ble.sh/blob/master/blerc.template
+# for documentation and defaults
+
+bleopt editor=vim
+
+bleopt prompt_eol_mark='⏎'
+
+bleopt history_share=1
+
+# vim: filetype=bash
