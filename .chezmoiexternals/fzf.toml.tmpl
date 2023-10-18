@@ -4,14 +4,14 @@
 {{ $supported_arch := list "amd64" "arm64" }}
 
 {{ define "amd64" }}
-	url = "https://github.com/junegunn/fzf/releases/download/0.42.0/fzf-0.42.0-linux_amd64.tar.gz"
-	checksum.sha512 = "41979beb3e29733e65a37eb128f6e32bae381b6f1a66e6a985cd2911d08ccde3cbde26e8a73b59d34afb67dc40ff4d409a35f663b1b56236f4dd75f5b7f7cd4c"
+	url = "https://github.com/junegunn/fzf/releases/download/0.43.0/fzf-0.43.0-linux_amd64.tar.gz"
+	checksum.sha512 = "bede5f5aa1eb4daf01d482977824942037adfcdf7894f258c20e849c49369ea23c0b4c7eb528bc1792cff6a0b5b3e498caab9f4b9ffda7a7ac8b545a48556183"
 {{ end }}
 
 # ARM 64bit also called arm64, aarch64, armv8
 {{ define "arm64" }}
-	url = "https://github.com/junegunn/fzf/releases/download/0.42.0/fzf-0.42.0-linux_arm64.tar.gz"
-	checksum.sha512 = "27fbffccd092044de62e2344b0915b10865644ade1f7b0ba7f9ecfb54c3f57a8fa17b697e0139a7d07cd2710d71f82a05c9b1044797f52a75e397a2c28f45832"
+	url = "https://github.com/junegunn/fzf/releases/download/0.43.0/fzf-0.43.0-linux_arm64.tar.gz"
+	checksum.sha512 = "d422a22563ac028b710112edbf832ec465985f20e5257444cc47bfe116a5654a2a7fcc8921c050644be32559d0a915db3a06af62dc3441ce4138e05ab83715ce"
 {{ end }}
 
 {{ define "binary" }}
@@ -23,8 +23,8 @@
 {{ end }}
 
 {{ define "sources" }}
-	url = "https://github.com/junegunn/fzf/archive/refs/tags/0.42.0.tar.gz"
-	sha512sum = "9587b8c9d37abcf1ae85b12d5cf3a1179f57241e3932db6801dee9bb952f83621b780d713c1793ccb4c5c36921b9078e156fe989b3e13664201ed729ea03d414"
+	url = "https://github.com/junegunn/fzf/archive/refs/tags/0.43.0.tar.gz"
+	checksum.sha512sum = "84e01d2f852e0d90b2a30342f7ad9a30e4e287688f6063efc2a0f602eab5ec064819efecd2041f46869bb1956b3d3eb50e98084deeaa26272c3bbafd000648f7"
 {{ end }}
 
 {{ if and (has .chezmoi.os $supported_os) (has .chezmoi.arch $supported_arch) }}
@@ -37,12 +37,13 @@
 	executable = true
 [".local/bin/fzf-tmux"]
 	type = "archive-file"
-	path = "fzf-0.42.0/bin/fzf-tmux"
+	path = "bin/fzf-tmux"
 	{{ template "sources" }}
 	executable = true
+	stripComponents = 1
 [".local/man"]
 	type = "archive"
-	include = ["fzf-0.42.0/man/**"]
+	include = ["fzf-*/man/**"]
 	{{ template "sources" }}
 	stripComponents = 2
 
@@ -51,15 +52,18 @@
 # Not fzf completion but completion of commands with fzf **<Tab>
 [".bashrc.d/80-fzf_completion.bash"]
 	type = "archive-file"
-	path = "fzf-0.42.0/shell/completion.bash"
+	path = "shell/completion.bash"
 	{{ template "sources" }}
+	stripComponents = 1
 [".bashrc.d/80-fzf_key_bindings.bash"]
 	type = "archive-file"
-	path = "fzf-0.42.0/shell/key-bindings.bash"
+	path = "shell/key-bindings.bash"
 	{{ template "sources" }}
+	stripComponents = 1
 [".config/fish/functions/fzf_key_bindings.fish"]
 	type = "archive-file"
-	path = "fzf-0.42.0/shell/key-bindings.fish"
+	path = "shell/key-bindings.fish"
 	{{ template "sources" }}
+	stripComponents = 1
 
 # vim: filetype=toml
