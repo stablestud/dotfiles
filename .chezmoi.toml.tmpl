@@ -26,8 +26,10 @@
 {{/* Check if machine has a wireless NIC */}}
 {{- if eq (output "sh" "-c" "test -r /sys/class/net; printf ${?}") ("0") -}}
 	{{- range $nic := glob "/sys/class/net/*" -}}
-		{{- if (joinPath $nic "/wireless" | stat) -}}
-			{{- $wireless = true -}}
+		{{- if eq (output "sh" "-c" (cat "test -d" $nic "; printf ${?}")) ("0") -}}
+			{{- if (joinPath $nic "/wireless" | stat) -}}
+				{{- $wireless = true -}}
+			{{- end -}}
 		{{- end -}}
 	{{- end -}}
 {{- end -}}
