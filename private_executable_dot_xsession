@@ -1,3 +1,11 @@
-PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}" i3 1>"${HOME}/.i3.log" 2>&1
+#! /usr/bin/env sh
+
+export PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
+
+if command -v dbus-run-session 1>/dev/null 2>&1; then
+	exec dbus-run-session -- i3 1>"${HOME}/.i3.log" 2>&1
+else
+	exec i3 1>"${HOME}/.i3.log" 2>&1
+fi
 
 # vim: filetype=sh
