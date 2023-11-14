@@ -1,0 +1,149 @@
+#! /usr/bin/env sh
+
+exec 1>>/"${HOME}/.pwrctrl.log" 2>&1
+
+# This script is a wrapper that tries to allow the user to power control the system
+# without root rights, that is, we try different ways of power "controlling" until one succeeds.
+#
+# In most cases the administrator must manually change settings
+# (e.g. the sudoers file) to allow unprivileged users to hibernate the system.
+#
+# The desired state as argument:
+# `suspend` to suspend to ram,
+# `hibernate` to hibernate to disk,
+# `reboot` to reboot the system,
+# `shutdown` to shutdown the system,
+# `hybrid` to hibernate to disk and suspend to ram simultaneously
+# `staged` to suspend to ram first and later to hibernate to disk after a timeout
+# By default the system will be hibernated
+
+shutdown()
+{
+	dbus-send --system --print-reply --dest="org.freedesktop.login1" \
+			/org/freedesktop/login1 \
+			org.freedesktop.login1.Manager.PowerOff \
+			boolean:true || \
+	shutdown -P now -h -a || \
+	poweroff -p || \
+	systemctl poweroff || \
+	return 1
+}
+
+reboot()
+{
+	dbus-send --system --print-reply --dest="org.freedesktop.login1" \
+			/org/freedesktop/login1 \
+			org.freedesktop.login1.Manager.Reboot \
+			boolean:true || \
+	shutdown -r now -a || \
+	reboot || \
+	systemctl reboot || \
+	return 1
+}
+
+hybrid()
+{
+	dbus-send --system --print-reply --dest="org.freedesktop.login1" \
+			/org/freedesktop/login1 \
+			org.freedesktop.login1.Manager.HybridSleep \
+			boolean:true || \
+	loginctl hybrid-sleep || \
+	s2both || \
+	systemctl hybrid-sleep || \
+	return 1
+}
+
+hibernate()
+{
+	dbus-send --system --print-reply --dest="org.freedesktop.login1" \
+			/org/freedesktop/login1 \
+			org.freedesktop.login1.Manager.Hibernate \
+			boolean:true || \
+	loginctl hibernate || \
+	s2disk || \
+	systemctl hibernate || \
+	return 1
+}
+
+suspend()
+{
+	dbus-send --system --print-reply --dest="org.freedesktop.login1" \
+			/org/freedesktop/login1 \
+			org.freedesktop.login1.Manager.Suspend \
+			boolean:true || \
+	loginctl suspend || \
+	s2ram || \
+	systemctl suspend || \
+	return 1
+}
+
+staged()
+{
+	loginctl suspend-then-hibernate || \
+	systemctl suspend-then-hibernate || \
+	return 1
+}
+
+main()
+{
+	action="${1}"
+	case "${action}" in
+		r* )
+			reboot    || { echo "Error: cannot reboot the system"; exit 1; } 1>&2
+			;;
+		sh* )
+			shutdown  || { echo "Error: cannot shutdown the system"; exit 1; } 1>&2
+			;;
+		su* )
+			suspend   || { echo "Error: cannot suspend the system"; exit 1; } 1>&2
+			;;
+		hi* )
+			hibernate || { echo "Error: cannot hibernate the system"; exit 1; } 1>&2
+			;;
+		hy* )
+			hybrid || hibernate || { echo "Error: cannot hybrid sleep the system"; exit 1; } 1>&2
+			;;
+		st* )
+			# for staged suspend
+			staged || hibernate || { echo "Error: cannot do stage sleep the system"; exit 1; } 1>&2
+			;;
+		"" )
+			hybrid || suspend_then_hibernate || hibernate || shutdown || { echo "Error: cannot set the system to sleep"; exit 1; } 1>&2
+	esac
+}
+
+prog="${0##*/}"
+param="${1}"
+
+case "${prog}" in
+	pwrr* )
+		action=reboot
+		;;
+	pwrsh* )
+		action=shutdown
+		;;
+	pwrsu* )
+		action=suspend
+		;;
+	pwrhi* )
+		action=hibernate
+		;;
+	pwrhy* )
+		action=hybrid
+		;;
+	pwrst* )
+		action=staged
+		;;
+	pwrc* | executable_pwrc* )
+		action=
+		;;
+	* )
+		if [ -z "${param}" ]; then
+			echo "Error: unknown state for ${prog}" 1>&2
+			exit 1
+		fi
+esac
+
+main "${action}"
+
+# vim: filetype=sh
