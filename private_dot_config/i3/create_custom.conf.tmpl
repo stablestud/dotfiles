@@ -33,6 +33,10 @@
 
 # launch audio server for audio output
 # required for Gentoo systems running pipewire as daemon
-#exec --no-startup-id gentoo-pipewire-launcher
+#exec --no-startup-id gentoo-pipewire-launcher restart
+
+# define primary/default monitor
+# used for tray icons placement
+#exec --no-startup-id xrandr --output DisplayPort-1 --primary
 
 # vim: filetype=i3config
