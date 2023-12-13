@@ -49,13 +49,13 @@
 
 {{ end }}
 
-# Not fzf completion but completion of commands with fzf **<Tab>
-[".bashrc.d/80-fzf_completion.bash"]
+# Not completion of fzf itself but for <cmd> **TAB
+[".bashrc.d/additional/fzf/shell/completion.bash"]
 	type = "archive-file"
 	path = "shell/completion.bash"
 	{{ template "sources" }}
 	stripComponents = 1
-[".bashrc.d/80-fzf_key_bindings.bash"]
+[".bashrc.d/additional/fzf/shell/key-bindings.bash"]
 	type = "archive-file"
 	path = "shell/key-bindings.bash"
 	{{ template "sources" }}
