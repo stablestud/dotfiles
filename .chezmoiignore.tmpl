@@ -1,10 +1,11 @@
-**/README.*
+**/README*
 **/LICENSE
 
 # Note: external binaries included by .chezmoiexternals* should
 # not be ignored by this file,
 # instead their template should result to an empty file/entry
 # on systems where the binary should not be installed
+# (empty files are not added by chezmoi)
 
 {{/* ignore these if no graphical environment is installed */}}
 {{ if .headless }}
@@ -28,6 +29,12 @@
 	.config/qutebrowser/**
 	.var
 	.var/**
+	.xsession
+	.xinitrc
+{{ end }}
+
+# Prevent setting i3 session for remote desktop, if not installed
+{{ if not (lookPath "i3") }}
 	.xsession
 	.xinitrc
 {{ end }}
