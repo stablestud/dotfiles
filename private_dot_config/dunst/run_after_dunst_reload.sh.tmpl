@@ -1,0 +1,7 @@
+#! {{ template "shebang.tmpl" "/usr/bin/env" }} sh
+
+{{ if lookPath "dunst" }}
+
+killall dunst 1>/dev/null 2>&1 || true
+
+{{ end }}

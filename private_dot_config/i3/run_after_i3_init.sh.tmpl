@@ -84,8 +84,24 @@ check_primary()
 	fi
 }
 
+reload()
+{
+	if [ -n "${I3SOCK}" ]; then
+		if [ -f "${I3SOCK}" ]; then
+			i3-msg --socket "${I3SOCK}" reload
+		else
+			for socket in $(dirname ${I3SOCK})/ipc-socket.*; do
+				i3-msg --socket "${socket}" reload 1>/dev/null 2>&1
+			done
+		fi
+	else
+		echo "Warning: cannot reload i3: I3SOCK env not found" 1>&2
+	fi
+}
+
 verify_deps
 check_primary
+reload
 
 {{ end }}
 

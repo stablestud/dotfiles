@@ -26,7 +26,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id dex --autostart --environment i3
 # notification daemon; if not started will be started automatically by
 # dbus, but if multiple notification daemons are installed, force dunst instead
-exec --no-startup-id dunst
+exec_always --no-startup-id dunst
 
 # runtime triggers (which run everytime i3 is being reloaded/restarted
 # for some reason on i3 start incorrect keyboard layouts are applied

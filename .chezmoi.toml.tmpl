@@ -41,6 +41,9 @@
 	{{- $glibc = true -}}
 {{- end -}}
 
+{{- $colorscheme_choices := list "black" "white" "dark" "light" -}}
+{{- $colorscheme := promptChoice "Selenized colorscheme to use: " $colorscheme_choices "black" -}}
+
 # Current machine values detected by chezmoi v{{ .chezmoi.version.version }}
 # hostname = {{ .chezmoi.hostname }}
 # os       = {{ .chezmoi.os }}
@@ -63,5 +66,14 @@ wireless = {{ $wireless }}
 # but glibc binaries are not compatible with musl distros (like Alpine Linux).
 # So this variable can be used to ignore glibc dependent apps on musl systems
 glibc    = {{ $glibc }}
+# Select what theme to use for applications supporting theme selection/color changing
+# Currently using Selenized theme only with vim, i3, rofi
+# The user can select the colorscheme
+# Available options:
+# - white
+# - light
+# - black
+# - dark
+colorscheme = {{ $colorscheme | quote }}
 
 # vim: filetype=toml
