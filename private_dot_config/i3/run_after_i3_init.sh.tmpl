@@ -84,14 +84,18 @@ check_primary()
 	fi
 }
 
-reload()
+restart()
 {
+	# Required to update colorscheme of screensaver
+	# Will be started by i3 again
+	killall xss-lock 1>/dev/null 2>&1 || true
+
 	if [ -n "${I3SOCK}" ]; then
 		if [ -f "${I3SOCK}" ]; then
-			i3-msg --socket "${I3SOCK}" reload
+			i3-msg --socket "${I3SOCK}" restart
 		else
 			for socket in $(dirname ${I3SOCK})/ipc-socket.*; do
-				i3-msg --socket "${socket}" reload 1>/dev/null 2>&1
+				i3-msg --socket "${socket}" restart 1>/dev/null 2>&1
 			done
 		fi
 	else
@@ -101,7 +105,7 @@ reload()
 
 verify_deps
 check_primary
-reload
+restart
 
 {{ end }}
 
