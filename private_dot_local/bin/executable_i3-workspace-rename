@@ -6,6 +6,10 @@
 # makes sure that the the workspace number is never changed.
 # For example: rename '10: comm' to 'mail' will rename it to '10: mail' and not 'mail'
 #
+# By default rofi one line prompt will be used to ask the user for the new name,
+# should that be not installed we fallback to i3-input.
+# Rofi is preferred as it can be customized to blend in with the rest of the system. (i3-input is ugly)
+#
 # Additionally when a id is given for example: rename '10: comm' to '8: mail', then
 # the id is not kept and the ID of the new name is used instead
 
@@ -151,8 +155,18 @@ parse_opts()
 	# Only ask for a workspace name if -n has not been given
 	# (allows to specify an empty name)
 	if [ -z "${name}" ] && [ "${name:+true}" = "${name+true}" ]; then
-		exec i3-input -P "Rename \"${workspace}\" to: " ${font:+-f}${font:+ }"${font}" \
-			-F "exec \"$(script_path) -n '%s' -w '${workspace}'\""
+		if command -v rofi 1>/dev/null 2>&1; then
+			name="$(rofi -dmenu -theme-str "listview { lines: 0; border: 0px; } entry { placeholder: \"${workspace#[[:digit:]]*: }\"; }" -p "Rename workspace '${workspace%%: *}' to")"
+			# If user aborted input (ESC pressed), do not alter name 
+			if [ "${?}" -ne 0 ]; then
+				exit
+			fi
+		else
+			exec i3-input -P "Rename \"${workspace}\" to: " ${font:+-f}${font:+ }"${font}" \
+				-F "exec \"$(script_path) -n '%s' -w '${workspace}'\""
+			# i3-input does a rerun of this script but with supplied name, so we can exit here
+			exit
+		fi
 	fi
 }
 
