@@ -29,12 +29,15 @@ script_path()
 
 select_jq()
 {
-	# Try `gojq` first, normally installed by chezmoi
+	# Try `gojq` first, can added as static binary easily
 	if command -v gojq 1>/dev/null 2>&1; then
 		cmd_jq="gojq --raw-output"
-	# Try `jq` as fallback, must be installed by system
+	# Try `jq` as fallback, easiest installable by system package manager
 	elif command -v jq 1>/dev/null 2>&1; then
 		cmd_jq="jq -r"
+	else
+		echo "Error: cannot find jq or gojq" 1>&2
+		exit 1
 	fi
 }
 
