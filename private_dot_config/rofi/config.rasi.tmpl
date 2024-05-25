@@ -1,0 +1,9 @@
+{{- if eq .colorscheme "black" -}}
+@import "selenized_black"
+{{- else if eq .colorscheme "white" -}}
+@import "selenized_white"
+{{- else if eq .colorscheme "dark" -}}
+@import "selenized_dark"
+{{- else if eq .colorscheme "light" -}}
+@import "selenized_light"
+{{- end }}
