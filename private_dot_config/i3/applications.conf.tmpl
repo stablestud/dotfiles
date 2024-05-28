@@ -46,6 +46,8 @@ exec_always --no-startup-id dunst
 # restarted. So to force fix my layout I just do <Ctrl-Shift-r> to restart
 # i3 and to execute the below setxkblayout script
 exec_always --no-startup-id "$HOME/.local/bin/setxkblayout"
+# Fix stuck in CAPS mode when keyboard layout has been already changed
+bindsym Ctrl+Shift+66 exec --no-startup-id "xdotool key Caps_Lock"
 
 # power control
 bindsym $mod+x exec --no-startup-id "$HOME/.local/bin/screensvrnow"
