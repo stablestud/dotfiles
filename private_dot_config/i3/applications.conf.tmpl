@@ -50,13 +50,14 @@ exec_always --no-startup-id "$HOME/.local/bin/setxkblayout"
 bindsym Ctrl+Shift+66 exec --no-startup-id "xdotool key Caps_Lock"
 
 # power control
-bindsym $mod+x exec --no-startup-id "$HOME/.local/bin/screensvrnow"
-bindsym $mod+Shift+x exec --no-startup-id "$HOME/.local/bin/pwrsuspend"
-bindsym $mod+Ctrl+Shift+x exec --no-startup-id i3-nagbar --type warning --message "Shutdown system?" --font "$font" --button-no-terminal "Yes" "$HOME/.local/bin/pwrshutdown"
+bindsym $mod+q exec --no-startup-id "$HOME/.local/bin/screensvrnow"
+bindsym $mod+Ctrl+Shift+q exec --no-startup-id i3-nagbar --type warning --message "Shutdown system?" --font "$font" --button-no-terminal "Yes" "$HOME/.local/bin/pwrshutdown"
+
 
 # launcher bindings
 # start program launcher
-bindsym $mod+d exec --no-startup-id "rofi -modi drun,run -show drun"
+bindsym $mod+d exec --no-startup-id "rofi -modi drun -show drun"
+bindsym $mod+Shift+d exec --no-startup-id "rofi -modi run -show run"
 # start filebrowser
 bindsym $mod+f exec --no-startup-id "rofi -modi filebrowser -show filebrowser"
 # start window switcher
