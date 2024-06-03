@@ -56,12 +56,12 @@ bindsym $mod+Ctrl+Shift+q exec --no-startup-id i3-nagbar --type warning --messag
 
 # launcher bindings
 # start program launcher
-bindsym $mod+d exec --no-startup-id "rofi -modi drun -show drun -show-icons"
+bindsym $mod+d exec --no-startup-id "rofi -modi drun -show drun"
 bindsym $mod+Shift+d exec --no-startup-id "rofi -modi run -show run"
 # start filebrowser
 bindsym $mod+f exec --no-startup-id "rofi -modi filebrowser -show filebrowser"
 # start window switcher
-bindsym $mod+Tab exec --no-startup-id "rofi -modi window -show window -show-icons"
+bindsym $mod+Tab exec --no-startup-id "rofi -modi window -show window"
 
 {{ if .battery -}}
 # handle backlight
