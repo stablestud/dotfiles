@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+# Wrapper script that creates a rofi window asking for given prompt.
+# Entered data is echoed out for use in other scripts
+# This wrapper is required, because creating a one line rofi window
+# is not straight forward as it requires customized syling properties
+# to create the one line window
+# Echoes supplied input, empty string if no input
+# Returns 1 if input has been aborted with ESC
+
+prompt="${1?Error: prompt message missing}"
+
+exec rofi -dmenu -theme-str "listview { lines: 0; border: 0px; } entry { placeholder: \"${2-enter data}\"; }" -p "${prompt}"

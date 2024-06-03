@@ -159,7 +159,7 @@ parse_opts()
 	# (allows to specify an empty name)
 	if [ -z "${name}" ] && [ "${name:+true}" = "${name+true}" ]; then
 		if command -v rofi 1>/dev/null 2>&1; then
-			name="$(rofi -dmenu -theme-str "listview { lines: 0; border: 0px; } entry { placeholder: \"${workspace#[[:digit:]]*: }\"; }" -p "Rename workspace '${workspace%%: *}' to")"
+			name="$(rofi-prompt "Rename workspace '${workspace%%: *}' to" "${workspace#[[:digit:]]*: }")"
 			# If user aborted input (ESC pressed), do not alter name 
 			if [ "${?}" -ne 0 ]; then
 				exit
