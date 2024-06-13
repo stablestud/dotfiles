@@ -41,9 +41,19 @@
 	{{- $glibc = true -}}
 {{- end -}}
 
+{{/* Let user select preferred selenized colorscheme, if not headless */}}
 {{- $colorscheme_choices := list "black" "white" "dark" "light" -}}
-{{- $colorscheme := promptChoice "Selenized colorscheme to use: " $colorscheme_choices "black" -}}
+{{- $colorscheme := "light" -}}
+{{- if eq $headless false -}}
+	{{- $colorscheme = promptChoice "Selenized colorscheme to use: " $colorscheme_choices "light" -}}
+{{- end -}}
 
+{{/* Determine if system supports AppImages */}}
+{{- $appimage_archs := list "amd64" -}}
+{{- $appimage_os := list "linux" -}}
+{{- $appimage := and (has .chezmoi.os $appimage_os) (has .chezmoi.arch $appimage_archs) (.glibc) -}}
+
+{{/* Infos about current system */}}
 # Current machine values detected by chezmoi v{{ .chezmoi.version.version }}
 # hostname = {{ .chezmoi.hostname }}
 # os       = {{ .chezmoi.os }}
@@ -66,6 +76,7 @@ wireless = {{ $wireless }}
 # but glibc binaries are not compatible with musl distros (like Alpine Linux).
 # So this variable can be used to ignore glibc dependent apps on musl systems
 glibc    = {{ $glibc }}
+appimage = {{ $appimage }}
 # Select what theme to use for applications supporting theme selection/color changing
 # Currently using Selenized theme only with vim, i3, rofi
 # The user can select the colorscheme

@@ -1,6 +1,3 @@
-{{ $supported_os := list "linux" }}
-{{ $supported_arch := list "amd64" }}
-
 {{ define "amd64" }}
 	url = "https://github.com/vim/vim-appimage/releases/download/v9.0.2043/Vim-v9.0.2043.glibc2.29-x86_64.AppImage"
 	checksum.sha512 = "fa03c898c67e7b35220db99c251428a3ccbce5effab9e952d8ffe56f524837fe9fabd5a03f67b45c7d15febfeedf081233b4e7f62892631b65e13cd79c96ef07"
@@ -12,7 +9,7 @@
 	{{ end }}
 {{ end }}
 
-{{ if and (has .chezmoi.os $supported_os) (has .chezmoi.arch $supported_arch) (.glibc) }}
+{{ if .appimage }}
 
 # Vim
 [".local/bin/.AppImages/vim.AppImage"]

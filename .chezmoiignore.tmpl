@@ -46,7 +46,8 @@
 # The underlying AppImages are architecture dependent,
 # so don't create the symlinks for unsupport systems
 # Also all AppImages are glibc dependent so make sure it is available
-{{ if or (ne .chezmoi.arch "amd64") (ne .chezmoi.os "linux") (not .glibc) }}
+{{ if not .appimage }}
+	.local/bin/.AppImageRunner
 	.local/bin/tmux
 	.local/bin/vim
 {{ end }}
