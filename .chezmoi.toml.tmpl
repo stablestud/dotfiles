@@ -51,7 +51,7 @@
 {{/* Determine if system supports AppImages */}}
 {{- $appimage_archs := list "amd64" -}}
 {{- $appimage_os := list "linux" -}}
-{{- $appimage := and (has .chezmoi.os $appimage_os) (has .chezmoi.arch $appimage_archs) (.glibc) -}}
+{{- $appimage := and (has .chezmoi.os $appimage_os) (has .chezmoi.arch $appimage_archs) ($glibc) -}}
 
 {{/* Infos about current system */}}
 # Current machine values detected by chezmoi v{{ .chezmoi.version.version }}
