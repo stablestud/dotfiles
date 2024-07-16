@@ -31,24 +31,32 @@ take_screenshot()
 {
 	msg_success="Saved to $(basename "${filepath}")"
 
-	{
-		if command -v maim 1>/dev/null 2>&1; then
+	if command -v maim 1>/dev/null 2>&1; then
+		{
 			if [ -z "${selection}" ]; then
 				maim --format png --noopengl
 			else
 				maim --select --format png --noopengl
 			fi
-		elif command -v scrot 1>/dev/null 2>&1; then
+		} | tee "${filepath}" | to_clipboard
+	elif command -v scrot 1>/dev/null 2>&1; then
+		{
 			if [ -z "${selection}" ]; then
-				scrot --pointer --silent -
+				scrot --silent -
 			else
 				scrot --select=capture --pointer --silent -
 			fi
+		} | tee "${filepath}" | to_clipboard
+	elif command -v grimshot 1>/dev/null 2>&1; then
+		if [ -z "${selection}" ]; then
+			grimshot savecopy screen "${filepath}"
 		else
-			echo "Error: cannot find screenshot utility" 1>&2
-			exit 1
+			grimshot --cursor savecopy anything "${filepath}"
 		fi
-	} | tee "${filepath}" | to_clipboard
+	else
+		echo "Error: cannot find screenshot utility" 1>&2
+		exit 1
+	fi
 	if [ "${?}" -eq "0" ]; then
 		msg_success="${msg_success} and CLIPBOARD"
 	fi
