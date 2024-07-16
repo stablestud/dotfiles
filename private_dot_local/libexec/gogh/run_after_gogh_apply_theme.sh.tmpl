@@ -7,39 +7,32 @@ BASE_PATH="${HOME}/.local/libexec/gogh"
 export GOGH_APPLY_SCRIPT="${BASE_PATH}/apply-colors.sh"
 export GOGH_NONINTERACTIVE="true"
 
-apply_gnome_terminal()
+apply_themes()
 {
-	export TERMINAL="gnome-terminal"
-	# Apply themes to gnome-terminal
-	for c in ${themes_excl}; do
-		TERMINAL="gnome-terminal" "${BASE_PATH}/${c}.sh"
-	done
-
-	GOGH_USE_NEW_THEME="true" "${BASE_PATH}/${theme_sel}.sh"
-	unset TERMINAL
-}
-
-apply_xfce4_terminal()
-{
-	export TERMINAL="xfce4-terminal"
-	xfce_clrs="${HOME}/.local/share/xfce4/terminal/colorschemes"
-	xfce_cfg="${HOME}/.config/xfce4/terminal/terminalrc"
-
-	if [ ! -d "${xfce_clrs}" ]; then
-		mkdir --parent "${xfce_clrs}"
-	fi
-
-	if [ ! -f "${xfce_cfg}" ]; then
-		mkdir --parent "$(dirname "${xfce_cfg}")"
-		touch "${xfce_cfg}"
-	fi
-
 	for c in ${themes_excl}; do
 		"${BASE_PATH}/${c}.sh"
 	done
 
 	GOGH_USE_NEW_THEME="true" "${BASE_PATH}/${theme_sel}.sh"
 	unset TERMINAL
+}
+
+apply_gnome_terminal()
+{
+	export TERMINAL="gnome-terminal"
+	apply_themes
+}
+
+apply_xfce4_terminal()
+{
+	export TERMINAL="xfce4-terminal"
+	apply_themes
+}
+
+apply_foot_terminal()
+{
+	export TERMINAL="foot"
+	apply_themes
 }
 
 main()
@@ -61,6 +54,11 @@ main()
 {{ if lookPath "xfce4-terminal" }}
 	apply_xfce4_terminal
 {{ end }}
+
+{{ if lookPath "foot" }}
+	apply_foot_terminal
+{{ end }}
+
 }
 
 main
