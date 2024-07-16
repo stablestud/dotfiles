@@ -1,32 +1,33 @@
 {{/* Goph is used to apply selenized themes on all kinds of terminals */}}
 
 {{ if and (not .headless) (lookPath "bash") }}
+{{ $git_hash := "831585063811618f5da7574b726b824b25d6376f" }}
 
 [".local/libexec/gogh/apply-colors.sh"]
 	type = "file"
 	# source: https://github.com/Gogh-Co/Gogh/blob/master/apply-colors.sh
-	# applied version is few commits after release v272
-	url  = "https://github.com/Gogh-Co/Gogh/raw/a80d91c8a0d72131d8d6caa984b70155a99c38db/apply-colors.sh"
-	checksum.sha512 = "5388b5407749c327ff7b52fe80ee5d5f2523c8c71a655487ba81829dd61fb96a38ed7d2c4357730984c9982107fcf1afe478ffa7e67616288643e2537af4b4a0"
+	# applied version is few commits after release v275
+	url  = "https://github.com/Gogh-Co/Gogh/raw/{{ $git_hash }}/apply-colors.sh"
+	checksum.sha512 = "656b98bff967ab27a2bfb48428929a6fdd46e87ba6644bef79fc6c456b907f3394be1a84ee97c79a74f420f2b93e839daa42af8fd3f38dd181a1c3367194b6b1"
 
 [".local/libexec/gogh/selenized-black.sh"]
 	type = "file"
 	# source: https://github.com/Gogh-Co/Gogh/blob/master/installs/selenized-black.sh
-	url  = "https://github.com/Gogh-Co/Gogh/raw/a80d91c8a0d72131d8d6caa984b70155a99c38db/installs/selenized-black.sh"
+	url  = "https://github.com/Gogh-Co/Gogh/raw/{{ $git_hash }}/installs/selenized-black.sh"
 	checksum.sha512 = "79ff52c0ab6cb8b66cb51eb5f79b3f282cf6e566318d66cf8d655de31f2a5f9a4d811d01bfd960bbb6298e1478ee3446a16248323025f3b354a763f6cd9d3bff"
 	executable = true
 
 [".local/libexec/gogh/selenized-white.sh"]
 	type = "file"
 	# source: https://github.com/Gogh-Co/Gogh/blob/master/installs/selenized-white.sh
-	url  = "https://github.com/Gogh-Co/Gogh/raw/a80d91c8a0d72131d8d6caa984b70155a99c38db/installs/selenized-white.sh"
+	url  = "https://github.com/Gogh-Co/Gogh/raw/{{ $git_hash }}/installs/selenized-white.sh"
 	checksum.sha512 = "f79e61820be5c36f6b2df790043675db3083af703de8e4faec2d5b8606ac8d5061417fe8eff00a3e3a9330a2399df4f34b0cbc9ae9187d8c138c39cec7e64c9e"
 	executable = true
 
 [".local/libexec/gogh/selenized-dark.sh"]
 	type = "file"
 	# source: https://github.com/Gogh-Co/Gogh/blob/master/installs/selenized-dark.sh
-	url  = "https://github.com/Gogh-Co/Gogh/raw/a80d91c8a0d72131d8d6caa984b70155a99c38db/installs/selenized-dark.sh"
+	url  = "https://github.com/Gogh-Co/Gogh/raw/{{ $git_hash }}/installs/selenized-dark.sh"
 	checksum.sha512 = "8be9269f4d0ae476d616ebfcb83582d9112da17185b00ae19dd7c4385301a1fa528221e17520409ccf9808295af5d0b11ecb692e320f17cc45eaad6224f3287e"
 	executable = true
 
