@@ -36,6 +36,8 @@ elif command -v lxterminal 1>/dev/null 2>&1; then
 	exec lxterminal --command /usr/bin/env sh -c "$(buildcmd "${@}")"
 elif command -v gnome-terminal 1>/dev/null 2>&1; then
 	exec gnome-terminal --wait -- /usr/bin/env sh -c "$(buildcmd "${@}")"
+elif command -v foot 1>/dev/null 2>&1; then
+	exec foot "${@}"
 else
 	echo "Error: No supported terminal emulator found!" 1>&2
 	exit 1
