@@ -3,9 +3,8 @@
 # and should the applications should be installed afterwards,
 # no changes in config file must be made to have it running as expected
 
-# lockscreen setup
 {{/* Default value is white screen */}}
-{{ $bg_col := "ffffff" }}
+{{- $bg_col := "ffffff" }}
 {{ if eq .colorscheme "black" }}
 	{{ $bg_col = "181818" }}
 {{ else if eq .colorscheme "white" }}
@@ -14,10 +13,11 @@
 	{{ $bg_col = "103c48" }}
 {{ else if eq .colorscheme "light" }}
 	{{ $bg_col = "fbf3db" }}
-{{ end }}
+{{- end }}
+# lockscreen setup
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec_always --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork --tiling --ignore-empty-password --show-failed-attempts --color="{{ $bg_col }}"
+exec_always --no-startup-id xss-lock "$HOME/.local/bin/i3-inhibit-lockscreen"
 
 exec --no-startup-id "$HOME/.local/bin/screensvron"
 

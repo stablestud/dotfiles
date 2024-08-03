@@ -3,7 +3,6 @@
 # Disables screen timeout and screensaver indefinitely
 # Useful for watching films etc
 
-xset -dpms
 xset s 0
 
 # vim: filetype=sh

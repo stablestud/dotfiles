@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+
+# This script manages timeout and automatic lockscreen functions for the i3 window manager.
+# It includes a check to see if the current window is in fullscreen mode.
+# If a window is fullscreen, the script will prevent the lockscreen from activating.
+# This is useful when watching videos,
+# making sure that the screen does not lock and disrupt the viewing experience.
+#
+# As arguments it takes the lockscreen command to execute if no fullscreen is active.
+
+# Get active window id
+get_active_window()
+{
+	xprop -root | awk '$1 ~ /_NET_ACTIVE_WINDOW/ { print $5 }'
+}
+
+# Check if active window is in fullscreen
+is_fullscreen()
+{
+	xprop -id "$(get_active_window)" | awk -F '=' '$1 ~ /_NET_WM_STATE\(ATOM\)/ { for (i=2; i<=3; i++) if ($i ~ /FULLSCREEN/) exit 0; exit 1 }'
+}
+
+main()
+{
+	if ! is_fullscreen; then
+		i3-lockscreen
+		revert
+	fi
+}
+
+main "${@}"
+
+# vim: filetype=sh

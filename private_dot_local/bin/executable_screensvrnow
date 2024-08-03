@@ -1,13 +1,16 @@
 #! /usr/bin/env sh
 
+# Wrapper script that enables screenlocking/screensaver for i3 systems
+# The user just need to call this script and it makes sure the screen gets locked
+
 # Reenable automatic screensaver, if it was disabled beforehand
 screensvron
 
 # Lock the screen and turn on the screensaver immediately
-if command -v xset 1>/dev/null 2>&1; then
-	xset dpms force off
-elif command -v loginctl 1>/dev/null 2>&1; then
+if command -v loginctl 1>/dev/null 2>&1; then
 	loginctl lock-session 
+elif [ -n "${I3SOCK}" ]; then
+	i3-lockscreen
 else
 	echo "Error: cannot lock screen" 1>&2
 	exit 1

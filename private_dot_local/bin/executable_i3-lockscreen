@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+# Wrapper script that locks the i3 screen with i3lock,
+# but also applies power saving features for the lockscreen (screen timeout/standby)
+# Power saving features are not enabled by default to prevent powersaving the screen
+# when watching a film, as it cannot be caught by i3-inhibit-lockscreen
+
+revert()
+{
+	xset -dpms dpms 0 0 0
+}
+
+main()
+{
+	xset +dpms dpms 5 5 5
+	# TODO fix colors
+	i3lock --nofork --tiling --ignore-empty-password --show-failed-attempts --color="103c48"
+	revert
+}
+
+
+trap revert HUP INT TERM
+main "${@}"
+
+# vim: filetype=sh
