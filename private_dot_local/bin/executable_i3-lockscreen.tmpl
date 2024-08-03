@@ -5,6 +5,17 @@
 # Power saving features are not enabled by default to prevent powersaving the screen
 # when watching a film, as it cannot be caught by i3-inhibit-lockscreen
 
+{{- $bg_col := "ffffff" }}
+{{ if eq .colorscheme "black" }}
+	{{ $bg_col = "181818" }}
+{{ else if eq .colorscheme "white" }}
+	{{ $bg_col = "ffffff" }}
+{{ else if eq .colorscheme "dark" }}
+	{{ $bg_col = "103c48" }}
+{{ else if eq .colorscheme "light" }}
+	{{ $bg_col = "fbf3db" }}
+{{ end }}
+
 revert()
 {
 	xset -dpms dpms 0 0 0
@@ -13,8 +24,7 @@ revert()
 main()
 {
 	xset +dpms dpms 5 5 5
-	# TODO fix colors
-	i3lock --nofork --tiling --ignore-empty-password --show-failed-attempts --color="103c48"
+	i3lock --nofork --tiling --ignore-empty-password --show-failed-attempts --color="{{ $bg_col }}"
 	revert
 }
 
