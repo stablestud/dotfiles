@@ -1,7 +1,7 @@
 [colorschemes.selenized_dark]
 bg_0  = "103c48"
-bg_1  = "174956"
-bg_2  = "325b66"
+bg_1  = "184956"
+bg_2  = "2d5b69"
 dim_0 = "72898f"
 fg_0  = "adbcbc"
 fg_1  = "cad8d9"
@@ -52,8 +52,8 @@ br_violet  = "b891f5"
 
 [colorschemes.selenized_light]
 bg_0  = "fbf3db"
-bg_1  = "e9e4d0"
-bg_2  = "cfcebe"
+bg_1  = "ece3cc"
+bg_2  = "d5cdb6"
 dim_0 = "909995"
 fg_0  = "53676d"
 fg_1  = "3a4d53"
