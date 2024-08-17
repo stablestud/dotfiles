@@ -3,17 +3,6 @@
 # and should the applications should be installed afterwards,
 # no changes in config file must be made to have it running as expected
 
-{{/* Default value is white screen */}}
-{{- $bg_col := "ffffff" }}
-{{ if eq .colorscheme "black" }}
-	{{ $bg_col = "181818" }}
-{{ else if eq .colorscheme "white" }}
-	{{ $bg_col = "ffffff" }}
-{{ else if eq .colorscheme "dark" }}
-	{{ $bg_col = "103c48" }}
-{{ else if eq .colorscheme "light" }}
-	{{ $bg_col = "fbf3db" }}
-{{- end }}
 # lockscreen setup
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.

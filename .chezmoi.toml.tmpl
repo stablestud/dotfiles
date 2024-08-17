@@ -41,11 +41,11 @@
 	{{- $glibc = true -}}
 {{- end -}}
 
-{{/* Let user select preferred selenized colorscheme, if not headless */}}
-{{- $colorscheme_choices := list "black" "white" "dark" "light" -}}
-{{- $colorscheme := "light" -}}
+{{/* Let user select preferred colorscheme/theme, if not headless */}}
+{{- $colorscheme_choices := list "selenized_black" "selenized_white" "selenized_dark" "selenized_light" -}}
+{{- $colorscheme := "selenized_light" -}}
 {{- if eq $headless false -}}
-	{{- $colorscheme = promptChoice "Selenized colorscheme to use: " $colorscheme_choices "light" -}}
+	{{- $colorscheme = promptChoice "Selenized colorscheme to use: " $colorscheme_choices "selenized_light" -}}
 {{- end -}}
 
 {{/* Determine if system supports AppImages */}}
@@ -78,13 +78,13 @@ wireless = {{ $wireless }}
 glibc    = {{ $glibc }}
 appimage = {{ $appimage }}
 # Select what theme to use for applications supporting theme selection/color changing
-# Currently using Selenized theme only with vim, i3, rofi
+# Currently using only Selenized themes with vim, i3, rofi
 # The user can select the colorscheme
 # Available options:
-# - white
-# - light
-# - black
-# - dark
+# - selenized_white
+# - selenized_light
+# - selenized_black
+# - selenzied_dark
 colorscheme = {{ $colorscheme | quote }}
 
 # vim: filetype=toml

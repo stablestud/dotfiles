@@ -1,0 +1,1 @@
+{{- (index .colorschemes .colorscheme).cyan -}}

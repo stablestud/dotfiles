@@ -1,4 +1,4 @@
-#! {{ template "shebang.tmpl" "/usr/bin/env" }} sh
+#! {{ template "shebang.tmpl" "/usr/bin/env" }} bash
 
 # Goph is used to apply color themes to all kinds of terminals
 # By default it'll install only Selenized themes
@@ -43,7 +43,7 @@ main()
 	fi
 
 	themes_def="selenized-black selenized-white selenized-dark selenized-light"
-	theme_sel="selenized-{{ .colorscheme }}"
+	theme_sel="{{ .colorscheme | replace "_" "-" }}"
 	themes_excl="$(printf "${themes_def}" | sed "s/${theme_sel}//g")"
 	themes="${themes_excl} ${theme_sel}" # Apply selected theme last
 
