@@ -1,0 +1,17 @@
+# SWAY/i3 CONFIGURATION
+
+# Setup the leader/meta/super key
+# Mod1 = Alt
+# Mod4 = Win
+# Uses Win as leader key
+set $mod Mod4
+
+# Configure sway/i3 behavior
+focus_follows_mouse no
+focus_wrapping no
+workspace_auto_back_and_forth no
+focus_on_window_activation urgent
+for_window [all] title_format "%title - %class"
+floating_modifier $mod
+
+{{- /* vim:set filetype=i3config: */}}

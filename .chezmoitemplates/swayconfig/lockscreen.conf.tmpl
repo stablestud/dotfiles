@@ -1,0 +1,13 @@
+# LOCKSCREEN/SCREENSAVER
+# Setup lockscreen and screensaver
+
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+exec --no-startup-id xss-lock "$HOME/.local/bin/i3-inhibit-lockscreen"
+# Setup screen timeouts etc
+exec --no-startup-id "$HOME/.local/bin/screensvron"
+
+# Lockscreen with keybind
+bindsym $mod+q exec --no-startup-id "$HOME/.local/bin/screensvrnow"
+
+{{- /* vim:set filetype=i3config: */}}

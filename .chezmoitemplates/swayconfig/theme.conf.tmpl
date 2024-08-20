@@ -1,0 +1,43 @@
+# THEMING
+# Selenized colorschemes for i3, selectable via chezmoi config variable colorscheme
+# Adapted from https://github.com/jan-warchol/selenized/tree/master/other-apps/i3
+
+# default shades
+set $bg       "#{{ template "colorscheme/bg_0" . }}"
+set $black    "#{{ template "colorscheme/bg_1" . }}"
+set $br_black "#{{ template "colorscheme/bg_2" . }}"
+set $white    "#{{ template "colorscheme/dim_0" . }}"
+set $fg	      "#{{ template "colorscheme/fg_0" . }}"
+set $br_white "#{{ template "colorscheme/fg_1" . }}"
+
+# normal colors
+set $red     "#{{ template "colorscheme/red" . }}"
+set $green   "#{{ template "colorscheme/green" . }}"
+set $yellow  "#{{ template "colorscheme/yellow" . }}"
+set $blue    "#{{ template "colorscheme/blue" . }}"
+set $magenta "#{{ template "colorscheme/magenta" . }}"
+set $cyan    "#{{ template "colorscheme/cyan" . }}"
+set $orange  "#{{ template "colorscheme/orange" . }}"
+set $violet  "#{{ template "colorscheme/violet" . }}"
+
+# bold/bright colors
+set $br_red     "#{{ template "colorscheme/br_red" . }}"
+set $br_green   "#{{ template "colorscheme/br_green" . }}"
+set $br_yellow  "#{{ template "colorscheme/br_yellow" . }}"
+set $br_blue    "#{{ template "colorscheme/br_blue" . }}"
+set $br_magenta "#{{ template "colorscheme/br_magenta" . }}"
+set $br_cyan    "#{{ template "colorscheme/br_cyan" . }}"
+set $br_orange  "#{{ template "colorscheme/br_orange" . }}"
+set $br_violet  "#{{ template "colorscheme/br_violet" . }}"
+
+# clientclass border backgr. text indicator
+client.focused $green $green $black $blue
+client.focused_inactive $cyan $cyan $black $violet
+client.unfocused $black $black $fg $white
+client.urgent $yellow $yellow $black $orange
+
+# font to use, selected font should exist on all systems by default
+set $font pango:{{ .i3font }}
+font "$font"
+
+{{- /* vim:set filetype=i3config: */}}

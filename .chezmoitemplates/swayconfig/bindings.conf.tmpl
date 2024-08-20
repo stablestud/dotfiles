@@ -1,47 +1,48 @@
-# Bindings for i3 internal actions (no external dependencies on applications)
-# To get keybind code/symbol for a key use `xev`
+# BINDINGS
+# Bindings for sway/i3 internal actions (no external dependencies on applications)
+# To get keybind code/symbol for a key use `xev` or `wev` (wayland)
 
 # Navigation
-# change focus
+# Change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
-# move focused window
+# Move focused window
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
-# iterate through workspaces
-# keys < and >
+# Iterate through workspaces
+# Keys < and >
 bindcode $mod+59 workspace prev
 bindcode $mod+60 workspace next
 
 # Layout
-# split in horizontal orientation
+# Split in horizontal orientation
 bindsym $mod+v split h
-# split in vertical orientation
+# Split in vertical orientation
 bindsym $mod+s split v
-# change container layout (stacked, tabbed, toggle split)
+# Change container layout (stacked, tabbed, toggle split)
 bindsym $mod+w layout stacking
 bindsym $mod+t layout tabbed
 bindsym $mod+e layout toggle split
-# enter fullscreen mode for the focused container
-# z for zoom (like in tmux)
-bindcode $mod+52 fullscreen toggle
+# Enter fullscreen mode for the focused container
+# z for zoom (like in tmux) bindcode $mod+52 fullscreen toggle
 
 # Floating window
-# toggle tiling / floating
+# Toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
-# change focus between tiling / floating windows
+# Change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
-# focus the parent container
-bindsym $mod+x focus child
-# focus the child container
-bindsym $mod+a focus parent
-# toggle floating with right mouse button
+# Toggle floating with right mouse button
 bindsym --border button3 floating toggle
 bindsym --whole-window --border $mod+button3 floating toggle
+
+# Focus the parent container
+bindsym $mod+x focus child
+# Focus the child container
+bindsym $mod+a focus parent
 
 # Kill focused window
 bindsym $mod+Shift+q kill
@@ -59,7 +60,7 @@ bindcode $mod+57 exec --no-startup-id "$HOME/.local/bin/i3-workspace-rename -f '
 # Start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
-# i3 control
+# WM control
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
@@ -67,12 +68,12 @@ bindsym $mod+Shift+e exec --no-startup-id i3-nagbar --type warning --message "Ex
 
 # Resize window (you can also use the mouse for that)
 mode "resize" {
-        # these bindings trigger as soon as you enter the resize mode
+        # These bindings trigger as soon as you enter the resize mode
 
-        # pressing left will shrink the window’s width.
-        # pressing right will grow the window’s width.
-        # pressing up will shrink the window’s height.
-        # pressing down will grow the window’s height.
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
         bindsym h resize shrink width 10 px or 10 ppt
         bindsym $mod+h resize shrink width 10 px or 10 ppt
         bindsym j resize grow height 10 px or 10 ppt
@@ -82,7 +83,7 @@ mode "resize" {
         bindsym l resize grow width 10 px or 10 ppt
         bindsym $mod+l resize grow width 10 px or 10 ppt
 
-        # back to normal: Enter or Escape or $mod+r
+        # Back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
         bindsym Escape mode "default"
         bindsym $mod+r mode "default"
@@ -95,8 +96,8 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# This mode disables all i3 commands and allows to control a remote i3 session
-# without controlling/manipulating the current i3 session.
+# This mode disables all WM commands and allows to control a remote RDP/VNC session
+# without controlling/manipulating the current session.
 # Useful when used with remmina etc
 mode "passthrough" {
 	bindsym $mod+p mode "default"
@@ -106,4 +107,4 @@ mode "passthrough" {
 
 bindsym $mod+p mode "passthrough"
 
-# vim: filetype=i3config
+{{- /* vim:set filetype=i3config: */}}

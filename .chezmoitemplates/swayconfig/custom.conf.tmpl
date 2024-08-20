@@ -1,0 +1,43 @@
+# CUSTOM MACHINE CONFIGURATION
+# This file will be read from sway/i3 to load machine specific configuration.
+# Here you can add custom settings for sway/i3 which won't be overwritten
+# by chezmoi updates.
+# To regenerate the newest custom config, delete this file and rerun `chezmoi apply`
+#
+# The content in this file should be commented out so it won't be applied to
+# all systems by default but only on demand when commented out.
+
+# example setup for custom laptop touchpad setup
+#exec --no-startup-id xinput set-prop "ELAN0709:00 04F3:31BF Touchpad" "libinput Tapping Enabled" 1
+#exec --no-startup-id xinput set-prop "ELAN0709:00 04F3:31BF Touchpad" "libinput Natural Scrolling Enabled" 1
+
+# example setup for workspace assignment to displays
+#workspace $ws0  output DisplayPort-1
+#workspace $ws1  output DisplayPort-1
+#workspace $ws2  output DisplayPort-1
+#workspace $ws3  output DisplayPort-1
+#workspace $ws4  output DisplayPort-1
+#workspace $ws5  output DisplayPort-1
+#workspace $ws6  output DisplayPort-2
+#workspace $ws7  output DisplayPort-2
+#workspace $ws8  output DisplayPort-2
+#workspace $ws9  output DisplayPort-2
+#workspace $ws10 output DisplayPort-2
+#workspace $ws11 output DisplayPort-2
+#workspace $ws12 output DisplayPort-2
+#workspace $ws13 output DisplayPort-2
+
+# move tiling windows via drag & drop by left-clicking into the title bar,
+# or left-clicking anywhere into the window while holding the floating modifier.
+# >4.21 i3 version required, therefore it is in custom as Ubuntu 20.04 has only 4.20
+#tiling_drag modifier titlebar
+
+# launch audio server for audio output
+# required for Gentoo systems running pipewire as daemon
+#exec --no-startup-id gentoo-pipewire-launcher restart
+
+# define primary/default monitor
+# used for tray icons placement
+#exec --no-startup-id xrandr --output DisplayPort-1 --primary
+
+{{- /* vim:set filetype=i3config: */}}

@@ -1,0 +1,51 @@
+# 3RD PARTY APPLICATIONS
+# Note: even though some applications might not be installed we try to start them anyway,
+# because failure to start them does not cause any issues,
+# and should the applications should be installed afterwards,
+# no changes in config file must be made to have it running as expected
+# startup important applications
+
+# Startup terminal on login
+exec --no-startup-id i3-msg 'workspace 1; exec i3-sensible-terminal'
+
+{{- if .battery }}
+# Alert at 15% and after that on every 3% battery level change with i3-nagbar
+exec --no-startup-id "$HOME/.local/bin/i3-battery-popup -L 18% -I 3% -N -f '$font' -t 2m"
+{{- end }}
+
+# Startup optional applications
+exec --no-startup-id picom --vsync --inactive-dim 0.1 --backend glx --detect-transient --inactive-dim-fixed --use-ewmh-active-win --mark-wmwin-focused --glx-no-stencil
+exec --no-startup-id redshift -l 52.5:13.4 -t 6500K:3000K
+{{- if .wireless }}
+exec --no-startup-id nm-applet
+{{- end }}
+# Autostart programs; list autostarted apps: dex -ad
+exec --no-startup-id dex --autostart --environment i3
+
+# Notification daemon; if not started will be started automatically by
+# dbus, but if multiple notification daemons are installed, force dunst instead
+exec_always --no-startup-id dunst
+
+# Runtime triggers (which run everytime i3 is being reloaded/restarted
+# for some reason on i3 start incorrect keyboard layouts are applied
+# even though this runs in startup. To fix this runs everytime i3 is
+# restarted. So to force fix my layout I just do <Ctrl-Shift-r> to restart
+# i3 and to execute the below setxkblayout script
+exec_always --no-startup-id "$HOME/.local/bin/setxkblayout"
+# Fix stuck in CAPS mode when keyboard layout has been already changed
+bindcode Ctrl+Shift+66 exec --no-startup-id "xdotool key Caps_Lock"
+
+# Shutdown binding
+bindsym $mod+Ctrl+Shift+q exec --no-startup-id i3-nagbar --type warning --message "Shutdown system?" --font "$font" --button-no-terminal "Yes" "$HOME/.local/bin/pwrshutdown"
+
+{{- if .battery }}
+# Handle backlight
+bindsym XF86MonBrightnessUp   exec light -A 10
+bindsym XF86MonBrightnessDown exec light -U 10
+{{ end -}}
+
+# Screenshot bindings
+# Use screenshot wrapper script that can use different screenshot utilities
+bindsym --release $mod+Print exec --no-startup-id "$HOME/.local/bin/screenshot -s"
+
+{{- /* vim:set filetype=i3config: */}}

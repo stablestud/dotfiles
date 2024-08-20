@@ -1,3 +1,6 @@
+# STATUSBAR CONFIGURATION
+# For displaying system information and workspace indicators
+
 # Start i3bar to display a workspace bar (plus the system information i3status finds out, if available)
 bar {
 	status_command i3status --config "$HOME/.config/i3/i3status.conf"
@@ -16,7 +19,7 @@ bar {
 	workspace_min_width 25px
 	separator_symbol " // "
 
-	# using color scheme from i3 config
+	# Using color scheme from default sway/i3 config
 	colors {
 		background $bg
 		statusline $br_white
@@ -28,3 +31,4 @@ bar {
 	}
 }
 
+{{- /* vim:set filetype=i3config: */}}

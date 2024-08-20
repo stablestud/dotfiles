@@ -1,0 +1,27 @@
+# LAUNCHER BINDINGS
+# Setup bindings on how to launch/start apps
+
+# Start program launcher
+bindsym $mod+d exec --no-startup-id "rofi -modi drun -show drun"
+bindsym $mod+Shift+d exec --no-startup-id "rofi -modi run -show run"
+# Start filebrowser
+bindsym $mod+f exec --no-startup-id "rofi -modi filebrowser -show filebrowser"
+# Start window switcher
+bindsym $mod+Tab exec --no-startup-id "rofi -modi window -show window -show-icons"
+
+# Launcher mode (launches applications directly from keybindings)
+mode "launch" {
+        # these bindings trigger as soon as you enter the launch mode
+	bindsym q exec "$HOME/.local/bin/openbrowser qutebrowser"; mode "default"
+	bindsym f exec "$HOME/.local/bin/openbrowser firefox"; mode "default"
+	bindsym c exec "$HOME/.local/bin/openbrowser chromium"; mode "default"
+	bindsym n exec "$HOME/.local/bin/termfg vim"; mode "default"
+
+        # back to normal: Enter or Escape or $mod+o
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+o mode "default"
+}
+bindsym $mod+o mode "launch"
+
+{{- /* vim:set filetype=i3config: */}}

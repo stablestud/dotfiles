@@ -1,3 +1,23 @@
+# WORKSPACES
+# Define workspaces in which windows will live
+
+# Note: must start with a number, else the workspace won't work
+set $ws0 0
+set $ws1 1
+set $ws2 2
+set $ws3 3
+set $ws4 4
+set $ws5 5
+set $ws6 6
+set $ws7 7
+set $ws8 8
+set $ws9 9
+set $ws10 10
+set $ws11 11
+set $ws12 12
+set $ws13 13
+
+# Switch to workspace keybind
 # Note: I am using codes instead of symbols to be keyboard layout independent,
 # making the physical buttons execute always their defined action.
 # following workspaces correspont to the following keys:
@@ -15,8 +35,6 @@
 # $ws11 - (minus)
 # $ws12 = (equal)
 # $ws13 backspace
-
-# switch to workspace
 bindcode $mod+49 workspace number $ws0
 bindcode $mod+10 workspace number $ws1
 bindcode $mod+11 workspace number $ws2
@@ -32,7 +50,7 @@ bindcode $mod+20 workspace number $ws11
 bindcode $mod+21 workspace number $ws12
 bindcode $mod+22 workspace number $ws13
 
-# move focused container to workspace
+# Move focused container to workspace
 bindcode $mod+Shift+49 move container to workspace number $ws0
 bindcode $mod+Shift+10 move container to workspace number $ws1
 bindcode $mod+Shift+11 move container to workspace number $ws2
@@ -48,4 +66,4 @@ bindcode $mod+Shift+20 move container to workspace number $ws11
 bindcode $mod+Shift+21 move container to workspace number $ws12
 bindcode $mod+Shift+22 move container to workspace number $ws13
 
-# vim: filetype=i3config
+{{- /* vim:set filetype=i3config: */}}
