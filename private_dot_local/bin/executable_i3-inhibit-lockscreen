@@ -17,14 +17,25 @@ get_active_window()
 # Check if active window is in fullscreen
 is_fullscreen()
 {
-	xprop -id "$(get_active_window)" | awk -F '=' '$1 ~ /_NET_WM_STATE\(ATOM\)/ { for (i=2; i<=3; i++) if ($i ~ /FULLSCREEN/) exit 0; exit 1 }'
+	# Try `gojq` first, can added as static binary easily
+	if command -v gojq 1>/dev/null 2>&1; then
+		i3-msg -t get_tree | gojq --raw-output -e 'any(.. | select(.type? == "con" and .window? != null); .fullscreen_mode == 1)' 1>/dev/null 2>&1
+	# Try `jq` as fallback, easiest installable by system package manager
+	elif command -v jq 1>/dev/null 2>&1; then
+		i3-msg -t get_tree | jq -r -e 'any(.. | select(.type? == "con" and .window? != null); .fullscreen_mode == 1)' 1>/dev/null 2>&1
+	# Try `xprop` as second fallback, is limited to current window
+	elif command -v xprop 1>/dev/null 2>&1; then
+		xprop -id "$(get_active_window)" | awk -F '=' '$1 ~ /_NET_WM_STATE\(ATOM\)/ { for (i=2; i<=3; i++) if ($i ~ /FULLSCREEN/) exit 0; exit 1 }' 1>/dev/null 2>&1
+	else
+		echo "Error: required dependencies are missing: jq, gojq or xprop" 1>&2
+		exit 1
+	fi
 }
 
 main()
 {
 	if ! is_fullscreen; then
 		i3-lockscreen
-		revert
 	fi
 }
 
