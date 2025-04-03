@@ -1,0 +1,38 @@
+{{ $supported_os := list "linux" }}
+{{ $supported_arch := list "amd64" "arm64" }}
+
+# source: https://github.com/rclone/rclone
+
+{{ define "amd64" }}
+	url = "https://github.com/rclone/rclone/releases/download/v1.69.1/rclone-v1.69.1-linux-amd64.zip"
+	checksum.sha512 = "8c902412313e1ed0398af26c41cc19e2adcbc275a6612c248a1f4b206236411b8d6db29e12d01d9830e5870c8acefd297e47f8731b76827ac4fb04aeb88dbeec"
+{{ end }}
+
+# ARM 64bit also called arm64, aarch64, armv8
+{{ define "arm64" }}
+	url = "https://github.com/rclone/rclone/releases/download/v1.69.1/rclone-v1.69.1-linux-arm64.zip"
+	checksum.sha512 = "798b562f4e0e4018f51a85a7226de78d7f64fcc62c28a17594c22e868f8b1eba8dab67aef9726f78d996e874592eb1bc59ada12a7467aab5623b66492d391581"
+{{ end }}
+
+{{ define "sources" }}
+	{{ if eq .chezmoi.arch "amd64" }}
+		{{ template "amd64" }}
+	{{ else if eq .chezmoi.arch "arm64" }}
+		{{ template "arm64" }}
+	{{ end }}
+{{ end }}
+
+# Rclone
+[".local/bin/rclone"]
+	type = "archive-file"
+	path = "rclone"
+	{{ template "sources" . }}
+	stripComponents = 1
+	executable = true
+[".local/man/man1/rclone.1"]
+	type = "archive-file"
+	path = "rclone.1"
+	{{ template "sources" . }}
+	stripComponents = 1
+
+# vim: filetype=toml
