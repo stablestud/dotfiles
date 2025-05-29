@@ -1,3 +1,5 @@
+{{/* Linux Go binaries could run on android, but android has blocked some syscalls (faccessat2) */}}
+{{/* therefore special binaries built with GOOS=android are required. So android is not supported by default */}}
 {{ $supported_os := list "linux" }}
 {{ $supported_arch := list "amd64" "arm64" }}
 
@@ -22,6 +24,8 @@
 	{{ end }}
 {{ end }}
 
+{{ if and (has .chezmoi.os $supported_os) (has .chezmoi.arch $supported_arch) }}
+
 # Rclone
 [".local/bin/rclone"]
 	type = "archive-file"
@@ -34,5 +38,7 @@
 	path = "rclone.1"
 	{{ template "sources" . }}
 	stripComponents = 1
+
+{{ end }}
 
 # vim: filetype=toml
