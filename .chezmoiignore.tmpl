@@ -7,7 +7,10 @@
 # on systems where the binary should not be installed
 # (empty files are not added by chezmoi)
 
-{{/* ignore these if no graphical environment is installed */}}
+# Ignore dynamic/cache ble.sh directory from being inspected
+.local/share/blesh/run/**
+
+# Ignore these if no graphical environment is installed
 {{ if .headless }}
 	.local/bin/termfg
 	.local/bin/openbrowser
