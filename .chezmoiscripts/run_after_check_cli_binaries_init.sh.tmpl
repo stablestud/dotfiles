@@ -10,10 +10,21 @@ required_deps="
 	vim
 	tmux"
 
-for i in ${required_deps}; do
-	if ! sh -l -c "command -v '${i}'" 1>/dev/null 2>&1; then
-		echo "Warning: important cli binary not installed: ${i}" 1>&2
-	fi
-done
+optional_deps="
+	rclone"
+
+check_deps()
+{
+	deps="${1?Missing deps arg}"
+	msg="${2?Missing msg arg}"
+	for i in ${deps}; do
+		if ! sh -l -c "command -v '${i}'" 1>/dev/null 2>&1; then
+			echo "${msg}: ${i}" 1>&2
+		fi
+	done
+}
+
+check_deps "${required_deps}" "Warning: important cli binary missing"
+check_deps "${optional_deps}" "Info: recommended cli binary missing"
 
 # vim: filetype=sh
