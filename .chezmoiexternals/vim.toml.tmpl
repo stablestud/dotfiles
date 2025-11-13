@@ -1,6 +1,6 @@
 {{ define "amd64" }}
-	url = "https://github.com/vim/vim-appimage/releases/download/v9.0.2043/Vim-v9.0.2043.glibc2.29-x86_64.AppImage"
-	checksum.sha512 = "fa03c898c67e7b35220db99c251428a3ccbce5effab9e952d8ffe56f524837fe9fabd5a03f67b45c7d15febfeedf081233b4e7f62892631b65e13cd79c96ef07"
+	url = "https://github.com/vim/vim-appimage/releases/download/v9.1.1912/Vim-v9.1.1912.glibc2.34-x86_64.AppImage"
+	checksum.sha512 = "55addf3c7bfb1217eced18af590afbd4738b516f585b08b117dc7cd861b628fa402b08c0558534b3f5a8e12d5e2188b66222eced9cd093d1ed4beb18ecd63209"
 {{ end }}
 
 {{ define "sources" }}
@@ -9,7 +9,7 @@
 	{{ end }}
 {{ end }}
 
-{{ if .appimage }}
+{{ if and (.appimage) (eq .chezmoi.arch "amd64") }}
 
 # Vim
 [".local/bin/.AppImages/vim.AppImage"]
