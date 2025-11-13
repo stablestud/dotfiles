@@ -1,29 +1,42 @@
 {{/* Linux Go binaries could run on android, but android has blocked some syscalls (faccessat2) */}}
 {{/* therefore special binaries built with GOOS=android are required. So android is not supported by default */}}
-{{ $supported_os := list "linux" }}
+{{ $supported_os := list "linux" "android" }}
 {{ $supported_arch := list "amd64" "arm64" }}
 
-{{ define "amd64" }}
-	url = "https://github.com/junegunn/fzf/releases/download/0.43.0/fzf-0.43.0-linux_amd64.tar.gz"
-	checksum.sha512 = "bede5f5aa1eb4daf01d482977824942037adfcdf7894f258c20e849c49369ea23c0b4c7eb528bc1792cff6a0b5b3e498caab9f4b9ffda7a7ac8b545a48556183"
+{{ $git_tag := "0.66.1" }}
+
+{{ define "linux-amd64" }}
+	url = "https://github.com/junegunn/fzf/releases/download/v{{ .git_tag }}/fzf-{{ .git_tag }}-linux_amd64.tar.gz"
+	checksum.sha512 = "3e0d994f0d5a38f34d728f819fea9bb59978a8c87ce673004340a9492ffca7c3acf1a40aea60912ed6c24e00dca2736eaed67b7ba20b037f4b57a8a37dcc7e0c"
 {{ end }}
 
 # ARM 64bit also called arm64, aarch64, armv8
-{{ define "arm64" }}
-	url = "https://github.com/junegunn/fzf/releases/download/0.43.0/fzf-0.43.0-linux_arm64.tar.gz"
-	checksum.sha512 = "d422a22563ac028b710112edbf832ec465985f20e5257444cc47bfe116a5654a2a7fcc8921c050644be32559d0a915db3a06af62dc3441ce4138e05ab83715ce"
+{{ define "linux-arm64" }}
+	url = "https://github.com/junegunn/fzf/releases/download/v{{ .git_tag }}/fzf-{{ .git_tag }}-linux_arm64.tar.gz"
+	checksum.sha512 = "ccb62ed34fe29b233fbb5429f7dc9049b6882cfb5381d58f0f295879bf7f04539325383ac5e17cda0563d2500dad669ad43c1c9923b259085a65d0b339912cfa"
+{{ end }}
+
+{{ define "android-arm64" }}
+	url = "https://github.com/junegunn/fzf/releases/download/v{{ .git_tag }}/fzf-{{ .git_tag }}-android_arm64.tar.gz"
+	checksum.sha512 = "a00be371514fb04d77889be54f40357aa4949cb243eb39134198b72aedb9a33f95d06b4c6a707419365694b458cfa9948a59bb47a6921d634a814ca6497b018b"
 {{ end }}
 
 {{ define "binary" }}
-	{{ if eq .chezmoi.arch "amd64" }}
-		{{ template "amd64" }}
-	{{ else if eq .chezmoi.arch "arm64" }}
-		{{ template "arm64" }}
+	{{ if eq .chezmoi.os "linux" }}
+		{{ if eq .chezmoi.arch "amd64" }}
+			{{ template "linux-amd64" (dict "git_tag" .git_tag) }}
+		{{ else if eq .chezmoi.arch "arm64" }}
+			{{ template "linux-arm64" (dict "git_tag" .git_tag) }}
+		{{ end }}
+	{{ else if eq .chezmoi.os "android" . }}
+		{{ if eq .chezmoi.arch "arm64" }}
+			{{ template "android-amd64" (dict "git_tag" .git_tag) }}
+		{{ end }}
 	{{ end }}
 {{ end }}
 
 {{ define "sources" }}
-	url = "https://github.com/junegunn/fzf/archive/refs/tags/0.43.0.tar.gz"
+	url = "https://github.com/junegunn/fzf/archive/refs/tags/v{{ .git_tag }}.tar.gz"
 	checksum.sha512sum = "84e01d2f852e0d90b2a30342f7ad9a30e4e287688f6063efc2a0f602eab5ec064819efecd2041f46869bb1956b3d3eb50e98084deeaa26272c3bbafd000648f7"
 {{ end }}
 
@@ -33,18 +46,18 @@
 [".local/bin/fzf"]
 	type = "archive-file"
 	path = "fzf"
-	{{ template "binary" . }}
+	{{ template "binary" (dict "chezmoi" .chezmoi "git_tag" $git_tag) }}
 	executable = true
 [".local/bin/fzf-tmux"]
 	type = "archive-file"
 	path = "bin/fzf-tmux"
-	{{ template "sources" }}
+	{{ template "sources" (dict "git_tag" $git_tag) }}
 	executable = true
 	stripComponents = 1
 [".local/man"]
 	type = "archive"
 	include = ["fzf-*/man/**"]
-	{{ template "sources" }}
+	{{ template "sources" (dict "git_tag" $git_tag) }}
 	stripComponents = 2
 
 {{ end }}
@@ -53,17 +66,17 @@
 [".bashrc.d/additional/fzf/shell/completion.bash"]
 	type = "archive-file"
 	path = "shell/completion.bash"
-	{{ template "sources" }}
+	{{ template "sources" (dict "git_tag" $git_tag) }}
 	stripComponents = 1
 [".bashrc.d/additional/fzf/shell/key-bindings.bash"]
 	type = "archive-file"
 	path = "shell/key-bindings.bash"
-	{{ template "sources" }}
+	{{ template "sources" (dict "git_tag" $git_tag) }}
 	stripComponents = 1
 [".config/fish/functions/fzf_key_bindings.fish"]
 	type = "archive-file"
 	path = "shell/key-bindings.fish"
-	{{ template "sources" }}
+	{{ template "sources" (dict "git_tag" $git_tag) }}
 	stripComponents = 1
 
 # vim: filetype=toml
