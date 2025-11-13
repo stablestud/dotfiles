@@ -1,0 +1,15 @@
+{{ $git_tag := "v2.51.2" }}
+
+[".bashrc.d/10-git-prompt.bash"]
+	type = "file"
+	# source: https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
+	url  = "https://raw.githubusercontent.com/git/git/{{ $git_tag }}/contrib/completion/git-prompt.sh"
+	checksum.sha512 = "372dbf34a65d4b7607784d0fa21d81cf594204a854976303675c1668e06d1772ed7122285002963d747d1566dd46b09bfc82d9364885c673ce19e7a34501e229"
+
+[".local/share/bash-completion/completions/git.bash"]
+	type = "file"
+	# source: https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
+	url  = "https://raw.githubusercontent.com/git/git/{{ $git_tag }}/contrib/completion/git-completion.bash"
+	checksum.sha512 = "b42c763cd60b3e03c1040cf59b8ea3708d61c10ba4610d9301281dbeb28d6ad150abf8005f5e2287013200e33422b6add737bc90a93b4ee313f886193412fe38"
+
+# vim: filetype=toml
