@@ -1,6 +1,6 @@
 {{ define "amd64" }}
-	url = "https://github.com/kiyoon/tmux-appimage/releases/download/3.3a/tmux.appimage"
-	checksum.sha512 = "6c559a5a67f1ba743ac90c49df6953e20c1abb671fd9bd491436bed1b745b7830e71f7015d79123ec1428984c343a6d0f1de7539fea511a4109a06e34ec10279"
+	url = "https://github.com/kiyoon/tmux-appimage/releases/download/3.5a/tmux.appimage"
+	checksum.sha512 = "b4d62af9347f0f74b9a5ae8393830c37cc84a688978e5a903594c10d4a76b7accf02b9f2a9229c5c8a9fe7debf4e5c04573356ecfecc6a6a5ecad629134ecaff"
 {{ end }}
 
 {{ define "sources" }}
@@ -9,7 +9,7 @@
 	{{ end }}
 {{ end }}
 
-{{ if .appimage }}
+{{ if and (.appimage) (eq .chezmoi.arch "amd64") }}
 
 # Tmux
 [".local/bin/.AppImages/tmux.AppImage"]
