@@ -1,24 +1,26 @@
 {{ if not .headless }}
+ 
+{{ $git_hash := "9a753d5c575c48e29eeb2be745d9571b4cec42b3" }}
 
 [".config/rofi/selenized_black.rasi"]
 	# source: https://github.com/jan-warchol/selenized
 	type = "file"
-	url  = "https://github.com/jan-warchol/selenized/raw/7188d68b6bb5a8be8f83d216c3f42727f0fdacf2/other-apps/rofi/selenized-black.rasi"
+	url  = "https://github.com/jan-warchol/selenized/raw/{{ $git_hash }}/other-apps/rofi/selenized-black.rasi"
 	checksum.sha512 = "073e2c89634c002e9bedbca8043850b24dd2a2d33e63b10200d87e03afc59b1961c78b8400ad36098bf9d4f4cf1da7f450a7b9ddf17460ad973deb0c044af12f"
 
 [".config/rofi/selenized_white.rasi"]
 	type = "file"
-	url  = "https://github.com/jan-warchol/selenized/raw/7188d68b6bb5a8be8f83d216c3f42727f0fdacf2/other-apps/rofi/selenized-white.rasi"
+	url  = "https://github.com/jan-warchol/selenized/raw/{{ $git_hash }}/other-apps/rofi/selenized-white.rasi"
 	checksum.sha512 = "6c7a9410bb7347c215f2e74be07cc518800398987eea4bbad7e0e89ac67c0fc486295d47806a7a3c46d8ee80d98a00bc116918c2d5228e2e2b15ca2ca9d25348"
 
 [".config/rofi/selenized_light.rasi"]
 	type = "file"
-	url  = "https://github.com/jan-warchol/selenized/raw/7188d68b6bb5a8be8f83d216c3f42727f0fdacf2/other-apps/rofi/selenized-light.rasi"
+	url  = "https://github.com/jan-warchol/selenized/raw/{{ $git_hash }}/other-apps/rofi/selenized-light.rasi"
 	checksum.sha512 = "f758843ac7d6670629885fc4c6925ddc3b6caab5460b5b5c3923ed0bfe619540acc9056679d01d46cad165c07ca0c1e231be9c793c59c114bb41a06e4ca5600b"
 
 [".config/rofi/selenized_dark.rasi"]
 	type = "file"
-	url  = "https://github.com/jan-warchol/selenized/raw/7188d68b6bb5a8be8f83d216c3f42727f0fdacf2/other-apps/rofi/selenized-dark.rasi"
+	url  = "https://github.com/jan-warchol/selenized/raw/{{ $git_hash }}/other-apps/rofi/selenized-dark.rasi"
 	checksum.sha512 = "a5b1ca62396f3f9df1c63e3826ed30f95f7d53f93b7d5e9f94853c9b8e07a28aaca6c81495151a5d3dab297695a570839970c2d6edf775024fc69a9e59ececb2"
 
 {{ end }}
