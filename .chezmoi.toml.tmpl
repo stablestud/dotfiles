@@ -12,7 +12,7 @@
 {{- $glibc    := false -}}
 
 {{/* check if machine has graphical capabilities */}}
-{{- if (or (lookPath "X") (lookPath "Xorg")) -}}
+{{- if (or (lookPath "X") (lookPath "Xorg") (env "DISPLAY") (env "WAYLAND_DISPLAY")) -}}
 	{{- $headless = false -}}
 {{- end -}}
 
@@ -65,7 +65,7 @@
 # home     = {{ .chezmoi.homeDir }}
 
 [data]
-# Whether machine is without graphical environment (X server)
+# Whether machine is without graphical environment (X server, Wayland)
 headless = {{ $headless }}
 # Whether machine has a battery
 battery  = {{ $battery }}
