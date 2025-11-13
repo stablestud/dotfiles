@@ -49,20 +49,25 @@ main()
 	themes_excl="$(printf "${themes_def}" | sed "s/${theme_sel}//g")"
 	themes="${themes_excl} ${theme_sel}" # Apply selected theme last
 
+	if [ -z "${TERMINAL}" ]; then :
 {{- if or (lookPath "gnome-terminal") }}
-	apply_gnome_terminal
-	applied="true"
+		apply_gnome_terminal
+		applied="true"
 {{ end -}}
 
 {{- if lookPath "xfce4-terminal" }}
-	apply_xfce4_terminal
-	applied="true"
+		apply_xfce4_terminal
+		applied="true"
 {{ end -}}
 
 {{- if lookPath "foot" }}
-	apply_foot_terminal
-	applied="true"
+		apply_foot_terminal
+		applied="true"
 {{ end }}
+	else
+		apply_themes
+		applied="true"
+	fi
 
 	if [ -z "${applied}" ]; then
 		echo "Warning: no supported terminal detected for Gogh" 1>&2
