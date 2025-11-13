@@ -4,14 +4,14 @@
 {{ $supported_arch := list "amd64" "arm64" }}
 
 {{ define "amd64" }}
-	url = "https://github.com/itchyny/gojq/releases/download/v0.12.13/gojq_v0.12.13_linux_amd64.tar.gz"
-	checksum.sha512 = "94792f032e02e6326d8b630c011c44f36cccd6a5669525ee2b3d5e959a5be3e02a4d835486e3af2b8a411c7b7cff7d8a611a0021a009b7f41df9f11f19550860"
+	url = "https://github.com/itchyny/gojq/releases/download/v0.12.17/gojq_v0.12.17_linux_amd64.tar.gz"
+	checksum.sha512 = "ddc140f078af1ea15c0744c235e4922e339e97d3b1a969c96fe2c1e609346a8e78aaaa5a954b987a4e55234c884869147fe98787151ba72fae80002e672afcb9"
 {{ end }}
 
 # ARM 64bit also called arm64, aarch64, armv8
 {{ define "arm64" }}
-	url = "https://github.com/itchyny/gojq/releases/download/v0.12.13/gojq_v0.12.13_linux_arm64.tar.gz"
-	checksum.sha512 = "e1f26d0818d52367c173df29e05eda0e60172deddbd5d49759a053ae5f3c84de7ab91a343d1b21be7f750954a0a7fedf1f5b223b99f1fe71f56a2c19bf8c6b76"
+	url = "https://github.com/itchyny/gojq/releases/download/v0.12.17/gojq_v0.12.17_linux_arm64.tar.gz"
+	checksum.sha512 = "17636f2309fd92af08060c8b3ae98d793c6c1d2136d94219cfe0846b0ec9c74485eb54171c6999c018b0e08c62439d03dc11055a198860a5f5d577c8e1ca8a69"
 {{ end }}
 
 {{ define "binary" }}
