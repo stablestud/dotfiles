@@ -1,5 +1,7 @@
 #! {{ template "shebang.tmpl" "/usr/bin/env" }} bash
 
+set -e
+
 # Goph is used to apply color themes to all kinds of terminals
 # By default it'll install only Selenized themes
 
@@ -38,7 +40,7 @@ apply_foot_terminal()
 main()
 {
 	if [ ! -f "${GOGH_APPLY_SCRIPT}" ]; then
-		echo "Error: cannot find apply-colors.sh" 2>&1
+		echo "Error: cannot find apply-colors.sh" 1>&2
 		exit 1
 	fi
 
@@ -47,18 +49,24 @@ main()
 	themes_excl="$(printf "${themes_def}" | sed "s/${theme_sel}//g")"
 	themes="${themes_excl} ${theme_sel}" # Apply selected theme last
 
-{{ if lookPath "gnome-terminal" }}
+{{- if or (lookPath "gnome-terminal") }}
 	apply_gnome_terminal
-{{  end }}
+	applied="true"
+{{ end -}}
 
-{{ if lookPath "xfce4-terminal" }}
+{{- if lookPath "xfce4-terminal" }}
 	apply_xfce4_terminal
-{{ end }}
+	applied="true"
+{{ end -}}
 
-{{ if lookPath "foot" }}
+{{- if lookPath "foot" }}
 	apply_foot_terminal
+	applied="true"
 {{ end }}
 
+	if [ -z "${applied}" ]; then
+		echo "Warning: no supported terminal detected for Gogh" 1>&2
+	fi
 }
 
 main
