@@ -1,14 +1,14 @@
 {{/* Goph is used to apply selenized themes on all kinds of terminals */}}
 
 {{ if and (not .headless) (lookPath "bash") }}
-{{ $git_hash := "831585063811618f5da7574b726b824b25d6376f" }}
+{{ $git_hash := "ff76ba705032dfec9058eceb9be084223d9d6ca6" }}
 
 [".local/libexec/gogh/apply-colors.sh"]
 	type = "file"
 	# source: https://github.com/Gogh-Co/Gogh/blob/master/apply-colors.sh
 	# applied version is few commits after release v275
 	url  = "https://github.com/Gogh-Co/Gogh/raw/{{ $git_hash }}/apply-colors.sh"
-	checksum.sha512 = "656b98bff967ab27a2bfb48428929a6fdd46e87ba6644bef79fc6c456b907f3394be1a84ee97c79a74f420f2b93e839daa42af8fd3f38dd181a1c3367194b6b1"
+	checksum.sha512 = "f104ed79c41bc8ab7c3d8d4e11d793dfcd38d56ae408bd146530b723f7641e70297db0b196609e422ba5157a4344463c6073e12edd6ae6f5abc1371e47273fcc"
 
 [".local/libexec/gogh/selenized-black.sh"]
 	type = "file"
@@ -34,7 +34,7 @@
 [".local/libexec/gogh/selenized-light.sh"]
 	type = "file"
 	# source: https://github.com/Gogh-Co/Gogh/blob/master/installs/selenized-light.sh
-	url  = "https://github.com/Gogh-Co/Gogh/raw/a80d91c8a0d72131d8d6caa984b70155a99c38db/installs/selenized-light.sh"
+	url  = "https://github.com/Gogh-Co/Gogh/raw/{{ $git_hash }}/installs/selenized-light.sh"
 	checksum.sha512 = "0440fad850cf0e5495beeb3ce34287bdd57014dedcd12d559e05eba19a1532ce5ead8ca3bdfb00d1e4e6e137dd45de5e837c5a28936a15e1a6ef9af24faaa4b7"
 	executable = true
 
