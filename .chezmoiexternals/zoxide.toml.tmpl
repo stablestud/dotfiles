@@ -1,24 +1,37 @@
-{{ $supported_os := list "linux" }}
+{{ $supported_os := list "linux" "android" }}
 {{ $supported_arch := list "amd64" "arm64" }}
 
 # source: https://github.com/ajeetdsouza/zoxide
 
-{{ define "amd64" }}
-	url = "https://github.com/ajeetdsouza/zoxide/releases/download/v0.9.2/zoxide-0.9.2-x86_64-unknown-linux-musl.tar.gz"
-	checksum.sha512 = "d91f984deb3464ba3e2b45e27effe5152671faa365dd4a44bf4f6dd7995641ebabb5481da2c930b7d811f65cfa7389e37293c9396bb95752936ae874fee68aef"
+{{ $version := "0.9.8" }}
+
+{{ define "linux-amd64" }}
+	url = "https://github.com/ajeetdsouza/zoxide/releases/download/v{{ .version }}/zoxide-{{ .version }}-x86_64-unknown-linux-musl.tar.gz"
+	checksum.sha512 = "106323b4572f4e609ef7312119c13ee3cffab02b9af804c3584993d75056960991845ddb1205e5da9a66e4d0d48806bda9ff7451231950c36b0bee4ee92cd3d0"
 {{ end }}
 
 # ARM 64bit also called arm64, aarch64, armv8
-{{ define "arm64" }}
-	url = "https://github.com/ajeetdsouza/zoxide/releases/download/v0.9.2/zoxide-0.9.2-aarch64-unknown-linux-musl.tar.gz"
-	checksum.sha512 = "242a163c87ac025489c96289fa011e7cf347663e743a1c7628994c7ac86a845b5188e5c6dbad92f676fac8b89cc176d0bb91112edf217fae57190ca8c124f44a"
+{{ define "linux-arm64" }}
+	url = "https://github.com/ajeetdsouza/zoxide/releases/download/v{{ .version }}/zoxide-{{ .version }}-aarch64-unknown-linux-musl.tar.gz"
+	checksum.sha512 = "0f5de55ee004ca26cd817a75bf26837972649a70933a6ecc8e96b2f85ec6a32f87b8e994a0281de7ae75b1bc4563f18ff83671b309afbe0e073d1afb4b0f0f21"
+{{ end }}
+
+{{ define "android-arm64" }}
+	url = "https://github.com/ajeetdsouza/zoxide/releases/download/v{{ .version }}/zoxide-{{ .version }}-aarch64-unknown-linux-musl.tar.gz"
+	checksum.sha512 = "4be3e6087e4761225dd54c37fb1ffbb32a7f5d94be84eba0d6cfc090ab27288d075542d853597992d8d11569333fe80127c776f754e2e052bca5256eca7a5d90"
 {{ end }}
 
 {{ define "sources" }}
-	{{ if eq .chezmoi.arch "amd64" }}
-		{{ template "amd64" }}
-	{{ else if eq .chezmoi.arch "arm64" }}
-		{{ template "arm64" }}
+	{{ if eq .chezmoi.os "linux" }}
+		{{ if eq .chezmoi.arch "amd64" }}
+			{{ template "linux-amd64" (dict "version" .version) }}
+		{{ else if eq .chezmoi.arch "arm64" }}
+			{{ template "linux-arm64" (dict "version" .version) }}
+		{{ end }}
+	{{ else if eq .chezmoi.os "android" }}
+		{{ if eq .chezmoi.arch "arm64" }}
+			{{ template "android-arm64" (dict "version" .version) }}
+		{{ end }}
 	{{ end }}
 {{ end }}
 
@@ -28,12 +41,12 @@
 [".local/bin/zoxide"]
 	type = "archive-file"
 	path = "zoxide"
-	{{ template "sources" . }}
+	{{ template "sources" (dict "chezmoi" .chezmoi "version" $version) }}
 	executable = true
 [".local/man"]
 	type = "archive"
 	include = ["man/**"]
-	{{ template "sources" . }}
+	{{ template "sources" (dict "chezmoi" .chezmoi "version" $version) }}
 	stripComponents = 1
 
 {{ end }}
@@ -41,10 +54,10 @@
 [".local/share/bash-completion/completions/zoxide.bash"]
 	type = "archive-file"
 	path = "completions/zoxide.bash"
-	{{ template "sources" . }}
+	{{ template "sources" (dict "chezmoi" .chezmoi "version" $version) }}
 [".config/fish/completions/zoxide.fish"]
 	type = "archive-file"
 	path = "completions/zoxide.fish"
-	{{ template "sources" . }}
+	{{ template "sources" (dict "chezmoi" .chezmoi "version" $version) }}
 
 # vim: filetype=toml
