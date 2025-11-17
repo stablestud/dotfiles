@@ -30,7 +30,7 @@
 		{{ end }}
 	{{ else if eq .chezmoi.os "android" . }}
 		{{ if eq .chezmoi.arch "arm64" }}
-			{{ template "android-amd64" (dict "git_tag" .git_tag) }}
+			{{ template "android-arm64" (dict "git_tag" .git_tag) }}
 		{{ end }}
 	{{ end }}
 {{ end }}
