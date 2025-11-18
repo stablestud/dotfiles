@@ -20,4 +20,16 @@
 
 {{ end }}
 
+{{ $selenized_git_hash := "3a0b714c50b9963f2cdc95254b9424e51fd8966d" }}
+
+[".vim/colors/selenized.vim"]
+	type = "file"
+	url  = "https://raw.githubusercontent.com/jan-warchol/selenized/{{ $selenized_git_hash }}/editors/vim/colors/selenized.vim"
+	checksum.sha512 = "4e2c723fa03eea91412b3240937decc841d1c8e4495d5e4b73eecd6b7f0641c80c1b483695cde262101493d30810225e01849b5dc6403db26b540ea97f846d32"
+
+[".vim/colors/selenized_bw.vim"]
+	type = "file"
+	url  = "https://raw.githubusercontent.com/jan-warchol/selenized/{{ $selenized_git_hash }}/editors/vim/colors/selenized_bw.vim"
+	checksum.sha512 = "d3ba586518f4b51f2705cabb6692ba46c677ff075ee4e22d4ba4985b35e0b3e9673df7fda75ae100e91f2c869313848325f5b556f90df5a2bb6c26ce24fcb365"
+
 # vim: filetype=toml
