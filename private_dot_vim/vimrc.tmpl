@@ -53,7 +53,9 @@ if has('syntax') && has('eval')
 endif
 
 " If terminal supports truecolor, make use of it
-if has('termguicolors') && ($COLORTERM ==# 'truecolor' || $COLORTERM ==# '24bit')
+if has('termguicolors')
+		\ && ($COLORTERM ==# 'truecolor' || $COLORTERM ==# '24bit')
+		\ && empty($TMUX) && empty($STY) " tmux and screen do not support truecolor everywhere
 	set termguicolors
 else
 	set t_Co=16
