@@ -1,15 +1,15 @@
 {{- $colorscheme := "default" -}}
 {{- if or (eq .colorscheme "selenized_light") (eq .colorscheme "selenized_dark") -}}
-	{{- $colorscheme = "selenized" -}}
+    {{- $colorscheme = "selenized" -}}
 {{- else if or (eq .colorscheme "selenized_white") (eq .colorscheme "selenized_black") -}}
-	{{- $colorscheme = "selenized_bw" -}}
+    {{- $colorscheme = "selenized_bw" -}}
 {{- end -}}
 
 {{- $background := "light" -}}
 {{- if or (eq .colorscheme "selenized_light") (eq .colorscheme "selenized_white") -}}
-	{{- $background = "light" -}}
+    {{- $background = "light" -}}
 {{- else if or (eq .colorscheme "selenized_dark") (eq .colorscheme "selenized_black") -}}
-	{{- $background = "dark" -}}
+    {{- $background = "dark" -}}
 {{- end -}}
 
 
@@ -22,11 +22,21 @@ endif
 source $VIMRUNTIME/defaults.vim
 
 if has('vms')
-  set nobackup		" do not keep a backup file, use versions instead
+  set nobackup  " do not keep a backup file, use versions instead
 else
-  set backup		" keep a backup file (restore to previous version)
+  set backup    " keep a backup file (restore to previous version)
+  let backup_dir = expand('~/.vim') . '/backupdir'
+  if !isdirectory(backup_dir)
+    call mkdir(backup_dir, 'p')
+  endif
+  let &backupdir = backup_dir . '//'
   if has('persistent_undo')
-    set undofile	" keep an undo file (undo changes after closing)
+    let undo_dir = expand('~/.vim') . '/undodir'
+    set undofile  " keep an undo file (undo changes after closing)
+    if !isdirectory(undo_dir)
+      call mkdir(undo_dir, 'p')
+    endif
+    let &undodir = undo_dir . '//'
   endif
 endif
 
@@ -54,11 +64,11 @@ endif
 
 " If terminal supports truecolor, make use of it
 if has('termguicolors')
-		\ && ($COLORTERM ==# 'truecolor' || $COLORTERM ==# '24bit')
-		\ && empty($TMUX) && empty($STY) " tmux and screen do not support truecolor everywhere
-	set termguicolors
+    \ && ($COLORTERM ==# 'truecolor' || $COLORTERM ==# '24bit')
+    \ && empty($TMUX) && empty($STY) " tmux and screen do not support truecolor everywhere
+  set termguicolors
 else
-	set t_Co=16
+  set t_Co=16
 endif
 
 " Make use of the wonderful Selenized theme
