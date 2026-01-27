@@ -63,12 +63,12 @@
 {{ end }}
 
 # Not completion of fzf itself but for <cmd> **TAB
-[".bashrc.d/additional/fzf/shell/completion.bash"]
+[".bashrc.vendor.d/additional/fzf/shell/completion.bash"]
 	type = "archive-file"
 	path = "shell/completion.bash"
 	{{ template "sources" (dict "git_tag" $git_tag) }}
 	stripComponents = 1
-[".bashrc.d/additional/fzf/shell/key-bindings.bash"]
+[".bashrc.vendor.d/additional/fzf/shell/key-bindings.bash"]
 	type = "archive-file"
 	path = "shell/key-bindings.bash"
 	{{ template "sources" (dict "git_tag" $git_tag) }}

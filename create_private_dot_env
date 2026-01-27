@@ -1,0 +1,5 @@
+# Define env variables that should be read by all kinds of login shells
+# Using the keyword 'export' will also pass the env variable to shells child processes
+#
+# For example you can disable here ble.sh
+#export BLE_DISABLE=true

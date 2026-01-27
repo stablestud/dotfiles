@@ -16,7 +16,15 @@ if [[ $- != *i* ]] ; then
 	return
 fi
 
-# Source external configuration files
+# Chezmoi specific configuration files; changes will be removed by chezmoi
+if [ -d ~/.bashrc.vendor.d/ ]; then
+	for conf in ~/.bashrc.vendor.d/*.bash; do
+		source "${conf}"
+	done
+	unset conf
+fi
+
+# Source machine specific configuration files; won't be updated by chezmoi
 if [ -d ~/.bashrc.d/ ]; then
 	for conf in ~/.bashrc.d/*.bash; do
 		source "${conf}"
