@@ -16,6 +16,9 @@ if [[ $- != *i* ]] ; then
 	return
 fi
 
+# Do not fail if no files with glob matching has been found
+shopt -s nullglob
+
 # Chezmoi specific configuration files; changes will be removed by chezmoi
 if [ -d ~/.bashrc.vendor.d/ ]; then
 	for conf in ~/.bashrc.vendor.d/*.bash; do
@@ -32,19 +35,25 @@ if [ -d ~/.bashrc.d/ ]; then
 	unset conf
 fi
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+# Chezmoi speicific bash alias definitions; changes will be removed by chezmoi
+if [ -d ~/.bash_aliases.vendor.d ]; then
+	for aliases in ~/.bash_aliases.d/*.bash; do
+		source "${aliases}"
+	done
+	unset aliases
+fi
+
+# Machine specific aliases; won't be updated by chezmoi
+if [ -f ~/.bash_aliases ]; then
+	source ~/.bash_aliases
+fi
 if [ -d ~/.bash_aliases.d ]; then
 	for aliases in ~/.bash_aliases.d/*.bash; do
 		source "${aliases}"
 	done
 	unset aliases
 fi
-# Machine specific aliases; won't be updated by chezmoi
-if [ -f ~/.bash_aliases ]; then
-	source ~/.bash_aliases
-fi
+
+shopt -u nullglob
 
 # vim: filetype=bash

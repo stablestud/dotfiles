@@ -1,0 +1,4 @@
+# In this folder machine specific bash aliases should be placed; they won't be updated by chezmoi
+# This file is required to ensure nothing gets committed in here in the chezmoi directory
+*
+!.gitignore
