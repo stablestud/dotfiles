@@ -1,4 +1,4 @@
-{{ $git_tag := "v2.51.2" }}
+{{ $git_tag := "v2.55.0" }}
 
 [".bashrc.vendor.d/10-git-prompt.bash"]
 	type = "file"
@@ -10,6 +10,6 @@
 	type = "file"
 	# source: https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
 	url  = "https://raw.githubusercontent.com/git/git/{{ $git_tag }}/contrib/completion/git-completion.bash"
-	checksum.sha512 = "b42c763cd60b3e03c1040cf59b8ea3708d61c10ba4610d9301281dbeb28d6ad150abf8005f5e2287013200e33422b6add737bc90a93b4ee313f886193412fe38"
+	checksum.sha512 = "d382688ffc9f44b0eb93ed4c40de32673c3e163eb8786da5457c9ccc12d97340c370e786aa5771cf7fbb613d73c757094e8168c76933ed573228af0b9bb55c0d"
 
 # vim: filetype=toml

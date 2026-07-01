@@ -70,7 +70,7 @@ main()
 	fi
 
 	if [ -z "${applied}" ]; then
-		echo "Warning: no supported terminal detected for Gogh" 1>&2
+		echo "Warning: no supported terminal detected for Gogh; TERMINAL=${TERMINAL}" 1>&2
 	fi
 }
 

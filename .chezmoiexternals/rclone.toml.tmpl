@@ -2,25 +2,26 @@
 {{/* therefore special binaries built with GOOS=android are required. So android is not supported by default */}}
 {{ $supported_os := list "linux" }}
 {{ $supported_arch := list "amd64" "arm64" }}
+{{ $tag := "v1.74.3" }}
 
 # source: https://github.com/rclone/rclone
 
 {{ define "amd64" }}
-	url = "https://github.com/rclone/rclone/releases/download/v1.71.2/rclone-v1.71.2-linux-amd64.zip"
-	checksum.sha512 = "29608575a642f7e564bfab4a498e0bd11aed59fb3dfec94cfe51f3799f64672124ed5fa8da36b3298219733fd0907317a196a5ab10ed10d8c56a54d0ba762115"
+	url = "https://github.com/rclone/rclone/releases/download/{{ .tag }}/rclone-{{ .tag }}-linux-amd64.zip"
+	checksum.sha512 = "dff5bb9d6eca8972b7b774204c521e068aecc6662b8ae052c6bbba89ccabbbf8d241506390356511455123c21c51900c5d62fd478136aafa16ea786554a42d45"
 {{ end }}
 
 # ARM 64bit also called arm64, aarch64, armv8
 {{ define "arm64" }}
-	url = "https://github.com/rclone/rclone/releases/download/v1.71.2/rclone-v1.71.2-linux-arm64.zip"
-	checksum.sha512 = "effc3aa3003542e4227a3d85f9aac6316fff1367b70229d0a6bafeeb03ec0f2d8892f8b3df46b0520e0f4d20e50509fda1b3bf7f5a584241458b6139d11e3347"
+	url = "https://github.com/rclone/rclone/releases/download/{{ .tag }}/rclone-{{ .tag }}-linux-arm64.zip"
+	checksum.sha512 = "937712edd94845311aad44e9e948e0af8e83b834092ddda19acecf9de9a01112718710ddaa7d18700656c7b30275f4ec000df6d469bafd78d66b8e241f13e0c1"
 {{ end }}
 
 {{ define "sources" }}
 	{{ if eq .chezmoi.arch "amd64" }}
-		{{ template "amd64" }}
+		{{ template "amd64" . }}
 	{{ else if eq .chezmoi.arch "arm64" }}
-		{{ template "arm64" }}
+		{{ template "arm64" . }}
 	{{ end }}
 {{ end }}
 
@@ -30,13 +31,13 @@
 [".local/bin/rclone"]
 	type = "archive-file"
 	path = "rclone"
-	{{ template "sources" . }}
+	{{ template "sources" (dict "tag" $tag "chezmoi" .chezmoi) }}
 	stripComponents = 1
 	executable = true
 [".local/man/man1/rclone.1"]
 	type = "archive-file"
 	path = "rclone.1"
-	{{ template "sources" . }}
+	{{ template "sources" (dict "tag" $tag "chezmoi" .chezmoi) }}
 	stripComponents = 1
 
 {{ end }}
