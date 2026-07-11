@@ -1,4 +1,4 @@
-recurse=yes
+--recurse=yes
 --exclude=.git
 --exclude=BUILD
 --exclude=build.*
