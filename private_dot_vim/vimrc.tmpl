@@ -85,4 +85,24 @@ set relativenumber number
 set nofoldenable
 set foldmethod=syntax
 
+" Installing Vim plugins using vim-plug
+call plug#begin()
+Plug 'https://github.com/bfrg/vim-c-cpp-modern.git'
+Plug 'https://github.com/junegunn/fzf.vim.git'
+Plug 'https://github.com/takac/vim-hardtime.git'
+Plug 'https://github.com/tpope/vim-fugitive.git'
+call plug#end()
+
+" Enable hardtime everywhere
+let g:hardtime_default_on = 1
+" Increase wait to 2s
+let g:hardtime_default_on = 1
+let g:hardtime_ignore_quickfix = 1
+let g:hardtime_motion_with_count_resets = 1
+let g:list_of_normal_keys = ["h", "j", "k", "l", "-", "+", "W", "b", "B", "e", "E", "ge", "gE", "x", "X" ]
+let g:list_of_visual_keys = ["h", "j", "k", "l", "-", "+", "W", "b", "B", "e", "E", "ge", "gE", "x", "X" ]
+let g:list_of_insert_keys = ["<BS>", "<Del>"] " Use <C-h> and <C-d> instead
+let g:list_of_disabled_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+let g:hardtime_showmsg = 1
+
 " vim: filetype=vim
