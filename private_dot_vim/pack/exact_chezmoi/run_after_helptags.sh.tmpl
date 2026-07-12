@@ -1,0 +1,4 @@
+#! {{ template "shebang.tmpl" "/usr/bin/env" }} sh
+
+# Generate helptags to be able to view plugin documentations (doc/*.txt)
+vim -U NONE -i NONE -n -es -c 'helptags ALL' -c 'qa!'
