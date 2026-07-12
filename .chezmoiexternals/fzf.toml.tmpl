@@ -3,22 +3,22 @@
 {{ $supported_os := list "linux" "android" }}
 {{ $supported_arch := list "amd64" "arm64" }}
 
-{{ $git_tag := "0.66.1" }}
+{{ $git_tag := "0.74.0" }}
 
 {{ define "linux-amd64" }}
 	url = "https://github.com/junegunn/fzf/releases/download/v{{ .git_tag }}/fzf-{{ .git_tag }}-linux_amd64.tar.gz"
-	checksum.sha512 = "3e0d994f0d5a38f34d728f819fea9bb59978a8c87ce673004340a9492ffca7c3acf1a40aea60912ed6c24e00dca2736eaed67b7ba20b037f4b57a8a37dcc7e0c"
+	checksum.sha512 = "d711f2a891a6fcf3e4c7d498595fd442f45a93707b40734e300eac544de993f27776262bcf1ed0aa35282b898f33dbf108690175a10003702118a8ba038209de"
 {{ end }}
 
 # ARM 64bit also called arm64, aarch64, armv8
 {{ define "linux-arm64" }}
 	url = "https://github.com/junegunn/fzf/releases/download/v{{ .git_tag }}/fzf-{{ .git_tag }}-linux_arm64.tar.gz"
-	checksum.sha512 = "ccb62ed34fe29b233fbb5429f7dc9049b6882cfb5381d58f0f295879bf7f04539325383ac5e17cda0563d2500dad669ad43c1c9923b259085a65d0b339912cfa"
+	checksum.sha512 = "70c13578be4ef8750d66ba88598b94c51f6c822c79584e1ef08312bb2ff9ae30f7170385e2c27a4eaae463597d4ba029dbf13ff3cd6bfd62d412027557bde8db"
 {{ end }}
 
 {{ define "android-arm64" }}
 	url = "https://github.com/junegunn/fzf/releases/download/v{{ .git_tag }}/fzf-{{ .git_tag }}-android_arm64.tar.gz"
-	checksum.sha512 = "a00be371514fb04d77889be54f40357aa4949cb243eb39134198b72aedb9a33f95d06b4c6a707419365694b458cfa9948a59bb47a6921d634a814ca6497b018b"
+	checksum.sha512 = "d286ce4858f5418717bde1db0be82742f3880086033ba16b5ad10e0b13c64e06f4885f2f9b4e4cf43cac2e727bbd5cc5a597ab713063e645ff45b66e33c1afa8"
 {{ end }}
 
 {{ define "binary" }}
@@ -37,7 +37,7 @@
 
 {{ define "sources" }}
 	url = "https://github.com/junegunn/fzf/archive/refs/tags/v{{ .git_tag }}.tar.gz"
-	checksum.sha512sum = "84e01d2f852e0d90b2a30342f7ad9a30e4e287688f6063efc2a0f602eab5ec064819efecd2041f46869bb1956b3d3eb50e98084deeaa26272c3bbafd000648f7"
+	checksum.sha512sum = "fcb92556b9350127828bebe76cda4798ac625e3fa472f03cb162b68b316f91e96a78ef6c641a8cbf0aaddb6d036574be73305cad923948ba8905a6ea837841f4"
 {{ end }}
 
 {{ if and (has .chezmoi.os $supported_os) (has .chezmoi.arch $supported_arch) }}
@@ -59,6 +59,16 @@
 	include = ["fzf-*/man/**"]
 	{{ template "sources" (dict "git_tag" $git_tag) }}
 	stripComponents = 2
+[".vim/pack/chezmoi/start/fzf/plugin/fzf.vim"]
+	type = "archive-file"
+	path = "plugin/fzf.vim"
+	{{ template "sources" (dict "git_tag" $git_tag) }}
+	stripComponents = 1
+[".vim/pack/chezmoi/start/fzf/doc/fzf.txt"]
+	type = "archive-file"
+	path = "doc/fzf.txt"
+	{{ template "sources" (dict "git_tag" $git_tag) }}
+	stripComponents = 1
 
 {{ end }}
 
