@@ -21,6 +21,36 @@ endif
 " Get the defaults that most users want.
 source $VIMRUNTIME/defaults.vim
 
+" Not necessary for .vimrc on normal Vim launch, but is required Vim with
+" specified configuration file, e.g. `vim -u .vimrc`
+if &compatible
+	" Set nocompatible only when its not set, to avaid its side-effects
+	set nocompatible
+endif
+
+" Generate helptags for plugins installed via minpac,
+" only required for plugins of type: 'opt'
+function! s:minpac_gen_helptags(hooktype, name)
+	execute 'helptags' minpac#getpluginfo(a:name).dir . '/doc'
+endfunction
+
+silent! packadd chezmoi.vim " chezmoi vim plugin might not yet be installed, therefore ignore error messages if not found
+packadd minpac
+
+" Installing Vim plugins using minpac
+call minpac#init()
+call minpac#add('https://github.com/alker0/chezmoi.vim.git',    { 'rev': '7a498ea65f658993237fb0469001bdf71f68cf94', 'type': 'opt' })
+call minpac#add('https://github.com/bfrg/vim-c-cpp-modern.git', { 'rev': 'b194a25209ed99ae73175cc5cbc94b2d5684f657', 'type': 'opt' })
+call minpac#add('https://github.com/junegunn/fzf.vim.git',      { 'rev': 'd2a59a992a2455f609c0fde2ebd84427ea8f919a' })
+call minpac#add('https://github.com/takac/vim-hardtime.git',    { 'rev': '91177392e9372a1cf09a4b9b79532d2490bd405f' })
+call minpac#add('https://github.com/tpope/vim-fugitive.git',    { 'rev': '3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0' })
+call minpac#add('https://github.com/wellle/context.vim.git',    { 'rev': 'b779a19653e94d4a7d6e668f1d71e48de34591fa' })
+
+" Define custom vim plugin manager (minpac) commands wrappers
+command PackInstall call minpac#update('', {'do': 'helptags ALL'})
+command PackClean  call minpac#clean()
+command PackStatus call minpac#status()
+
 if has('vms')
   set nobackup  " do not keep a backup file, use versions instead
 else
@@ -85,15 +115,7 @@ set relativenumber number
 set nofoldenable
 set foldmethod=syntax
 
-" Installing Vim plugins using vim-plug
-call plug#begin()
-Plug 'https://github.com/alker0/chezmoi.vim.git',    { 'commit': '7a498ea65f658993237fb0469001bdf71f68cf94' }
-Plug 'https://github.com/bfrg/vim-c-cpp-modern.git', { 'commit': 'b194a25209ed99ae73175cc5cbc94b2d5684f657', 'for': 'cpp,c' }
-Plug 'https://github.com/junegunn/fzf.vim.git',      { 'commit': 'd2a59a992a2455f609c0fde2ebd84427ea8f919a' }
-Plug 'https://github.com/takac/vim-hardtime.git',    { 'commit': '91177392e9372a1cf09a4b9b79532d2490bd405f' }
-Plug 'https://github.com/tpope/vim-fugitive.git',    { 'commit': '3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0' }
-Plug 'https://github.com/wellle/context.vim.git',    { 'commit': 'b779a19653e94d4a7d6e668f1d71e48de34591fa' }
-call plug#end()
+" Plugin configurations below
 
 " Dynamically set chezmoi source dir
 let g:chezmoi#source_dir_path = '{{ .chezmoi.sourceDir }}'
@@ -104,8 +126,8 @@ let g:hardtime_default_on = 1
 let g:hardtime_default_on = 1
 let g:hardtime_ignore_quickfix = 1
 let g:hardtime_motion_with_count_resets = 1
-let g:list_of_normal_keys = ["h", "j", "k", "l", "-", "+", "W", "b", "B", "e", "E", "ge", "gE", "x", "X" ]
-let g:list_of_visual_keys = ["h", "j", "k", "l", "-", "+", "W", "b", "B", "e", "E", "ge", "gE", "x", "X" ]
+let g:list_of_normal_keys = ["n", "N", "h", "j", "k", "l", "-", "+", "W", "b", "B", "e", "E", "ge", "gE", "x", "X", "[", "{", "(", ")", "}", "]" ]
+let g:list_of_visual_keys = ["n", "N", "h", "j", "k", "l", "-", "+", "W", "b", "B", "e", "E", "ge", "gE", "x", "X", "[", "{", "(", ")", "}", "]" ]
 let g:list_of_insert_keys = ["<BS>", "<Del>"] " Use <C-h> and <C-d> instead
 let g:list_of_disabled_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
 let g:hardtime_showmsg = 1

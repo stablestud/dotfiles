@@ -20,6 +20,7 @@
 
 {{ end }}
 
+# source: https://github.com/jan-warchol/selenized
 {{ $selenized_git_hash := "9a753d5c575c48e29eeb2be745d9571b4cec42b3" }}
 
 [".vim/pack/chezmoi/opt/selenized/colors/selenized.vim"]
@@ -32,16 +33,14 @@
 	url  = "https://raw.githubusercontent.com/jan-warchol/selenized/{{ $selenized_git_hash }}/editors/vim/colors/selenized_bw.vim"
 	checksum.sha512 = "d3ba586518f4b51f2705cabb6692ba46c677ff075ee4e22d4ba4985b35e0b3e9673df7fda75ae100e91f2c869313848325f5b556f90df5a2bb6c26ce24fcb365"
 
-{{ $vimplug_git_hash := "88e31471818e9a29a8a20a0ee61360cfd7bdc1cd" }}
+# source: https://github.com/k-takata/minpac
+{{ $minpac_git_hash := "7a616ad2393139dbdf7514c14606098404e38625" }}
 
-# source: https://github.com/junegunn/vim-plug
-[".vim/pack/chezmoi/start/vim-plug/autoload/plug.vim"]
-	type = "file"
-	url  = "https://raw.githubusercontent.com/junegunn/vim-plug/{{ $vimplug_git_hash }}/plug.vim"
-	checksum.sha512 = "91c708217451f5381b5f091a36afd73a7786770b2a3e2f6550876110505efea449227df3cc053eb55800ddad4b39e3ba727b57bfc88cc2a15ef469772c58c3d2"
+[".vim/pack/chezmoi/opt/minpac"]
+	type = "archive"
+	url  = "https://github.com/k-takata/minpac/archive/{{ $minpac_git_hash }}.tar.gz"
+	checksum.sha512 = "b7fb2d3266fbe5ab839069c23fc9b3d103517629fb2befc04a5cbd15e7452b9256adf433bb14469da3682eb9d2eb4d5d5803eccf88956f5dc3165d105be84892"
+	stripComponents = 1
+	exact = true
 
-[".vim/pack/chezmoi/start/vim-plug/doc/plug.txt"]
-	type = "file"
-	url  = "https://raw.githubusercontent.com/junegunn/vim-plug/{{ $vimplug_git_hash }}/doc/plug.txt"
-	checksum.sha512 = "a167c5a680e04a9fc01cb55e8e89569a2c638204912709203e1c26820e37561611ed207168052419dde2430f403c6163bd95430aef2669f471bc2a14d1a4359c"
 # vim: filetype=toml
