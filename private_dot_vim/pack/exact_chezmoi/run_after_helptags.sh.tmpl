@@ -4,8 +4,12 @@ runtimepath=""
 
 # Generate helptags for 'disabled' plugins to be able to view plugin documentations (doc/*.txt)
 # as normally using `:helptags ALL` these docs for 'opt' plugins will not be generated
-for i in $HOME/.vim/pack/*/opt/*; do
+for i in $HOME/.vim/pack/chezmoi/opt/*; do
 	runtimepath="${runtimepath}${runtimepath:+,}${i}"
 done
 
 vim --not-a-term -T dump -U NONE -i NONE -Es -n -c "set runtimepath+=${runtimepath}" -c "helptags ALL" -c qall
+
+exit 0
+
+# vim: filetype=sh
