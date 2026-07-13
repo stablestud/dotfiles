@@ -87,11 +87,16 @@ set foldmethod=syntax
 
 " Installing Vim plugins using vim-plug
 call plug#begin()
-Plug 'https://github.com/bfrg/vim-c-cpp-modern.git'
-Plug 'https://github.com/junegunn/fzf.vim.git'
-Plug 'https://github.com/takac/vim-hardtime.git'
-Plug 'https://github.com/tpope/vim-fugitive.git'
+Plug 'https://github.com/alker0/chezmoi.vim.git',    { 'commit': '7a498ea65f658993237fb0469001bdf71f68cf94' }
+Plug 'https://github.com/bfrg/vim-c-cpp-modern.git', { 'commit': 'b194a25209ed99ae73175cc5cbc94b2d5684f657', 'for': 'cpp,c' }
+Plug 'https://github.com/junegunn/fzf.vim.git',      { 'commit': 'd2a59a992a2455f609c0fde2ebd84427ea8f919a' }
+Plug 'https://github.com/takac/vim-hardtime.git',    { 'commit': '91177392e9372a1cf09a4b9b79532d2490bd405f' }
+Plug 'https://github.com/tpope/vim-fugitive.git',    { 'commit': '3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0' }
+Plug 'https://github.com/wellle/context.vim.git',    { 'commit': 'b779a19653e94d4a7d6e668f1d71e48de34591fa' }
 call plug#end()
+
+" Dynamically set chezmoi source dir
+let g:chezmoi#source_dir_path = '{{ .chezmoi.sourceDir }}'
 
 " Enable hardtime everywhere
 let g:hardtime_default_on = 1
