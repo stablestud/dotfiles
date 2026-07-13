@@ -41,7 +41,7 @@ if exists('g:loaded_minpac')
 	" Installing Vim plugins using minpac
 	call minpac#init()
 	call minpac#add('https://github.com/alker0/chezmoi.vim.git',    { 'rev': '7a498ea65f658993237fb0469001bdf71f68cf94', 'type': 'opt' })
-	call minpac#add('https://github.com/bfrg/vim-c-cpp-modern.git', { 'rev': 'b194a25209ed99ae73175cc5cbc94b2d5684f657', 'type': 'opt' })
+	call minpac#add('https://github.com/bfrg/vim-c-cpp-modern.git', { 'rev': 'b194a25209ed99ae73175cc5cbc94b2d5684f657' })
 	call minpac#add('https://github.com/junegunn/fzf.vim.git',      { 'rev': 'd2a59a992a2455f609c0fde2ebd84427ea8f919a' })
 	call minpac#add('https://github.com/takac/vim-hardtime.git',    { 'rev': '91177392e9372a1cf09a4b9b79532d2490bd405f' })
 	call minpac#add('https://github.com/tpope/vim-fugitive.git',    { 'rev': '3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0' })
@@ -51,23 +51,6 @@ if exists('g:loaded_minpac')
 	command PackInstall call minpac#update('', {'do': 'helptags ALL'})
 	command PackClean  call minpac#clean()
 	command PackStatus call minpac#status()
-
-	" Plugin configurations below
-
-	" Dynamically set chezmoi source dir
-	let g:chezmoi#source_dir_path = '{{ .chezmoi.sourceDir }}'
-
-	" Enable hardtime everywhere
-	let g:hardtime_default_on = 1
-	" Increase wait to 2s
-	let g:hardtime_default_on = 1
-	let g:hardtime_ignore_quickfix = 1
-	let g:hardtime_motion_with_count_resets = 1
-	let g:list_of_normal_keys = ["n", "N", "h", "j", "k", "l", "-", "+", "w", "W", "b", "B", "e", "E", "ge", "gE", "x", "X", "[", "{", "(", ")", "}", "]" ]
-	let g:list_of_visual_keys = ["n", "N", "h", "j", "k", "l", "-", "+", "w", "W", "b", "B", "e", "E", "ge", "gE", "x", "X", "[", "{", "(", ")", "}", "]" ]
-	let g:list_of_insert_keys = ["<BS>"] " Use <C-h> instead
-	let g:list_of_disabled_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
-	let g:hardtime_showmsg = 1
 endif
 
 if has('vms')
@@ -133,5 +116,22 @@ set relativenumber number
 " Fold based on syntax by default
 set nofoldenable
 set foldmethod=syntax
+
+" Plugin configurations below
+
+" Dynamically set chezmoi source dir
+let g:chezmoi#source_dir_path = '{{ .chezmoi.sourceDir }}'
+
+" Enable hardtime everywhere
+let g:hardtime_default_on = 1
+" Increase wait to 2s
+let g:hardtime_default_on = 1
+let g:hardtime_ignore_quickfix = 1
+let g:hardtime_motion_with_count_resets = 1
+let g:list_of_normal_keys = ["n", "N", "h", "j", "k", "l", "-", "+", "w", "W", "b", "B", "e", "E", "ge", "gE", "x", "X", "[", "{", "(", ")", "}", "]" ]
+let g:list_of_visual_keys = ["n", "N", "h", "j", "k", "l", "-", "+", "w", "W", "b", "B", "e", "E", "ge", "gE", "x", "X", "[", "{", "(", ")", "}", "]" ]
+let g:list_of_insert_keys = ["<BS>"] " Use <C-h> instead
+let g:list_of_disabled_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+let g:hardtime_showmsg = 1
 
 " vim: filetype=vim
