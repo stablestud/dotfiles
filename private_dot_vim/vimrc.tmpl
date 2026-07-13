@@ -40,12 +40,18 @@ packadd minpac
 if exists('g:loaded_minpac')
 	" Installing Vim plugins using minpac
 	call minpac#init()
-	call minpac#add('https://github.com/alker0/chezmoi.vim.git',    { 'rev': '7a498ea65f658993237fb0469001bdf71f68cf94', 'type': 'opt' })
-	call minpac#add('https://github.com/bfrg/vim-c-cpp-modern.git', { 'rev': 'b194a25209ed99ae73175cc5cbc94b2d5684f657' })
-	call minpac#add('https://github.com/junegunn/fzf.vim.git',      { 'rev': 'd2a59a992a2455f609c0fde2ebd84427ea8f919a' })
-	call minpac#add('https://github.com/takac/vim-hardtime.git',    { 'rev': '91177392e9372a1cf09a4b9b79532d2490bd405f' })
-	call minpac#add('https://github.com/tpope/vim-fugitive.git',    { 'rev': '3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0' })
-	call minpac#add('https://github.com/wellle/context.vim.git',    { 'rev': 'b779a19653e94d4a7d6e668f1d71e48de34591fa' })
+	call minpac#add('https://github.com/alker0/chezmoi.vim.git',     { 'rev': '7a498ea65f658993237fb0469001bdf71f68cf94', 'type': 'opt' })
+	call minpac#add('https://github.com/bfrg/vim-c-cpp-modern.git',  { 'rev': 'b194a25209ed99ae73175cc5cbc94b2d5684f657' })
+	call minpac#add('https://github.com/easymotion/vim-easymotion',  { 'rev': 'b3cfab2a6302b3b39f53d9fd2cd997e1127d7878', 'type': 'opt' })
+	call minpac#add('https://github.com/junegunn/fzf.vim.git',       { 'rev': 'd2a59a992a2455f609c0fde2ebd84427ea8f919a' })
+	call minpac#add('https://github.com/mg979/vim-visual-multi.git', { 'rev': 'a6975e7c1ee157615bbc80fc25e4392f71c344d4', 'type': 'opt' })
+	call minpac#add('https://github.com/nanotee/zoxide.vim.git',     { 'rev': '520d1abeb71ba42989a842251f8ba5c46be89aab' })
+	call minpac#add('https://github.com/preservim/nerdtree.git',     { 'rev': '690d061b591525890f1471c6675bcb5bdc8cdff9', 'type': 'opt' })
+	call minpac#add('https://github.com/takac/vim-hardtime.git',     { 'rev': '91177392e9372a1cf09a4b9b79532d2490bd405f' })
+	call minpac#add('https://github.com/tpope/vim-eunuch.git',       { 'rev': 'e86bb794a1c10a2edac130feb0ea590a00d03f1e' })
+	call minpac#add('https://github.com/tpope/vim-fugitive.git',     { 'rev': '3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0' })
+	call minpac#add('https://github.com/unblevable/quick-scope.git', { 'rev': '6cee1d9e0b9ac0fbffeb538d4a5ba9f5628fabbc', 'type': 'opt' })
+	call minpac#add('https://github.com/wellle/context.vim.git',     { 'rev': 'b779a19653e94d4a7d6e668f1d71e48de34591fa' })
 
 	" Define custom vim plugin manager (minpac) commands wrappers
 	command PackInstall call minpac#update('', {'do': 'helptags ALL'})
@@ -128,10 +134,12 @@ let g:hardtime_default_on = 1
 let g:hardtime_default_on = 1
 let g:hardtime_ignore_quickfix = 1
 let g:hardtime_motion_with_count_resets = 1
-let g:list_of_normal_keys = ["n", "N", "h", "j", "k", "l", "-", "+", "w", "W", "b", "B", "e", "E", "ge", "gE", "x", "X", "[", "{", "(", ")", "}", "]" ]
+let g:list_of_normal_keys = [";", ",", "n", "N", "h", "j", "k", "l", "-", "+", "w", "W", "b", "B", "e", "E", "ge", "gE", "x", "X", "[", "{", "(", ")", "}", "]" ]
 let g:list_of_visual_keys = ["n", "N", "h", "j", "k", "l", "-", "+", "w", "W", "b", "B", "e", "E", "ge", "gE", "x", "X", "[", "{", "(", ")", "}", "]" ]
 let g:list_of_insert_keys = ["<BS>"] " Use <C-h> instead
 let g:list_of_disabled_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
 let g:hardtime_showmsg = 1
+
+let g:zoxide_prefix = 'j'
 
 " vim: filetype=vim
