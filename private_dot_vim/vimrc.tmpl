@@ -57,6 +57,7 @@ if exists('g:loaded_minpac')
 	command PackInstall call minpac#update('', {'do': 'helptags ALL'})
 	command PackClean  call minpac#clean()
 	command PackStatus call minpac#status()
+	command PackPurge  call delete(minpac#opt.minpac_dir, 'rf') | call minpac#clean()
 endif
 
 if has('vms')
