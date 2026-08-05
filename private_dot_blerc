@@ -7,6 +7,7 @@
 bleopt editor=vim
 bleopt prompt_eol_mark='⏎'
 bleopt history_share=1
+bleopt color_scheme=base16
 bleopt term_index_colors=auto
 
 ble-import config/execmark
