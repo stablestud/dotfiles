@@ -9,4 +9,7 @@ bleopt prompt_eol_mark='⏎'
 bleopt history_share=1
 bleopt term_index_colors=auto
 
+ble-import config/execmark
+bleopt exec_elapsed_enabled='_ble_exec_time_tot>=25000'
+
 # vim: filetype=bash
