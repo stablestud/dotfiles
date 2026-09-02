@@ -1,8 +1,0 @@
-#! /usr/bin/env sh
-
-# Disables screen timeout and screensaver indefinitely
-# Useful for watching films etc
-
-xset s 0
-
-# vim: filetype=sh

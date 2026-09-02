@@ -12,37 +12,10 @@
 
 # Ignore these if no graphical environment is installed
 {{ if .headless }}
-	.local/bin.vendor.d/termfg
-	.local/bin.vendor.d/openbrowser
-	.local/bin.vendor.d/screenshot
-	.local/bin.vendor.d/screensvr*
-	.local/bin.vendor.d/setxkblayout
-	.local/bin.vendor.d/pwr*
-	.local/bin.vendor.d/qutebrowser-clean
-	.local/bin.vendor.d/i3-*
-	.local/bin.vendor.d/rofi-*
 	.local/libexec/gogh
 	.local/libexec/gogh/**
 	.fonts
 	.fonts/**
-	.config/i3
-	.config/i3/**
-	.config/dunst
-	.config/dunst/**
-	.config/rofi
-	.config/rofi/**
-	.config/qutebrowser
-	.config/qutebrowser/**
-	.var
-	.var/**
-	.xsession
-	.xinitrc
-{{ end }}
-
-# Prevent setting i3 session for remote desktop, if not installed
-{{ if not (lookPath "i3") }}
-	.xsession
-	.xinitrc
 {{ end }}
 
 # Ignore symlinks which are used for AppImages,

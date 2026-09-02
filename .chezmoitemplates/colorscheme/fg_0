@@ -1,1 +1,0 @@
-{{- (index .colorschemes .colorscheme).fg_0 -}}
