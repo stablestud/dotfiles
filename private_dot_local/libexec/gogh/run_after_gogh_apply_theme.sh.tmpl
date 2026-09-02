@@ -16,25 +16,13 @@ apply_themes()
 	done
 
 	GOGH_USE_NEW_THEME="true" "${BASE_PATH}/${theme_sel}.sh"
+}
+
+apply_terminal()
+{
+	export TERMINAL="${1?no terminal given}"
+	apply_themes
 	unset TERMINAL
-}
-
-apply_gnome_terminal()
-{
-	export TERMINAL="gnome-terminal"
-	apply_themes
-}
-
-apply_xfce4_terminal()
-{
-	export TERMINAL="xfce4-terminal"
-	apply_themes
-}
-
-apply_foot_terminal()
-{
-	export TERMINAL="foot"
-	apply_themes
 }
 
 main()
@@ -51,17 +39,19 @@ main()
 
 	if [ -z "${TERMINAL}" ]; then :
 {{- if or (lookPath "gnome-terminal") }}
-		apply_gnome_terminal
+		apply_terminal "gnome-terminal"
 		applied="true"
 {{ end -}}
-
 {{- if lookPath "xfce4-terminal" }}
-		apply_xfce4_terminal
+		apply_terminal "xfce4-terminal"
 		applied="true"
 {{ end -}}
-
 {{- if lookPath "foot" }}
-		apply_foot_terminal
+		apply_terminal "foot"
+		applied="true"
+{{ end }}
+{{- if lookPath "konsole" }}
+		apply_terminal "konsole"
 		applied="true"
 {{ end }}
 	else

@@ -12,7 +12,7 @@
 {{ if and (.appimage) (eq .chezmoi.arch "amd64") }}
 
 # Tmux
-[".local/bin/.AppImages/tmux.AppImage"]
+[".local/bin.vendor.d/.AppImages/tmux.AppImage"]
 	# source: https://github.com/kiyoon/tmux-appimage
 	type = "file"
 	{{ template "sources" . }}

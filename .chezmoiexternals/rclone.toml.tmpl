@@ -28,7 +28,7 @@
 {{ if and (has .chezmoi.os $supported_os) (has .chezmoi.arch $supported_arch) }}
 
 # Rclone
-[".local/bin/rclone"]
+[".local/bin.vendor.d/rclone"]
 	type = "archive-file"
 	path = "rclone"
 	{{ template "sources" (dict "tag" $tag "chezmoi" .chezmoi) }}

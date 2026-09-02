@@ -12,7 +12,7 @@
 {{ if and (.appimage) (eq .chezmoi.arch "amd64") }}
 
 # Vim
-[".local/bin/.AppImages/vim.AppImage"]
+[".local/bin.vendor.d/.AppImages/vim.AppImage"]
 	# source: https://github.com/vim/vim-appimage
 	type = "file"
 	{{ template "sources" . }}

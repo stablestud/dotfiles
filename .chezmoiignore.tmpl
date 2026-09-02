@@ -12,15 +12,15 @@
 
 # Ignore these if no graphical environment is installed
 {{ if .headless }}
-	.local/bin/termfg
-	.local/bin/openbrowser
-	.local/bin/screenshot
-	.local/bin/screensvr*
-	.local/bin/setxkblayout
-	.local/bin/pwr*
-	.local/bin/qutebrowser-clean
-	.local/bin/i3-*
-	.local/bin/rofi-*
+	.local/bin.vendor.d/termfg
+	.local/bin.vendor.d/openbrowser
+	.local/bin.vendor.d/screenshot
+	.local/bin.vendor.d/screensvr*
+	.local/bin.vendor.d/setxkblayout
+	.local/bin.vendor.d/pwr*
+	.local/bin.vendor.d/qutebrowser-clean
+	.local/bin.vendor.d/i3-*
+	.local/bin.vendor.d/rofi-*
 	.local/libexec/gogh
 	.local/libexec/gogh/**
 	.fonts
@@ -50,9 +50,9 @@
 # so don't create the symlinks for unsupport systems
 # Also all AppImages are glibc dependent so make sure it is available
 {{ if not .appimage }}
-	.local/bin/.AppImageRunner
-	.local/bin/tmux
-	.local/bin/vim
+	.local/bin.vendor.d/.AppImageRunner
+	.local/bin.vendor.d/tmux
+	.local/bin.vendor.d/vim
 {{ end }}
 
 # Ignore generated helptag files

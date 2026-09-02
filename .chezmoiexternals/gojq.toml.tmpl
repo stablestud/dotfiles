@@ -25,7 +25,7 @@
 
 {{ if and (has .chezmoi.os $supported_os) (has .chezmoi.arch $supported_arch) }}
 
-[".local/bin/gojq"]
+[".local/bin.vendor.d/gojq"]
 	type = "archive-file"
 	path = "gojq"
 	{{ template "binary" (dict "tag" $tag "chezmoi" .chezmoi ) }}

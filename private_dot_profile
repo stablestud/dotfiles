@@ -9,6 +9,11 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
+# set PATH so it includes chezmoi bins if it exists
+if [ -d "${HOME}/.local/bin.vendor.d" ] ; then
+	export PATH="${HOME}/.local/bin.vendor.d:${PATH}"
+fi
+
 # set PATH so it includes user's private bin if it exists
 if [ -d "${HOME}/.local/bin" ] ; then
 	export PATH="${HOME}/.local/bin:${PATH}"
