@@ -3,22 +3,22 @@
 {{ $supported_os := list "linux" "android" }}
 {{ $supported_arch := list "amd64" "arm64" }}
 
-{{ $git_tag := "0.74.0" }}
+{{ $git_tag := "0.74.3" }}
 
 {{ define "linux-amd64" }}
 	url = "https://github.com/junegunn/fzf/releases/download/v{{ .git_tag }}/fzf-{{ .git_tag }}-linux_amd64.tar.gz"
-	checksum.sha512 = "d711f2a891a6fcf3e4c7d498595fd442f45a93707b40734e300eac544de993f27776262bcf1ed0aa35282b898f33dbf108690175a10003702118a8ba038209de"
+	checksum.sha512 = "8484a05d6ee5baafbaa3c54daeb1336d02049a457152563fe446c72325542a6500c58ba322aa3fc31d3d0ee097c508b402405cff420721ad7dd85825d3927d7d"
 {{ end }}
 
 # ARM 64bit also called arm64, aarch64, armv8
 {{ define "linux-arm64" }}
 	url = "https://github.com/junegunn/fzf/releases/download/v{{ .git_tag }}/fzf-{{ .git_tag }}-linux_arm64.tar.gz"
-	checksum.sha512 = "70c13578be4ef8750d66ba88598b94c51f6c822c79584e1ef08312bb2ff9ae30f7170385e2c27a4eaae463597d4ba029dbf13ff3cd6bfd62d412027557bde8db"
+	checksum.sha512 = "7c50af4d288f9a1e0ec9bf4121506031d2eea03c2f8b2c7627906c833747f00dde25ac778ee7488b4102900186570cc8666a83de9c6ad1bdac34ceacac185a0b"
 {{ end }}
 
 {{ define "android-arm64" }}
 	url = "https://github.com/junegunn/fzf/releases/download/v{{ .git_tag }}/fzf-{{ .git_tag }}-android_arm64.tar.gz"
-	checksum.sha512 = "d286ce4858f5418717bde1db0be82742f3880086033ba16b5ad10e0b13c64e06f4885f2f9b4e4cf43cac2e727bbd5cc5a597ab713063e645ff45b66e33c1afa8"
+	checksum.sha512 = "ad10e89777d324e752afcb26751bd6ad74d2da4e14c5c11f506a5fc786d73534b371dccda9a56a825e93d710e1b38123c989e2902c5e59edf9d10f9203277788"
 {{ end }}
 
 {{ define "binary" }}

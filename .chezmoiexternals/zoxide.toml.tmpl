@@ -3,22 +3,22 @@
 
 # source: https://github.com/ajeetdsouza/zoxide
 
-{{ $version := "0.9.9" }}
+{{ $version := "0.10.0" }}
 
 {{ define "linux-amd64" }}
 	url = "https://github.com/ajeetdsouza/zoxide/releases/download/v{{ .version }}/zoxide-{{ .version }}-x86_64-unknown-linux-musl.tar.gz"
-	checksum.sha512 = "f1a310b8b3e243426957fcbcb4d7b360a810a6ff12efa6c53d07cbe9435d65cbdcb6ab5f57123a60921822bb12023926ceade887ce1fd66eaaa45feed5e31ce7"
+	checksum.sha512 = "abe50c6be799a3da2a8169b2ef0ddcb0b0437d400a44af33d5cb614d36aa8edf68255fe6b99a8f7639f5fbc95f20b5613fba52c7b2a2343382e450d3e9f728fb"
 {{ end }}
 
 # ARM 64bit also called arm64, aarch64, armv8
 {{ define "linux-arm64" }}
 	url = "https://github.com/ajeetdsouza/zoxide/releases/download/v{{ .version }}/zoxide-{{ .version }}-aarch64-unknown-linux-musl.tar.gz"
-	checksum.sha512 = "6643bbb7d714d662a3b8405d841f1a3dc64d38b3ed4f5a7f941b9dcb7ad7973aea4adb473e86c5908a94f10df70df924cc18735438a3e2c0d030a2329594c189"
+	checksum.sha512 = "a5d08aaa4d548a1a1e44cb4dfd37573c48f81e31c1dde0b302e960860054ae8e130ae1321acc3ca370f565b14a702ef2acc762446821adebaca52447376005d7"
 {{ end }}
 
 {{ define "android-arm64" }}
 	url = "https://github.com/ajeetdsouza/zoxide/releases/download/v{{ .version }}/zoxide-{{ .version }}-aarch64-linux-android.tar.gz"
-	checksum.sha512 = "157f20eb61826bbfc06a342fb8ee73146bd965896d17d8a1dc5ec1bb4f01c58e0ec92b62e5098526c9742d129a168553a3251b755802a9a655a18b027e4a575c"
+	checksum.sha512 = "8d3e2432f23eaf194a67d2f439b4cc2b2856913f49acd36ed5ee23d799109052c9d0974bd67f4869f01ecdbb444f6263884d03531f58c32128d0d85b6dad63af"
 {{ end }}
 
 {{ define "sources" }}

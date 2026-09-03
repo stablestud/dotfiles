@@ -2,19 +2,19 @@
 {{/* therefore special binaries built with GOOS=android are required. So android is not supported by default */}}
 {{ $supported_os := list "linux" }}
 {{ $supported_arch := list "amd64" "arm64" }}
-{{ $tag := "v1.74.3" }}
+{{ $tag := "v1.75.0" }}
 
 # source: https://github.com/rclone/rclone
 
 {{ define "amd64" }}
 	url = "https://github.com/rclone/rclone/releases/download/{{ .tag }}/rclone-{{ .tag }}-linux-amd64.zip"
-	checksum.sha512 = "dff5bb9d6eca8972b7b774204c521e068aecc6662b8ae052c6bbba89ccabbbf8d241506390356511455123c21c51900c5d62fd478136aafa16ea786554a42d45"
+	checksum.sha512 = "de73b704cd74b4a6d1a4b343034a2cf40f9e07e489cc005187fd422644592a9cda1ed5fda9e47135b5236f5315b55225072c37bfc0c1db1a42e937c2d3782d70"
 {{ end }}
 
 # ARM 64bit also called arm64, aarch64, armv8
 {{ define "arm64" }}
 	url = "https://github.com/rclone/rclone/releases/download/{{ .tag }}/rclone-{{ .tag }}-linux-arm64.zip"
-	checksum.sha512 = "937712edd94845311aad44e9e948e0af8e83b834092ddda19acecf9de9a01112718710ddaa7d18700656c7b30275f4ec000df6d469bafd78d66b8e241f13e0c1"
+	checksum.sha512 = "5bb52d9e5f14c241f7346a8b8efc53e8ef021ef192f3728ca1d03f82955002e18c14a78eb4d5dd2386afb9454cb2003408d13d5e34bf0f74f70a356e76a27011"
 {{ end }}
 
 {{ define "sources" }}
