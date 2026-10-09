@@ -24,8 +24,8 @@
 # Also all AppImages are glibc dependent so make sure it is available
 {{ if not .appimage }}
 	.local/bin.vendor.d/.AppImageRunner
-	.local/bin.vendor.d/tmux
 	.local/bin.vendor.d/vim
+	.local/bin.vendor.d/vifm
 {{ end }}
 
 # Ignore generated helptag files
