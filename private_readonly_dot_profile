@@ -24,7 +24,10 @@ if [ -d "${HOME}/bin" ] ; then
 	export PATH="${HOME}/bin:${PATH}"
 fi
 
-# source machine specific env file; won't be overwritten by chezmoi
+# source chezmoi managed env file
+. "${HOME}/.env.vendor"
+
+# source machine/user specific env file; won't be overwritten by chezmoi
 . "${HOME}/.env"
 
 # if running bash

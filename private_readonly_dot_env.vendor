@@ -1,0 +1,5 @@
+# Chezmoi manages env variables that should be read by all kinds of login shells
+# Using the keyword 'export' will also pass the env variable to shells child processes
+
+export EDITOR=vim
+export VISUAL=vim
