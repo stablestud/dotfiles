@@ -1,0 +1,23 @@
+{{ define "amd64" }}
+	url = "https://github.com/vifm/vifm/releases/download/v0.14.4/vifm-v0.14.4-x86_64.AppImage"
+	checksum.sha512 = "2ef4227ef7a930634c30dcdd1c6ad408a73624e66b8df449c344675189e644a1f400c8226ad6631e485f7ef1e22861dff526adcf32967a3388a2ff7bea240f0d"
+{{ end }}
+
+{{ define "sources" }}
+	{{ if eq .chezmoi.arch "amd64" }}
+		{{ template "amd64" }}
+	{{ end }}
+{{ end }}
+
+{{ if and (.appimage) (eq .chezmoi.arch "amd64") }}
+
+# Vifm
+[".local/bin.vendor.d/.AppImages/vifm.AppImage"]
+	# source: https://github.com/vifm/vifm
+	type = "file"
+	{{ template "sources" . }}
+	executable = true
+
+{{ end }}
+
+# vim: filetype=toml

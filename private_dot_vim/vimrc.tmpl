@@ -1,21 +1,21 @@
 {{- $colorscheme := "default" -}}
 {{- if or (eq .colorscheme "selenized_light") (eq .colorscheme "selenized_dark") -}}
-  {{- $colorscheme = "selenized" -}}
+	{{- $colorscheme = "selenized" -}}
 {{- else if or (eq .colorscheme "selenized_white") (eq .colorscheme "selenized_black") -}}
-  {{- $colorscheme = "selenized_bw" -}}
+	{{- $colorscheme = "selenized_bw" -}}
 {{- end -}}
 
 {{- $background := "light" -}}
 {{- if or (eq .colorscheme "selenized_light") (eq .colorscheme "selenized_white") -}}
-  {{- $background = "light" -}}
+	{{- $background = "light" -}}
 {{- else if or (eq .colorscheme "selenized_dark") (eq .colorscheme "selenized_black") -}}
-  {{- $background = "dark" -}}
+	{{- $background = "dark" -}}
 {{- end -}}
 
 
 " When started as 'evim', evim.vim will already have done these settings, bail out.
 if v:progname =~? 'evim'
-  finish
+	finish
 endif
 
 " Get the defaults that most users want.
@@ -41,58 +41,58 @@ if exists('g:loaded_minpac')
 	" Installing Vim plugins using minpac
 	call minpac#init()
 	call minpac#add('https://github.com/Stormherz/tablify.git',            { 'rev': 'abddcf9eb56e4b120718f2a88d80cf2f2d910d4e', 'type': 'opt' })
-	call minpac#add('https://github.com/alker0/chezmoi.vim.git',       { 'rev': '7a498ea65f658993237fb0469001bdf71f68cf94', 'type': 'opt' })
-	call minpac#add('https://github.com/bfrg/vim-c-cpp-modern.git',    { 'rev': 'b194a25209ed99ae73175cc5cbc94b2d5684f657' })
+	call minpac#add('https://github.com/alker0/chezmoi.vim.git',           { 'rev': '7a498ea65f658993237fb0469001bdf71f68cf94', 'type': 'opt' })
+	call minpac#add('https://github.com/bfrg/vim-c-cpp-modern.git',        { 'rev': 'b194a25209ed99ae73175cc5cbc94b2d5684f657' })
 	call minpac#add('https://github.com/easymotion/vim-easymotion.git',    { 'rev': 'b3cfab2a6302b3b39f53d9fd2cd997e1127d7878', 'type': 'opt' })
-	call minpac#add('https://github.com/junegunn/fzf.vim.git',         { 'rev': 'a630ef91e1e050574e703f506cd0812b18d26939' })
+	call minpac#add('https://github.com/junegunn/fzf.vim.git',             { 'rev': 'a630ef91e1e050574e703f506cd0812b18d26939' })
 	call minpac#add('https://github.com/ludovicchabant/vim-gutentags.git', { 'rev': 'aa47c5e29c37c52176c44e61c780032dfacef3dd', 'type': 'opt' })
-	call minpac#add('https://github.com/mg979/vim-visual-multi.git',   { 'rev': 'a6975e7c1ee157615bbc80fc25e4392f71c344d4', 'type': 'opt' })
-	call minpac#add('https://github.com/mhinz/vim-signify.git',        { 'rev': '3b5ae37eb2b77c3ae58d60dfdc3fc30258078663' })
-	call minpac#add('https://github.com/nanotee/zoxide.vim.git',       { 'rev': 'd4c3d088a70a4edae9def6209644c092f4221fe5' })
-	call minpac#add('https://github.com/preservim/nerdtree.git',       { 'rev': '690d061b591525890f1471c6675bcb5bdc8cdff9', 'type': 'opt' })
-	call minpac#add('https://github.com/takac/vim-hardtime.git',       { 'rev': '91177392e9372a1cf09a4b9b79532d2490bd405f' })
-	call minpac#add('https://github.com/tpope/vim-eunuch.git',         { 'rev': '929490937745cd96130d3e7948f762f0aa403314', 'type': 'opt' })
-	call minpac#add('https://github.com/tpope/vim-fugitive.git',       { 'rev': '3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0' })
-	call minpac#add('https://github.com/unblevable/quick-scope.git',   { 'rev': '6cee1d9e0b9ac0fbffeb538d4a5ba9f5628fabbc', 'type': 'opt' })
-	call minpac#add('https://github.com/wellle/context.vim.git',       { 'rev': 'b779a19653e94d4a7d6e668f1d71e48de34591fa' })
+	call minpac#add('https://github.com/mg979/vim-visual-multi.git',       { 'rev': 'a6975e7c1ee157615bbc80fc25e4392f71c344d4', 'type': 'opt' })
+	call minpac#add('https://github.com/mhinz/vim-signify.git',            { 'rev': '3b5ae37eb2b77c3ae58d60dfdc3fc30258078663' })
+	call minpac#add('https://github.com/nanotee/zoxide.vim.git',           { 'rev': 'd4c3d088a70a4edae9def6209644c092f4221fe5' })
+	call minpac#add('https://github.com/preservim/nerdtree.git',           { 'rev': '690d061b591525890f1471c6675bcb5bdc8cdff9', 'type': 'opt' })
+	call minpac#add('https://github.com/takac/vim-hardtime.git',           { 'rev': '91177392e9372a1cf09a4b9b79532d2490bd405f' })
+	call minpac#add('https://github.com/tpope/vim-eunuch.git',             { 'rev': '929490937745cd96130d3e7948f762f0aa403314', 'type': 'opt' })
+	call minpac#add('https://github.com/tpope/vim-fugitive.git',           { 'rev': '3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0' })
+	call minpac#add('https://github.com/unblevable/quick-scope.git',       { 'rev': '6cee1d9e0b9ac0fbffeb538d4a5ba9f5628fabbc', 'type': 'opt' })
+	call minpac#add('https://github.com/vifm/vifm.vim.git',                { 'rev': '617e3dc7c9af1f03cc664124aff2fe98fafcf1b2' }) " v0.14
+	call minpac#add('https://github.com/wellle/context.vim.git',           { 'rev': 'b779a19653e94d4a7d6e668f1d71e48de34591fa' })
 
 	" Define custom vim plugin manager (minpac) commands wrappers
 	command PackInstall call minpac#update('', {'do': 'helptags ALL'})
-	command PackClean  call minpac#clean()
-	command PackStatus call minpac#status()
-	command PackPurge  call delete(minpac#opt.minpac_dir, 'rf') | call minpac#clean()
+	command PackClean   call minpac#clean()
+	command PackStatus  call minpac#status()
+	command PackPurge    call delete(minpac#opt.minpac_dir, 'rf') | call minpac#clean()
 endif
 
 if has('vms')
-  set nobackup  " do not keep a backup file, use versions instead
+	set nobackup " do not keep a backup file, use versions instead
 else
-  set backup    " keep a backup file (restore to previous version)
-  let backup_dir = expand('~/.vim') . '/backupdir'
-  if !isdirectory(backup_dir)
-    call mkdir(backup_dir, 'p')
-  endif
-  let &backupdir = backup_dir . '//'
-  if has('persistent_undo')
-    let undo_dir = expand('~/.vim') . '/undodir'
-    set undofile  " keep an undo file (undo changes after closing)
-    if !isdirectory(undo_dir)
-      call mkdir(undo_dir, 'p')
-    endif
-    let &undodir = undo_dir . '//'
-  endif
+	set backup   " keep a backup file (restore to previous version)
+	let backup_dir = expand('~/.vim') . '/backupdir'
+	if !isdirectory(backup_dir)
+		call mkdir(backup_dir, 'p')
+	endif
+	let &backupdir = backup_dir . '//'
+	if has('persistent_undo')
+		let undo_dir = expand('~/.vim') . '/undodir'
+		set undofile    " keep an undo file (undo changes after closing)
+		if !isdirectory(undo_dir)
+			call mkdir(undo_dir, 'p')
+		endif
+		let &undodir = undo_dir . '//'
+	endif
 endif
 
 if &t_Co > 2 || has('gui_running')
-  " Switch on highlighting the last used search pattern.
-  set hlsearch
+	" Switch on highlighting the last used search pattern.
+	set hlsearch
 endif
 
 " Put these in an autocmd group, so that we can delete them easily.
 augroup vimrcEx
-  au!
-
-  " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
+	au!
+	" For all text files set 'textwidth' to 78 characters.
+	autocmd FileType text setlocal textwidth=78
 augroup END
 
 " Add optional packages.
@@ -101,16 +101,16 @@ augroup END
 " The ! means the package won't be loaded right away but when plugins are
 " loaded during initialization.
 if has('syntax') && has('eval')
-  packadd! matchit
+	packadd! matchit
 endif
 
 " If terminal supports truecolor, make use of it
 if has('termguicolors')
-    \ && ($COLORTERM ==# 'truecolor' || $COLORTERM ==# '24bit')
-    \ && empty($TMUX) && empty($STY) " tmux and screen do not support truecolor everywhere
-  set termguicolors
+		\ && ($COLORTERM ==# 'truecolor' || $COLORTERM ==# '24bit')
+		\ && empty($TMUX) && empty($STY) " tmux and screen do not support truecolor everywhere
+	set termguicolors
 else
-  set t_Co=16
+	set t_Co=16
 endif
 
 " Make use of the wonderful Selenized theme
